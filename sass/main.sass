@@ -16,7 +16,7 @@ a
 	color: $accent
 	font-weight: bold
 	text-decoration: none
-	transition: all .2s ease
+	transition: all .25s ease
 	&:hover
 		text-decoration: none
 		color: $accent
@@ -54,8 +54,8 @@ b, strong
 		align-items: center
 		flex-wrap: wrap
 	&__link
-		background-color: $accent
-		color: #fff
+		background-color: transparent
+		color: $accent
 		display: flex
 		align-items: center
 		font-weight: 300
@@ -63,8 +63,35 @@ b, strong
 		font-size: 12px
 		padding: 10px 20px
 		margin: 1%
-		border-radius: 6px
-		img
+		border-radius: 50px
+		border: 2px solid $accent
+		&:hover
+			color: #fff
+			background-color: $accent
+		img, svg
 			width: 20px
 			height: 100%
 			margin-right: 5px
+		svg
+			fill: $accent
+			transition: all .25s
+		&--vk
+			border-color: $vk
+			color: $vk
+			svg
+				fill: $vk
+			&:hover
+				background-color: $vk
+				color: #fff
+				svg
+					fill: #fff
+		&--od
+			border-color: $od
+			color: $od
+			svg
+				fill: $od
+			&:hover
+				background-color: $od
+				color: #fff
+				svg
+					fill: #fff
