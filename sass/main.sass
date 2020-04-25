@@ -58,7 +58,7 @@ b, strong
 		color: $accent
 		display: flex
 		align-items: center
-		font-weight: 300
+		font-weight: 500
 		text-transform: uppercase
 		font-size: 12px
 		padding: 10px 20px
@@ -68,11 +68,12 @@ b, strong
 		&:hover
 			color: #fff
 			background-color: $accent
-		img, svg
+			svg
+				fill: #fff
+		svg
 			width: 20px
 			height: 100%
 			margin-right: 5px
-		svg
 			fill: $accent
 			transition: all .25s
 		&--vk
@@ -92,6 +93,26 @@ b, strong
 				fill: $od
 			&:hover
 				background-color: $od
+				color: #fff
+				svg
+					fill: #fff
+		&--fb
+			border-color: $fb
+			color: $fb
+			svg
+				fill: $fb
+			&:hover
+				background-color: $fb
+				color: #fff
+				svg
+					fill: #fff
+		&--youtube
+			border-color: $youtube
+			color: $youtube
+			svg
+				fill: $youtube
+			&:hover
+				background-color: $youtube
 				color: #fff
 				svg
 					fill: #fff
