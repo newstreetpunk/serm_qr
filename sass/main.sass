@@ -2,6 +2,9 @@
 @import "fonts"
 @import "libs"
 
+
+html, body, .wrapper
+	height: 100%
 body
 	font-size: 16px
 	min-width: 320px
@@ -35,11 +38,27 @@ b, strong
 	height: 1px
 	margin: -1px
 
+main
+	+media-breakpoint-down(xs)
+		flex: 1 0 auto
+
+header
+	+media-breakpoint-down(xs)
+		flex: 0 0 auto
+
 .wrapper
 	max-width: 600px
 	width: 100%
 	padding: 0 15px
 	margin: 0 auto
+	position: relative
+	+media-breakpoint-down(xs)
+		display: flex
+		flex-direction: column
+
+.bottom-mobile
+	+media-breakpoint-down(xs)
+		flex: 0 0 auto
 
 h2
 	font-size: 16px
