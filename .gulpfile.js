@@ -39,7 +39,7 @@ if(typeof port == 'undefined')
 	global.port = 8100;
 
 
-projects.newstreetpunk_kia_qr = {
+projects.kia_qr = {
 
 	port: ++port,
 
@@ -77,17 +77,17 @@ projects.newstreetpunk_kia_qr = {
 
 
 
-/* newstreetpunk_kia_qr BEGIN */
+/* kia_qr BEGIN */
 
 // Local Server
-function newstreetpunk_kia_qr_browsersync() {
+function kia_qr_browsersync() {
 	connect.server({
-		port: projects.newstreetpunk_kia_qr.port,
-		base: projects.newstreetpunk_kia_qr.base,
+		port: projects.kia_qr.port,
+		base: projects.kia_qr.base,
 	}, function (){
 		browserSync.init({
-			// server: { baseDir: projects.newstreetpunk_kia_qr.base + '/' },
-			proxy: '127.0.0.1:' + projects.newstreetpunk_kia_qr.port,
+			// server: { baseDir: projects.kia_qr.base + '/' },
+			proxy: '127.0.0.1:' + projects.kia_qr.port,
 			notify: false,
 			online: online
 		});
@@ -95,36 +95,36 @@ function newstreetpunk_kia_qr_browsersync() {
 };
 
 // Custom Styles
-function newstreetpunk_kia_qr_styles() {
-	return src(projects.newstreetpunk_kia_qr.styles.src)
+function kia_qr_styles() {
+	return src(projects.kia_qr.styles.src)
 	.pipe(eval(preprocessor)({ outputStyle: 'expanded' }).on("error", notify.onError()))
-	.pipe(concat(projects.newstreetpunk_kia_qr.styles.output))
+	.pipe(concat(projects.kia_qr.styles.output))
 	.pipe(autoprefixer({ grid: true, overrideBrowserslist: ['last 10 versions'] }))
 	.pipe(cleancss( {level: { 1: { specialComments: 0 } } })) // Optional. Comment out when debugging
-	.pipe(dest(projects.newstreetpunk_kia_qr.styles.dest))
+	.pipe(dest(projects.kia_qr.styles.dest))
 	.pipe(browserSync.stream())
 
 };
 
 // Scripts & JS Libraries
-function newstreetpunk_kia_qr_scripts() {
-	return src(projects.newstreetpunk_kia_qr.scripts.src)
-	.pipe(concat(projects.newstreetpunk_kia_qr.scripts.output))
+function kia_qr_scripts() {
+	return src(projects.kia_qr.scripts.src)
+	.pipe(concat(projects.kia_qr.scripts.output))
 	// .pipe(uglify()) // Minify js (opt.)
-	.pipe(header(projects.newstreetpunk_kia_qr.forProd))
-	.pipe(dest(projects.newstreetpunk_kia_qr.scripts.dest))
+	.pipe(header(projects.kia_qr.forProd))
+	.pipe(dest(projects.kia_qr.scripts.dest))
 	.pipe(browserSync.stream())
 };
 
-function newstreetpunk_kia_qr_watch() {
-	watch(projects.newstreetpunk_kia_qr.styles.watch, newstreetpunk_kia_qr_styles);
-	// watch(projects.newstreetpunk_kia_qr.scripts.src, newstreetpunk_kia_qr_scripts);
+function kia_qr_watch() {
+	watch(projects.kia_qr.styles.watch, kia_qr_styles);
+	// watch(projects.kia_qr.scripts.src, kia_qr_scripts);
 
-	watch(projects.newstreetpunk_kia_qr.code.src).on('change', browserSync.reload);
+	watch(projects.kia_qr.code.src).on('change', browserSync.reload);
 };
 
-// newstreetpunk_kia_qr_scripts, 
-module.exports = parallel(newstreetpunk_kia_qr_styles, newstreetpunk_kia_qr_browsersync, newstreetpunk_kia_qr_watch);
+// kia_qr_scripts, 
+exports.kia_qr = parallel(kia_qr_styles, kia_qr_browsersync, kia_qr_watch);
 
 
-/* newstreetpunk_kia_qr END */
+/* kia_qr END */
