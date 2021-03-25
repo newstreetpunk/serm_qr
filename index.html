@@ -128,19 +128,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			<h2>Оставить отзыв</h2>
 			<div class="add-review__list">
 				
-				<a href="#" class="add-review__link">
+				<a href="#" class="add-review__link" data-source="google">
 					<img src="img/icons/google-maps.svg" alt="Google" class="add-review__icon _active">
 					<img src="img/icons/google-maps-hover.svg" alt="Google" class="add-review__icon _hover">
 					<span>Google</span>
 				</a>
 
-				<a href="#" class="add-review__link">
+				<a href="#" class="add-review__link" data-source="yandex">
 					<img src="img/icons/yandex-maps.svg" alt="Yandex" class="add-review__icon _active">
 					<img src="img/icons/yandex-maps-hover.svg" alt="Yandex" class="add-review__icon _hover">
 					<span>Yandex</span>
 				</a>
 
-				<a href="#" class="add-review__link">
+				<a href="#" class="add-review__link" data-source="gis">
 					<img src="img/icons/2GIS.svg" alt="2Gis" class="add-review__icon _active">
 					<img src="img/icons/2GIS-hover.svg" alt="2Gis" class="add-review__icon _hover">
 					<span>2GIS</span>
@@ -149,9 +149,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			</div>
 			<!-- /.action-review__list -->
 
-			<div class="map-block">
-				<h3>Выберите дилера:</h3>
-				<img src="img/map.png" alt="Карта">
+			<div class="map">
+				<div class="map-block">
+					<h3>Выберите дилера:</h3>
+					<img src="img/map.png" alt="Карта">
+
+					<a href="#" class="dealer-link samara"target="_blank">samars</a>
+					<a href="#" class="dealer-link moscow"target="_blank">mosc</a>
+					<a href="#" class="dealer-link mexico"target="_blank">mex</a>
+
+				</div>
 			</div>
 			<!-- /.map -->
 
@@ -177,6 +184,117 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	</div>
 	<!-- /.wrapper -->
+
+	<script>
+		
+		document.addEventListener('DOMContentLoaded', () => {
+
+			function setSourceLink(val, selector){
+				
+				const source = {					
+					google : {						
+						"samara" : "https://g.page/Kiavsamare/review?rc",
+						"moscow" : "https://g.page/kiasmr/review?rc",
+						"mexico" : "https://g.page/Kiavsamare-mehzavod/review?rc"
+					},
+					yandex : {						
+						"samara" : "https://yandex.ru/profile/216059659516?intent=reviews",
+						"moscow" : "https://yandex.ru/profile/1179041515?intent=reviews",
+						"mexico" : "https://yandex.ru/profile/91221589795?intent=reviews"
+					},
+					gis : {						
+						"samara" : "https://2gis.ru/samara/firm/2533803071703640/tab/reviews",
+						"moscow" : "https://2gis.ru/samara/firm/70000001019939556/tab/reviews",
+						"mexico" : "https://2gis.ru/samara/firm/70000001043828289/tab/reviews"
+					}
+				};
+					
+				delearLinks = document.querySelectorAll(selector);
+
+				for(k in source[val]) {
+
+					delearLinks.forEach( (el) => {
+						if (el.classList.contains(k)) {
+							el.setAttribute('href', source[val][k]);
+						}
+					});
+
+				};
+			}
+
+			function slideUp(container){
+
+				container.style.height = '0px';
+				container.addEventListener('transitionend', function () {
+					container.classList.remove('active');
+				}, {
+					once: true
+				});
+			}
+
+			function slideDown(container){
+
+				container.classList.add('active');
+				container.style.height = 'auto';
+
+				let height = container.clientHeight + 'px';
+
+				// container.style.height = '0px';
+
+				setTimeout( () => {
+					container.style.height = height;
+				}, 0);
+
+			}
+
+
+			const links = document.querySelectorAll('.add-review__link');
+			const map = document.querySelector('.map');
+			const mapBlock = document.querySelector('.map-block');
+
+			links.forEach( (el) => {
+				el.addEventListener('click', (e) => {
+					e.preventDefault();
+
+					let attr = el.getAttribute('data-source');
+
+					setSourceLink(attr, '.dealer-link');
+
+					if ( el.classList.contains('active') ) {
+
+						el.classList.remove('active');
+						slideUp(mapBlock);
+						mapBlock.addEventListener('transitionend', function () {
+							// if( window.innerWidth > 768 ){
+							// map.style.height = 0;
+							// }
+						}, {
+							once: true
+						});
+
+					}else{
+
+						slideUp(mapBlock);
+						links.forEach( (elem) => {
+							elem.classList.remove('active');
+						});						
+
+						el.classList.add('active');
+
+						setTimeout( () => {
+							slideDown(mapBlock);
+							// if( window.innerWidth > 768 ){
+							// 	map.style.height = mapBlock.clientHeight + 'px';	
+							// }												
+						}, 500 )
+
+					}					
+				});
+			});
+
+		});
+
+	</script>
 
 </body>
 </html>
