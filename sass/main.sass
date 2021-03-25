@@ -208,7 +208,7 @@ hr
 	background-color: #fff
 	overflow: hidden
 	z-index: 1
-	+media-breakpoint-up(xs)
+	+media-breakpoint-down(xs)
 		margin-left: -15px
 		margin-right: -15px
 	&__list
@@ -226,7 +226,7 @@ hr
 		span
 			display: block
 			margin-top: 60px
-		&:hover, &.active
+		&.active
 			color: rgba(0,0,0,.8)
 			.add-review__icon._active
 				opacity: 0
@@ -234,6 +234,15 @@ hr
 			.add-review__icon._hover
 				opacity: 1
 				visibility: visible
+		+media-breakpoint-up(lg)
+			&:hover, &.active
+				color: rgba(0,0,0,.8)
+				.add-review__icon._active
+					opacity: 0
+					visibility: hidden
+				.add-review__icon._hover
+					opacity: 1
+					visibility: visible
 	&__icon
 		width: 53px
 		height: 53px
