@@ -243,6 +243,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 				}, 300);
 			}
 
+			function scrollSmooth(selector){
+				setTimeout( ()=>{
+					document.querySelector(selector).scrollIntoView({
+						behavior: 'smooth',
+						block: 'start'
+					});
+				}, 600 );
+			}
+
 			const links = document.querySelectorAll('.add-review__link');
 			const map = document.querySelector('.map');
 			const mapImage = document.querySelector('.map-img');
@@ -275,12 +284,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 						el.classList.add('active');
 						slideDown(mapBlock);
 
-						setTimeout( ()=>{
-							document.querySelector('.add-review').scrollIntoView({
-								behavior: 'smooth',
-								block: 'start'
-							});
-						}, 600 );											
+						scrollSmooth('.add-review');											
 					}
 
 					window.addEventListener('resize', () => {

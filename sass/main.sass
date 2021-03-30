@@ -286,5 +286,79 @@ hr
 		top: 11%
 		width: 20%
 
+.classified
+	margin-top: 20px
+	h2
+		font-weight: bold
+	&__list
+		display: flex
+		align-items: stretch
+		justify-content: space-between
+		margin: 20px 0
+	&__link
+		flex: 0 1 20%
+		position: relative
+		display: inline-block
+		padding-bottom: 3px
+		+media-breakpoint-down(xs)
+			flex: 0 1 26%
+		&:before
+			content: ''
+			display: inline-block
+			width: 70%
+			height: 2px
+			position: absolute
+			left: 50%
+			top: 100%
+			transform: translate(-50%, 5px)
+			background-color: $accent
+			filter: blur(1px)
+			border-radius: 50% / 100%
+			opacity: 0
+			transition: all .3s ease-out
+		&:hover, &.active
+			&:before
+				opacity: 1
+				transform: translate(-50%, 0)
+	&__icon
+		width: auto
+		height: 100%
+	&__sublist
+		padding: 20px 0
+		+media-breakpoint-down(xs)
+			padding-top: 0
+	&__sublink
+		width: 45%
+		text-align: center
+		display: inline-block
+		text-transform: uppercase
+		color: $text
+		opacity: 0.7
+		transition: opacity .3s ease
+		position: relative
+		+media-breakpoint-down(xs)
+			width: 47%
+			font-size: 15px
+		&:before
+			content: ''
+			display: inline-block
+			width: 30%
+			height: 2px
+			position: absolute
+			left: 50%
+			top: 100%
+			transform: translate(-50%, 5px)
+			background-color: $accent
+			filter: blur(1px)
+			border-radius: 50% / 100%
+			opacity: 0
+			transition: all .3s ease-out
+		&:hover, &.active
+			opacity: 1
+			color: $text
+			&:before
+				opacity: 1
+				transform: translate(-50%, 0)
+
 
 
