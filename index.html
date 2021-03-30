@@ -149,10 +149,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			</div>
 			<!-- /.action-review__list -->
 
-			<div class="map">
+			<div class="map" id="map">
 				<div class="map-block">
 					<h3>Выберите дилера:</h3>
-					<img src="img/map.png" alt="Карта">
+					<img src="img/map.png" alt="Карта" class="map-img">
 
 					<a href="#" class="dealer-link samara"target="_blank"></a>
 					<a href="#" class="dealer-link moscow"target="_blank"></a>
@@ -234,22 +234,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 			function slideDown(container){
 
-				container.classList.add('active');
-				container.style.height = 'auto';
-
-				let height = container.clientHeight + 'px';
-
-				// container.style.height = '0px';
-
+				container.addEventListener('transitionend', function () {
+					container.classList.add('active');
+				});
 				setTimeout( () => {
-					container.style.height = height;
-				}, 0);
-
+					container.style.height = container.scrollHeight + 'px';
+					container.closest('#map').style.height = container.scrollHeight + 'px';
+				}, 300);
 			}
-
 
 			const links = document.querySelectorAll('.add-review__link');
 			const map = document.querySelector('.map');
+			const mapImage = document.querySelector('.map-img');
 			const mapBlock = document.querySelector('.map-block');
 
 			links.forEach( (el) => {
@@ -264,31 +260,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 						el.classList.remove('active');
 						slideUp(mapBlock);
-						// mapBlock.addEventListener('transitionend', function () {
-						// 	// if( window.innerWidth > 768 ){
-						// 	// map.style.height = 0;
-						// 	// }
-						// }, {
-						// 	once: true
-						// });
+						mapBlock.addEventListener('transitionend', function () {
+							map.style.height = 0;
+						}, {
+							once: true
+						});
 
 					}else{
-
-						slideUp(mapBlock);
+						
+						slideUp(mapBlock);							
 						links.forEach( (elem) => {
 							elem.classList.remove('active');
-						});						
-
+						});
 						el.classList.add('active');
+						slideDown(mapBlock);
 
-						setTimeout( () => {
-							slideDown(mapBlock);
-							// if( window.innerWidth > 768 ){
-							// 	map.style.height = mapBlock.clientHeight + 'px';	
-							// }												
-						}, 500 )
+						setTimeout( ()=>{
+							document.querySelector('.add-review').scrollIntoView({
+								behavior: 'smooth',
+								block: 'start'
+							});
+						}, 600 );											
+					}
 
-					}					
+					window.addEventListener('resize', () => {
+						if ( mapBlock.classList.contains('active') ) {
+							map.style.height = (mapImage.clientWidth + 30) + 'px';
+							mapBlock.style.height = (mapImage.clientWidth + 30) + 'px';
+						}
+					});
+
 				});
 			});
 
