@@ -110,7 +110,7 @@ function kia_qr_styles() {
 function kia_qr_scripts() {
 	return src(projects.kia_qr.scripts.src)
 	.pipe(concat(projects.kia_qr.scripts.output))
-	// .pipe(uglify()) // Minify js (opt.)
+	.pipe(uglify()) // Minify js (opt.)
 	.pipe(header(projects.kia_qr.forProd))
 	.pipe(dest(projects.kia_qr.scripts.dest))
 	.pipe(browserSync.stream())
@@ -118,13 +118,12 @@ function kia_qr_scripts() {
 
 function kia_qr_watch() {
 	watch(projects.kia_qr.styles.watch, kia_qr_styles);
-	// watch(projects.kia_qr.scripts.src, kia_qr_scripts);
+	watch(projects.kia_qr.scripts.src, kia_qr_scripts);
 
 	watch(projects.kia_qr.code.src).on('change', browserSync.reload);
 };
 
-// kia_qr_scripts, 
-exports.kia_qr = parallel(kia_qr_styles, kia_qr_browsersync, kia_qr_watch);
+exports.kia_qr = parallel(kia_qr_styles, kia_qr_scripts, kia_qr_browsersync, kia_qr_watch);
 
 
 /* kia_qr END */
