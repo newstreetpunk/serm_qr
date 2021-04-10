@@ -25,8 +25,12 @@ a
 	text-decoration: none
 	transition: all .4s ease
 	&:hover
+		color: $text
 		text-decoration: none
-		color: $accent
+	@media screen and (min-width: 992px)
+		&:hover
+			text-decoration: none
+			color: $accent
 img
 	display: block
 	max-width: 100%
@@ -229,7 +233,7 @@ hr
 		span
 			display: block
 			margin-top: 60px
-		&.active, &:hover
+		&.active
 			color: rgba(0,0,0,.8)
 			.add-review__icon._active
 				opacity: 0
@@ -237,6 +241,15 @@ hr
 			.add-review__icon._hover
 				opacity: 1
 				visibility: visible
+		@media screen and (min-width: 992px)
+			&:hover
+				color: rgba(0,0,0,.8)
+				.add-review__icon._active
+					opacity: 0
+					visibility: hidden
+				.add-review__icon._hover
+					opacity: 1
+					visibility: visible
 	&__icon
 		width: 53px
 		height: 53px

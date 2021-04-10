@@ -33,26 +33,53 @@ document.addEventListener('DOMContentLoaded', () => {
 		};
 	}
 
-	function slideUp(container){
+	// function slideUp(container){
 
-		container.style.height = '0px';
-		container.addEventListener('transitionend', function () {
-			container.classList.remove('active');
-		}, {
-			once: true
-		});
+	// 	container.style.height = '0px';
+	// 	container.addEventListener('transitionend', function () {
+	// 		container.classList.remove('active');
+	// 	}, {
+	// 		once: true
+	// 	});
+	// }
+
+	// function slideDown(container){
+
+	// 	container.addEventListener('transitionend', function () {
+	// 		container.classList.add('active');
+	// 	});
+	// 	setTimeout( () => {
+	// 		container.style.height = container.scrollHeight + 'px';
+	// 		container.closest('#map').style.height = container.scrollHeight + 'px';
+	// 	}, 400);
+	// }
+
+	function slideDown(container) {
+		container.classList.add('active')
+		container.style.height = "auto"
+
+		/** Get the computed height of the container. */
+		var height = container.clientHeight + "px"
+
+		/** Set the height of the content as 0px, */
+		/** so we can trigger the slide down animation. */
+		container.style.height = "0px"
+
+		/** Do this after the 0px has applied. */
+		/** It's like a delay or something. MAGIC! */
+		setTimeout(() => {
+			container.style.height = height
+		}, 300)
 	}
+    function slideUp(container) {
+    	/** Set the height as 0px to trigger the slide up animation. */
+    	container.style.height = "0px"
 
-	function slideDown(container){
-
-		container.addEventListener('transitionend', function () {
-			container.classList.add('active');
-		});
-		setTimeout( () => {
-			container.style.height = container.scrollHeight + 'px';
-			container.closest('#map').style.height = container.scrollHeight + 'px';
-		}, 400);
-	}
+    	/** Remove the `active` class when the animation ends. */
+    	container.addEventListener('transitionend', () => {
+    		container.classList.remove('active')
+    	}, { once: true })
+    }
 
 	function scrollSmooth(selector){
 		setTimeout( ()=>{
@@ -60,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				behavior: 'smooth',
 				block: 'start'
 			});
-		}, 600 );
+		}, 400 );
 	}
 
 	const links = document.querySelectorAll('.add-review__link');
@@ -89,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}else{
 
 				slideUp(mapBlock);
+				
 				links.forEach( (elem) => {
 					elem.classList.remove('active');
 				});
@@ -96,16 +124,20 @@ document.addEventListener('DOMContentLoaded', () => {
 				slideDown(mapBlock);
 
 				scrollSmooth('.add-review');
+
+				map.style.height = (mapImage.clientWidth + 30) + 'px';
+				mapBlock.style.height = (mapImage.clientWidth + 30) + 'px';
 			}
 
-			window.addEventListener('resize', () => {
-				if ( mapBlock.classList.contains('active') ) {
-					map.style.height = (mapImage.clientWidth + 30) + 'px';
-					mapBlock.style.height = (mapImage.clientWidth + 30) + 'px';
-				}
-			});
 
 		});
+	});
+
+	window.addEventListener('resize', () => {
+		if ( mapBlock.classList.contains('active') ) {
+			map.style.height = (mapImage.clientWidth + 30) + 'px';
+			mapBlock.style.height = (mapImage.clientWidth + 30) + 'px';
+		}
 	});
 
 });
