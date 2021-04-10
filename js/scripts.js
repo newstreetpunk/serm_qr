@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		setTimeout( () => {
 			container.style.height = container.scrollHeight + 'px';
 			container.closest('#map').style.height = container.scrollHeight + 'px';
-		}, 300);
+		}, 400);
 	}
 
 	function scrollSmooth(selector){
