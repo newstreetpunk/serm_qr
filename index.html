@@ -159,6 +159,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 					<a href="#" class="dealer-link mexico"target="_blank"></a>
 
 				</div>
+
+				<span class="loader loader-default"></span>
+				<span id="map1"></span>
 			</div>
 			<!-- /.map -->
 
@@ -184,6 +187,68 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	</div>
 	<!-- /.wrapper -->
+
+	<script>
+		let placemarks = [
+		{
+			position: [53.1887,50.2880],
+			balloonContentHeader: 'АО "Тепличный"',
+            balloonContentBody: '<a href="tel:+78469552533" class="dealer-phone">☎️ +7 846 955-26-33</a><br>\
+                <br> \
+                г. Самара, улица Ветлянская, 41<br>\
+                <a href="https://yandex.ru/maps/51/samara/?from=api-maps&ll=50.288000%2C53.188700&mode=routes&origin=jsapi_2_1_76&rtext=~53.188700%2C50.288000&rtt=auto&ruri=~&z=16"  target="_blank" class="dealer-phone">📍 Проложить маршрут</a><br>',
+            balloonContentFooter: 'пн-пт 8:00–17:00,<br>перерыв 12:00–13:00',
+            hintContent: 'АО "Тепличный"',
+            preset: 'islands#blueFactoryIcon'
+		},
+		{
+			position: [53.2582,50.2144],
+			balloonContentHeader: '"Тонар"',
+            balloonContentBody: '<a href="tel:+78469552533" class="dealer-phone">☎️ +7 846 955-26-33</a><br>\
+                <br> \
+                г. Самара, улица Ново-Садовая, 387<br>\
+                справа от центрального входа в ТЦ Поляна<br>\
+                <a href="https://yandex.ru/maps/51/samara/?from=api-maps&ll=50.214450%2C53.258157&mode=routes&origin=jsapi_2_1_78&pt=50.2526%2C53.2446~50.288%2C53.1887~50.2144%2C53.2582&rtext=~53.258157%2C50.214450&rtt=auto&ruri=~ymapsbm1%3A%2F%2Fgeo%3Fll%3D50.214%252C53.258%26spn%3D0.001%252C0.001%26text%3D%25D0%25A0%25D0%25BE%25D1%2581%25D1%2581%25D0%25B8%25D1%258F%252C%2520%25D0%25A1%25D0%25B0%25D0%25BC%25D0%25B0%25D1%2580%25D0%25B0%252C%2520%25D0%259D%25D0%25BE%25D0%25B2%25D0%25BE-%25D0%25A1%25D0%25B0%25D0%25B4%25D0%25BE%25D0%25B2%25D0%25B0%25D1%258F%2520%25D1%2583%25D0%25BB%25D0%25B8%25D1%2586%25D0%25B0%252C%2520387&z=16.74"  target="_blank" class="dealer-phone">📍 Проложить маршрут</a><br>',
+            balloonContentFooter: 'пн-пт 10:00-18:00,<br>суббота 9:00-14:00, <br>воскресенье выходной',
+            hintContent: '"Тонар"',
+            preset: 'islands#blueHomeIcon'
+		},
+		{
+			position: [53.2446,50.2526],
+			balloonContentHeader: '"Тонар"',
+            balloonContentBody: '<a href="tel:+78469552533" class="dealer-phone">☎️ +7 846 955-26-33</a><br>\
+                <br> \
+                г. Самара, проспект Карла Маркса, 450а<br>\
+                напротив центрального входа в рынок Лилия<br>\
+                <a href="https://yandex.ru/maps/51/samara/?from=api-maps&ll=50.252593%2C53.244559&mode=routes&origin=jsapi_2_1_78&pt=50.2526%2C53.2446~50.288%2C53.1887~50.2144%2C53.2582&rtext=~53.244559%2C50.252592&rtt=auto&ruri=~ymapsbm1%3A%2F%2Fgeo%3Fll%3D50.253%252C53.245%26spn%3D0.001%252C0.001%26text%3D%25D0%25A0%25D0%25BE%25D1%2581%25D1%2581%25D0%25B8%25D1%258F%252C%2520%25D0%25A1%25D0%25B0%25D0%25BC%25D0%25B0%25D1%2580%25D0%25B0%252C%2520%25D0%25BF%25D1%2580%25D0%25BE%25D1%2581%25D0%25BF%25D0%25B5%25D0%25BA%25D1%2582%2520%25D0%259A%25D0%25B0%25D1%2580%25D0%25BB%25D0%25B0%2520%25D0%259C%25D0%25B0%25D1%2580%25D0%25BA%25D1%2581%25D0%25B0%252C%2520450%25D0%2590&z=16.74"  target="_blank" class="dealer-phone">📍 Проложить маршрут</a><br>',
+            balloonContentFooter: 'пн-пт 9.30-17:00,<br>суббота 9:00-14:00, <br>воскресенье выходной',
+            hintContent: '"Тонар"',
+            preset: 'islands#blueHomeIcon'
+		}
+		];
+		let maps = [
+		{
+			parent: ".map",
+			id: "map1",
+			position: [53.1887,50.2880],
+			zoom: 11,
+			placemarks: placemarks,
+		},
+		{
+			parent: ".map",
+			position: [53.2582,50.2144],
+			zoom: 11,
+			placemarks: placemarks,
+		},
+		{
+			parent: ".map",
+			position: [53.2446,50.2526],
+			zoom: 11,
+			placemarks: placemarks,
+		}
+		];
+
+	</script>
 
 <script src="/js/scripts.min.js?12345678"></script>
 

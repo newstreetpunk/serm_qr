@@ -55,6 +55,8 @@ projects.kia_qr = {
 
 	scripts: {
 		src: [
+			'node_modules/jquery/dist/jquery.min.js',
+			basename + '/js/map.js', 
 			basename + '/js/scripts.js', // Custom scripts. Always at the end
 		],
 		dest:       basename + '/js',

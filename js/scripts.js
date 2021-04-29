@@ -59,6 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			setSourceLink(attr);
 
+			maps.forEach(function(map){
+				ymap(map)
+			});
+
 			mapBlock.style.height = '0px';
 
 			if ( el.classList.contains('active') ) {
