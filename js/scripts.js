@@ -4,9 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	const reviews = document.querySelectorAll('.add-review__link');
 	const map = document.querySelector('.map');
 	const mapBlock = document.querySelector('.map-block');
-	const mapImage = document.querySelector('.map-img');
+	const yandexMap = document.querySelector('#map');
 
-	var clicked = 0;
+	let clicked = false;
+	let attr = '';
 
 	const source = {
 		google : {
@@ -26,18 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	};
 
-	function setSourceLink(val){
-
-		for(k in source[val]) {
-
-			delears.forEach( (el) => {
-				if (el.classList.contains(k)) {
-					el.setAttribute('href', source[val][k]);
-				}
-			});
-
-		};
+	function setSourceLink(val, id){
+		return source[val][id];
 	}
+
 
 	function scrollSmooth(selector){
 		setTimeout( ()=>{
@@ -53,11 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		el.addEventListener('click', (e) => {
 			e.preventDefault();
 
-			clicked++;
-
-			let attr = el.getAttribute('data-source');
-
-			setSourceLink(attr);
+			attr = el.getAttribute('data-source');
 
 			mapBlock.style.height = '0px';
 
@@ -79,21 +68,62 @@ document.addEventListener('DOMContentLoaded', () => {
 				el.classList.add('active');
 
 				setTimeout(() => {
-					map.style.height = (mapImage.clientWidth + 30) + 'px';
-					mapBlock.style.height = (mapImage.clientWidth + 30) + 'px';
+					if (!clicked) {
+						ymaps.ready(init);						
+					}
+					map.style.height = (mapBlock.clientWidth + 30) + 'px';
+					yandexMap.style.height = (mapBlock.clientWidth + 30) + 'px';
+					mapBlock.style.height = (mapBlock.clientWidth + 30) + 'px';
 					scrollSmooth('.add-review');
+					clicked = true;
 				}, 300)
 			}
-
 
 		});
 	});
 
-	window.addEventListener('resize', () => {
-		if ( mapBlock.classList.contains('active') ) {
-			map.style.height = (mapImage.clientWidth + 30) + 'px';
-			mapBlock.style.height = (mapImage.clientWidth + 30) + 'px';
-		}
-	});
+	let zoom = 11;
+
+	function init () {
+		const add = (a1, a2) => a1.map((e, i) => e + a2[i]);
+		const avr = (array, length) => array.map((e, i) => e/length);
+		var center = [0,0];
+
+		var myMap = new ymaps.Map('map', {
+			center: center,
+			zoom: zoom,
+			controls: ['zoomControl']
+		});
+
+
+
+		myMap.behaviors.disable('scrollZoom');
+
+		placemarks.sort(function(a, b) {
+			return b.position[1] - a.position[1];
+		});
+
+		placemarks.forEach((obj) => {
+			center = add(center,obj.position);
+			myPlacemark = new ymaps.Placemark(obj.position, {
+				hintContent: obj.hintContent,
+			}, {
+				iconLayout: 'default#image',
+				iconImageHref: 'img/icons/kia-locator.svg',
+				iconImageSize: [42, 62],
+				iconImageOffset: [-21, -58],
+			});
+
+			myMap.geoObjects.add(myPlacemark);
+
+			myPlacemark.events.add('click', function (e) {
+				window.open(setSourceLink(attr, obj.id));
+				// console.log(obj.id);
+			});
+
+		});
+
+		myMap.setCenter(avr(center,placemarks.length));
+	}
 
 });

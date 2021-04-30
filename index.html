@@ -149,14 +149,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			</div>
 			<!-- /.action-review__list -->
 
-			<div class="map" id="map">
+			<div class="map">
 				<div class="map-block">
 					<h3>Выберите дилера:</h3>
-					<img src="./img/map.png" alt="Карта" class="map-img">
-
-					<a href="#" class="dealer-link samara"target="_blank"></a>
-					<a href="#" class="dealer-link moscow"target="_blank"></a>
-					<a href="#" class="dealer-link mexico"target="_blank"></a>
+					
+				<span id="map"></span>
 
 				</div>
 			</div>
@@ -185,7 +182,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	</div>
 	<!-- /.wrapper -->
 
-<script src="/js/scripts.min.js?12345678"></script>
+	<script>
+		let placemarks = [
+		{
+			position: [53.1836, 50.153],
+			hintContent: 'КИА Центр Самара',
+			id: 'samara'
+		},
+		{
+			position: [53.2487, 50.2155],
+			hintContent: 'КИА Центр на Московском',
+			id: 'moscow'
+		},
+		{
+			position: [53.291231, 50.285478],
+			hintContent: 'КИА Центр Мехзавод',
+			id: 'mexico'
+		}
+		];
+	</script>
+
+	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&loadByRequire=1" type="text/javascript"></script>
+	<script src="/js/scripts.min.js?12345678"></script>
 
 </body>
 </html>
