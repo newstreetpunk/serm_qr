@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-	let zoom = 11;
+	let zoom = (window.screen.availWidth < 360) ? 10 : 11;
 
 	function init () {
 		const add = (a1, a2) => a1.map((e, i) => e + a2[i]);
