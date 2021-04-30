@@ -82,30 +82,36 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-	let winW = window.screen.availWidth;
 	let zoom = 11;
 
-	if (winW < 481)
-		zoom = 10;
-
-
 	function init () {
+		const add = (a1, a2) => a1.map((e, i) => e + a2[i]);
+		const avr = (array, length) => array.map((e, i) => e/length);
+		var center = [0,0];
+
 		var myMap = new ymaps.Map('map', {
-			center: [53.2357, 50.2155],
+			center: center,
 			zoom: zoom,
 			controls: ['zoomControl']
 		});
 
+
+
 		myMap.behaviors.disable('scrollZoom');
 
+		placemarks.sort(function(a, b) {
+			return b.position[1] - a.position[1];
+		});
+
 		placemarks.forEach((obj) => {
+			center = add(center,obj.position);
 			myPlacemark = new ymaps.Placemark(obj.position, {
 				hintContent: obj.hintContent,
 			}, {
 				iconLayout: 'default#image',
 				iconImageHref: 'img/icons/kia-locator.png',
 				iconImageSize: [42, 62],
-				iconImageOffset: [-21, -31],
+				iconImageOffset: [-21, -58],
 			});
 
 			myMap.geoObjects.add(myPlacemark);
@@ -116,6 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 
 		});
+
+		myMap.setCenter(avr(center,placemarks.length));
 	}
 
 });
