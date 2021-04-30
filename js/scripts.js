@@ -103,9 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				hintContent: obj.hintContent,
 			}, {
 				iconLayout: 'default#image',
-				iconImageHref: 'img/icons/kia-locator.png',
-				iconImageSize: [42, 62],
-				iconImageOffset: [-21, -31],
+				iconImageHref: 'img/icons/kia-locator.svg',
+				iconImageSize: [42.8, 62],
+				iconImageOffset: [-21.4, -31],
 			});
 
 			myMap.geoObjects.add(myPlacemark);
