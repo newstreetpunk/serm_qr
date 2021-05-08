@@ -103,10 +103,6 @@ h2
 	&:hover
 		span
 			color: rgba(#000, .8)
-		svg
-			background-color: $accent
-			path
-				fill: #fff
 	span
 		line-height: 1.2
 		color: rgba(#000, .5)
@@ -115,15 +111,28 @@ h2
 	svg
 		width: 53px
 		height: auto
-		border: 1px solid $accent
 		transition: all .25s ease
-		border-radius: 50%
-		margin-bottom: 10px
-		path
-			fill: $accent
-			transition: all .25s ease
 
 
+
+
+.service-block
+	.icon-link
+		flex: 0 0 75px
+		font-weight: 500
+		margin: 1%
+		&:hover
+			svg
+				background-color: $accent
+				path
+					fill: #fff
+		svg
+			border: 1px solid $accent
+			border-radius: 50%
+			margin-bottom: 10px
+			path
+				fill: $accent
+				transition: all .25s ease
 
 
 .social
