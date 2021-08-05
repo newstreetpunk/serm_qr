@@ -29,7 +29,7 @@ a
 	&:hover
 		color: $text
 		text-decoration: none
-	@media screen and (min-width: 992px)
+	@include media-breakpoint-up(lg)
 		&:hover
 			text-decoration: none
 			color: $accent
@@ -49,11 +49,11 @@ b, strong
 	margin: -1px
 
 main
-	+media-breakpoint-down(xs)
+	@include media-breakpoint-down(sm)
 		flex: 1 0 auto
 
 header
-	+media-breakpoint-down(xs)
+	@include media-breakpoint-down(sm)
 		flex: 0 0 auto
 
 .logo
@@ -136,12 +136,12 @@ ymaps
 	padding: 0 15px
 	margin: 0 auto
 	position: relative
-	+media-breakpoint-down(xs)
+	@include media-breakpoint-down(sm)
 		display: flex
 		flex-direction: column
 
 .bottom-mobile
-	+media-breakpoint-down(xs)
+	@include media-breakpoint-down(sm)
 		flex: 0 0 auto
 
 h2, h3
@@ -220,9 +220,9 @@ h2
 		margin: 1%
 		border-radius: 50px
 		border: 2px solid $accent
-		@media screen and (max-width: 390px)
+		@media (max-width: 390px)
 			margin: 2% 6%
-		@media screen and (max-width: 335px)
+		@media (max-width: 335px)
 			margin: 2% 4%
 		> span
 			display: none
@@ -271,7 +271,8 @@ h2
 		&--tik
 			border-color: $tiktok
 			color: $tiktok
-			flex-basis: 56px
+			width: 53px
+			height: 53px
 			&:hover
 				background-color: $tiktok
 				color: #fff
@@ -323,10 +324,10 @@ hr
 		transform: scale(1)
 		&:hover
 			transform: scale(1.1)
-		+media-breakpoint-down(sm)
+		@include media-breakpoint-down(lg)
 			&.viber-pc
 				display: none
-		+media-breakpoint-up(md)
+		@include media-breakpoint-up(lg)
 			&.viber-mobile
 				display: none
 
@@ -335,7 +336,7 @@ hr
 	background-color: #fff
 	overflow: hidden
 	z-index: 1
-	+media-breakpoint-down(xs)
+	@include media-breakpoint-down(sm)
 		margin-left: -15px
 		margin-right: -15px
 	&__list
@@ -362,7 +363,7 @@ hr
 			.add-review__icon._hover
 				opacity: 1
 				visibility: visible
-		@media screen and (min-width: 992px)
+		@include media-breakpoint-up(lg)
 			&:hover
 				color: rgba(0,0,0,.8)
 				.add-review__icon._active
@@ -435,7 +436,7 @@ hr
 		position: relative
 		display: inline-block
 		padding-bottom: 3px
-		+media-breakpoint-down(xs)
+		@include media-breakpoint-down(sm)
 			flex: 0 1 26%
 		&:before
 			content: ''
@@ -460,7 +461,7 @@ hr
 		height: 100%
 	&__sublist
 		padding: 20px 0
-		+media-breakpoint-down(xs)
+		@include media-breakpoint-down(sm)
 			padding-top: 0
 	&__sublink
 		width: 45%
@@ -471,7 +472,7 @@ hr
 		opacity: 0.7
 		transition: opacity .3s ease
 		position: relative
-		+media-breakpoint-down(xs)
+		@include media-breakpoint-down(sm)
 			width: 47%
 			font-size: 15px
 		&:before
