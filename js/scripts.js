@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		placemarks.forEach((obj) => {
 			center = add(center,obj.position);
 			myPlacemark = new ymaps.Placemark(obj.position, {
-				hintContent: obj.hintContent,
+				hintContent: '<div class="kia-hint">'+obj.hintContent+'</div>',
 			}, {
 				iconLayout: 'default#image',
 				iconImageHref: 'img/icons/kia-locator.svg?re',
