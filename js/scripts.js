@@ -13,17 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
 		google : {
 			"samara" : "https://g.page/Kiavsamare/review?rc",
 			"moscow" : "https://g.page/kiasmr/review?rc",
-			"mexico" : "https://g.page/Kiavsamare-mehzavod/review?rc"
+			"mexico" : "https://g.page/Kiavsamare-mehzavod/review?rc",
+			"engels" : "https://g.page/Kiaengels/review?rc",
+			"szr" : "https://g.page/KiaSyzran/review?rc"
 		},
 		yandex : {
 			"samara" : "https://yandex.ru/profile/216059659516?intent=reviews",
 			"moscow" : "https://yandex.ru/profile/1179041515?intent=reviews",
-			"mexico" : "https://yandex.ru/profile/91221589795?intent=reviews"
+			"mexico" : "https://yandex.ru/profile/91221589795?intent=reviews",
+			"engels" : "https://yandex.ru/profile/1671033598?intent=reviews",
+			"szr" : "https://yandex.ru/profile/87743443177?intent=reviews"
 		},
 		gis : {
 			"samara" : "https://2gis.ru/samara/firm/2533803071703640/tab/reviews",
 			"moscow" : "https://2gis.ru/samara/firm/70000001019939556/tab/reviews",
-			"mexico" : "https://2gis.ru/samara/firm/70000001043828289/tab/reviews"
+			"mexico" : "https://2gis.ru/samara/firm/70000001043828289/tab/reviews",
+			"engels" : "https://2gis.ru/samara/firm/70000001018721119/tab/reviews",
+			"szr" : "https://2gis.ru/samara/firm/70000001051678906/tab/reviews"
 		}
 	};
 
@@ -69,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				setTimeout(() => {
 					if (!clicked) {
-						ymaps.ready(init);						
+						ymaps.ready(init);
 					}
 					map.style.height = (mapBlock.clientWidth + 30) + 'px';
 					yandexMap.style.height = (mapBlock.clientWidth + 30) + 'px';
@@ -109,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				hintContent: obj.hintContent,
 			}, {
 				iconLayout: 'default#image',
-				iconImageHref: 'img/icons/kia-locator.svg',
+				iconImageHref: 'img/icons/kia-locator.svg?re',
 				iconImageSize: [42, 62],
 				iconImageOffset: [-21, -58],
 			});
