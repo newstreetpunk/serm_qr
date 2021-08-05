@@ -65,7 +65,7 @@ header
 		margin: 30px 0
 	&:hover
 		color: $black
-	&::before
+	&-disable::before
 		content: ''
 		position: absolute
 		top: 0
@@ -75,6 +75,12 @@ header
 		background-color: $midnight
 		@include media-breakpoint-down(sm)
 			left: 42%
+	&-line
+		height: 70px
+		width: 2px
+		background-color: $midnight
+		@include media-breakpoint-down(sm)
+			height: 45px
 	&-img
 		width: 200px
 		flex: 0 0 auto
@@ -111,7 +117,7 @@ header
 	letter-spacing: 0.6px
 	line-height: 1.4
 	@include media-breakpoint-down(sm)
-		font-size: 15px
+		font-size: 20px
 		br
 			display: none
 	b
@@ -127,7 +133,7 @@ ymaps
 	color: rgba($white, .8)
 	line-height: 1.4
 
-	
+
 .wrapper
 	max-width: 600px
 	width: 100%
