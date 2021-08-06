@@ -105,15 +105,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		myMap.behaviors.disable('scrollZoom');
 
+		HintLayout = ymaps.templateLayoutFactory.createClass( "<div class='kia-hint'>" +
+			"{{ properties.name }}" +
+			"</div>", {
+				// Определяем метод getShape, который
+				// будет возвращать размеры макета хинта.
+				// Это необходимо для того, чтобы хинт автоматически
+				// сдвигал позицию при выходе за пределы карты.
+				getShape: function () {
+					var el = this.getElement(),
+						result = null;
+					if (el) {
+						var firstChild = el.firstChild;
+						result = new ymaps.shape.Rectangle(
+							new ymaps.geometry.pixel.Rectangle([
+								[0, 0],
+								[firstChild.offsetWidth, firstChild.offsetHeight]
+							])
+						);
+					}
+					return result;
+				}
+			}
+		);
+
 		placemarks.sort(function(a, b) {
 			return b.position[1] - a.position[1];
 		});
-
 		placemarks.forEach((obj) => {
 			center = add(center,obj.position);
 			myPlacemark = new ymaps.Placemark(obj.position, {
-				hintContent: '<div class="kia-hint">'+obj.hintContent+'</div>',
+				name: obj.hintContent
 			}, {
+				hintLayout: HintLayout,
 				iconLayout: 'default#image',
 				iconImageHref: 'img/icons/kia-locator.svg?re',
 				iconImageSize: [42, 62],
