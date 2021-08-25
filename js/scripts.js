@@ -55,10 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			attr = el.getAttribute('data-source');
 
 			mapBlock.style.height = '0px';
+			document.querySelector('.add-screenshot').style.height = '0px';
 
 			if ( el.classList.contains('active') ) {
 
 				el.classList.remove('active');
+				document.querySelector('.add-screenshot').classList.remove('active');
 
 				mapBlock.addEventListener('transitionend', function () {
 					map.style.height = 0;
@@ -70,8 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				reviews.forEach( (elem) => {
 					elem.classList.remove('active');
+					document.querySelector('.add-screenshot').classList.remove('active');
 				});
 				el.classList.add('active');
+				setTimeout(()=>{
+					document.querySelector('.add-screenshot').classList.add('active');
+				}, 300)
 
 				setTimeout(() => {
 					if (!clicked) {
@@ -79,9 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
 					}
 					map.style.height = (mapBlock.clientWidth + 30) + 'px';
 					yandexMap.style.height = (mapBlock.clientWidth + 30) + 'px';
-					mapBlock.style.height = (mapBlock.clientWidth + 30) + 'px';
+					mapBlock.style.height = (mapBlock.clientWidth + 30) + 'px';					
 					scrollSmooth('.add-review');
 					clicked = true;
+				}, 300)
+				setTimeout(()=>{
+					document.querySelector('.add-screenshot').style.height = 'auto';
 				}, 300)
 			}
 

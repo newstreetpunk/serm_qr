@@ -412,6 +412,73 @@ hr
 		max-width: 100%
 		width: 100%
 
+.add-screenshot
+	transition: height .3s ease-out
+	// overflow: hidden
+	display: block
+	height: auto	
+	&:not(.active)
+		height: 0
+		display: none
+
+.kia-form-group
+	margin-left: auto
+	margin-right: auto
+	max-width: 400px
+	width: 100%
+	height: 60px
+	transition: all .25s ease-out
+	background-color: transparent
+	position: relative
+	display: flex
+	flex-direction: column-reverse
+	font-size: 15px
+	label
+		position: absolute
+		left: 0
+		top: 70%
+		transform: translateY(-50%)
+		transform-origin: left top
+		cursor: text
+		transition: all 0.25s
+		color: #697279
+		font-size: 15px
+		.error-message
+			color: red
+			opacity: 0
+			transition: all 0.25s
+	input
+		border: none
+		height: 70%
+		width: 100%
+		padding: 5px 0 0
+		border-bottom: 1px solid #cdd0d2
+		outline: 0
+		&:focus:required:invalid ~ label > .error-message
+			opacity: 1
+		&:focus
+			border: none
+			border-bottom: 1px solid #000
+	input:focus ~ label,
+	input:not(:placeholder-shown) ~ label
+		top: 33%
+		left: 0
+		transform: translateY(-50%) scale(0.8)
+	&.disabled
+		cursor: default
+		opacity: 0.6
+		input, label
+			cursor: default
+
+.btn
+	background-color: #05141f
+	color: #fff
+	border: none
+	font-weight: 700
+	padding: 15px 30px
+
+
+
 .dealer-link
 	position: absolute
 	width: 25%
