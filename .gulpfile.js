@@ -55,6 +55,7 @@ projects.kia_qr = {
 
 	scripts: {
 		src: [
+			'node_modules/dropzone/dist/dropzone.js',
 			basename + '/js/scripts.js', // Custom scripts. Always at the end
 		],
 		dest:       basename + '/js',
