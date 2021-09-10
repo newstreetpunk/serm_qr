@@ -165,4 +165,173 @@ document.addEventListener('DOMContentLoaded', () => {
 		myMap.setCenter(avr(center,placemarks.length));
 	}
 
+	let dropzoneError = document.querySelector('.error-message');
+	let dropzoneSuccess = document.querySelector('.success-message');
+
+	let uploadField = document.querySelector('#file-upload');
+
+	let dropzone = new Dropzone(uploadField, {
+		url: 'upload.php',
+		addRemoveLinks: true,
+		parallelUploads: 1,
+		acceptedFiles: '.jpg,.jpeg,.png',
+		maxFiles: 1,
+		maxFilesize: 10,
+		dictDefaultMessage: '<div class="dz-message needsclick">Загрузить скриншот</div>',
+		dictFallbackMessage: "Ваш браузер не поддерживает загрузку перетаскиванием",
+		dictFallbackText: "Пожалуйста, используйте резервную форму ниже, чтобы загрузить свои файлы, как в старые добрые времена)",
+		dictFileTooBig: "Слишком большой файл ({{filesize}}Мб). Максимальный размер: {{maxFilesize}}Мб.",
+		dictInvalidFileType: "Вы не можете загрузить файлы этого типа.",
+		dictResponseError: "Сервер вернул ответ {{statusCode}}.",
+		dictCancelUpload: "Отменить загрузку",
+		dictUploadCanceled: "Загрузка завершена.",
+		dictCancelUploadConfirmation: "Вы уверены, что хотите отменить?",
+		dictRemoveFile: "Удалить файл",
+		dictRemoveFileConfirmation: "Хотите удалить файл?",
+		dictMaxFilesExceeded: 'Привышен лимит изображений',
+		dictFileSizeUnits: {
+			tb: "Тб",
+			gb: "Гб",
+			mb: "Мб",
+			kb: "Кб",
+			b: "байт"
+		},
+		init: function(){
+			// console.log(this)
+			this.element.innerHTML = this.options.dictDefaultMessage;
+		},
+		thumbnail: function(file, dataUrl) {
+			if (file.previewElement) {
+				file.previewElement.classList.remove("dz-file-preview");
+				let images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+				for (let i = 0; i < images.length; i++) {
+					let thumbnailElement = images[i];
+					thumbnailElement.alt = file.name;
+					thumbnailElement.src = dataUrl;
+					url = dataUrl;
+				}
+				setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
+			}
+		},
+		success: function(file, response){
+			response = JSON.parse(response);
+			// console.log(file);
+			if (response.answer == 'error') {
+				dropzoneSuccess.style.display = 'none';
+				dropzoneError.innerText = response.error;
+				dropzoneError.style.display = 'block';
+				dropzone.removeFile(file);
+			}else{
+				dropzoneError.style.display = 'none';
+				dropzoneSuccess.innerText = response.answer;
+				dropzoneSuccess.style.display = 'block';
+					// this.defaultOptions.success(file);
+			}
+				// console.log(res);
+		},
+		removedfile: function (file) {
+			file.previewElement.remove();
+			dropzoneSuccess.style.display = 'none';
+			dropzoneError.style.display = 'none';
+			const request = new XMLHttpRequest();
+
+			const url = "delete.php";
+			request.open("POST", url, true);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
+			request.addEventListener("readystatechange", () => {
+				if(request.readyState === 4 && request.status === 200) {  
+					dropzoneSuccess.innerText = request.responseText;
+					dropzoneSuccess.style.display = 'block';
+					// console.log(request.responseText);
+				}
+			});
+			request.send();
+		}
+	});
+
+	var $$$ = function (name) { return document.querySelector(name) },
+	$$ = function (name) { return document.querySelectorAll(name) };
+
+	function maskphone(e) {
+		var num = this.value.replace('+7', '').replace(/\D/g, '').split(/(?=.)/), i = num.length;
+		if (0 <= i) num.unshift('+7');
+		if (1 <= i) num.splice(1, 0, ' ');
+		if (4 <= i) num.splice(5, 0, ' ');
+		if (7 <= i) num.splice(9, 0, '-');
+		if (9 <= i) num.splice(12, 0, '-');
+		if (11 <= i) num.splice(15, num.length - 15);
+		this.value = num.join('');
+	};
+
+	$$("input[name=phone]").forEach(function (element) {
+		element.addEventListener('focus', maskphone);
+		element.addEventListener('input', maskphone);
+	});
+
+	document.querySelector('input[name=phone]').addEventListener('change', function(){
+		document.querySelector('.error-message#phone').style.display = 'none';
+	})
+
+	function checkingRequiredFields(form, errors) {
+		let valid = true;
+		for (key in errors) {
+			let field = document.querySelector('.error-message#'+key);
+			field.innerText = errors[key];
+			field.style.display = 'block';
+			valid = false;
+		}
+		return valid;
+	}
+
+	const form = document.querySelector('form');
+	let btn = document.querySelector('form button');
+	let formMes = document.querySelector('.form-message');
+
+	form.addEventListener('submit', function(e){
+		e.preventDefault();
+		btn.innerHTML = 'Отправляем...';
+		btn.setAttribute('disabled', true);
+		let name = document.getElementById('name-field').value;
+		let phone = document.getElementById('phone-field').value;
+		// let data = new FormData(this);
+
+		const request = new XMLHttpRequest();
+		const url = "mail.php";
+		const data = 'name=' + name + '&phone=' + phone;
+
+		request.open("POST", url, true);
+		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
+		request.addEventListener("readystatechange", () => {
+			if(request.readyState === 4 && request.status === 200) {  
+					let res = JSON.parse(request.responseText);
+
+					if (!res.validation && !checkingRequiredFields(this, res.massages)) {
+						btn.innerHTML = 'Отправить';
+						btn.removeAttribute('disabled');
+						return false;
+					}
+
+					if (res.answer == 'error') {
+						alert(res.error);
+						btn.innerHTML = 'Отправить';
+						btn.removeAttribute('disabled');
+						return false;
+					}
+
+					if(res.answer == 'ok') {
+						formMes.innerText = 'Ваше сообщение успешно отправлено!';
+						dropzone.removeAllFiles();
+						this.reset();
+						btn.innerHTML = 'Отправить';
+						btn.removeAttribute('disabled');
+						setTimeout(function(){
+							formMes.innerText = '';
+						}, 3000)
+					}
+
+				}
+			});
+		request.send(data);
+	})
+
 });

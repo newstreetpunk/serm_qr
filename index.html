@@ -176,19 +176,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			<h2>Загрузи скрин отзыва, <br>чтобы участвовать в <b>розыгрыше 🎁!</b></h2>
 
 			<form>
-				<p style="padding: 50px; border:1px dashed #000;max-width: 400px; width: 100%; margin: auto;">Загрузить скриншот</p>
+				<div class="kia-dropzone">
+					<div class="file-upload" id="file-upload"></div>
+					<div class="error-message"></div>
+					<div class="success-message"></div>
+				</div>
+				
 
 				<div class="kia-form-group">
-					<input type="text" id="name" name="name" class="bg-transparent rounded-3 h-100 w-100 px-3 pt-4 pb-1" placeholder=" ">
-					<label for="name" class="position-absolute">Имя</label>
+					<input type="text" id="name-field" name="name" placeholder=" ">
+					<label for="name">Имя</label>
 				</div>
 				<div class="kia-form-group">
-					<input type="tel" id="phone" name="phone" class="bg-transparent rounded-3 h-100 w-100 px-3 pt-4 pb-1" placeholder=" ">
-					<label for="phone" class="position-absolute">Телефон</label>
+					<input type="tel" id="phone-field" name="phone" placeholder=" " required>
+					<label for="phone">Телефон *</label>
 				</div>
+				<div class="error-message" id="phone"></div>
 				<br>
 				<br>
 				<button class="btn">Отправить</button>
+				<div class="form-message"></div>
 			</form>
 
 		</section>
