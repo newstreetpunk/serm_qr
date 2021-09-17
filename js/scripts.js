@@ -289,19 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const form = document.querySelector('form');
 	let btn = document.querySelector('form button');
-	let formMes = document.querySelector('.form-message');
 
 	form.onsubmit = async (e) => {
 		e.preventDefault();
 		btn.innerHTML = 'Отправляем...';
 		btn.setAttribute('disabled', true);
-
-		Swal.fire({
-			title: 'Error!',
-			text: 'Do you want to continue',
-			icon: 'error',
-			confirmButtonText: 'Cool'
-		})
 
 		let response = await fetch('mail.php', {
 			method: 'POST',
@@ -319,25 +311,67 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 
 			if (res.answer == 'error') {
-				alert(res.error);
+				Swal.fire({
+					title: 'ОШИБКА!',
+					text: res.error,
+					icon: 'error',
+					iconColor: '#eA0029',
+					backdrop: 'rgba(0,0,0,0.7)',
+					showCloseButton: true,
+					closeButtonHtml: '&times;',
+					showConfirmButton: false
+				})
 				btn.innerHTML = 'Отправить';
 				btn.removeAttribute('disabled');
 				return false;
 			}
 
 			if(res.answer == 'ok') {
-				formMes.innerText = 'Ваше сообщение успешно отправлено!';
-				dropzone.removeAllFiles();
+				Swal.fire({
+					title: 'Успех!',
+					text: 'Ваше сообщение успешно отправлено!',
+					icon: 'success',
+					iconColor: '#f3c300',
+					backdrop: 'rgba(0,0,0,0.7)',
+					showCloseButton: true,
+					closeButtonHtml: '&times;',
+					confirmButtonColor: '#05141f'
+				});
 				form.reset();
+				dropzone.removeAllFiles();
 				btn.innerHTML = 'Отправить';
 				btn.removeAttribute('disabled');
-				setTimeout(function(){
-					formMes.innerText = '';
-				}, 3000)
 			}
 		}else{
-			alert('ОШИБКА! Перезагрузите страницу и попробуйте снова.')
+			Swal.fire({
+				title: 'ОШИБКА!',
+				text: 'Перезагрузите страницу и попробуйте снова',
+				icon: 'error',
+				iconColor: '#eA0029',
+				backdrop: 'rgba(0,0,0,0.7)',
+				showCloseButton: true,
+				closeButtonHtml: '&times;',
+				showConfirmButton: false
+			})
 		}
 	};
+
+	document.getElementById('popup_link').addEventListener('click', function(e){
+		e.preventDefault();
+		Swal.fire({
+			html: policy,
+			width: 900,
+			backdrop: 'rgba(0,0,0,0.7)',
+			showCloseButton: true,
+			closeButtonHtml: '&times;',
+			showConfirmButton: false,
+			showClass: {
+				popup: 'animate__animated animate__fadeIn'
+			},
+			hideClass: {
+				popup: 'animate__animated animate__fadeOut'
+			}
+		})
+	})
 
 });
