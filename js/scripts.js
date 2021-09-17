@@ -272,6 +272,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		document.querySelector('.error-message#phone').style.display = 'none';
 	})
 
+	document.querySelector('input[name=agree]').addEventListener('change', function(){
+		document.querySelector('.error-message#agree').style.display = 'none';
+	})
+
 	function checkingRequiredFields(form, errors) {
 		let valid = true;
 		for (key in errors) {
@@ -287,52 +291,97 @@ document.addEventListener('DOMContentLoaded', () => {
 	let btn = document.querySelector('form button');
 	let formMes = document.querySelector('.form-message');
 
-	form.addEventListener('submit', function(e){
+	form.onsubmit = async (e) => {
 		e.preventDefault();
 		btn.innerHTML = 'Отправляем...';
 		btn.setAttribute('disabled', true);
-		let name = document.getElementById('name-field').value;
-		let phone = document.getElementById('phone-field').value;
-		// let data = new FormData(this);
 
-		const request = new XMLHttpRequest();
-		const url = "mail.php";
-		const data = 'name=' + name + '&phone=' + phone;
+		let response = await fetch('mail.php', {
+			method: 'POST',
+			body: new FormData(form)
+		});
 
-		request.open("POST", url, true);
-		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
-		request.addEventListener("readystatechange", () => {
-			if(request.readyState === 4 && request.status === 200) {  
-					let res = JSON.parse(request.responseText);
+		if (response.status === 200) {
+			let res = await response.json();
+			console.log(res);
+			if (!res.validation && !checkingRequiredFields(this, res.massages)) {
+				document.querySelector('.success-message').style.display = 'none';
+				btn.innerHTML = 'Отправить';
+				btn.removeAttribute('disabled');
+				return false;
+			}
 
-					if (!res.validation && !checkingRequiredFields(this, res.massages)) {
-						document.querySelector('.success-message').style.display = 'none';
-						btn.innerHTML = 'Отправить';
-						btn.removeAttribute('disabled');
-						return false;
-					}
+			if (res.answer == 'error') {
+				alert(res.error);
+				btn.innerHTML = 'Отправить';
+				btn.removeAttribute('disabled');
+				return false;
+			}
 
-					if (res.answer == 'error') {
-						alert(res.error);
-						btn.innerHTML = 'Отправить';
-						btn.removeAttribute('disabled');
-						return false;
-					}
+			if(res.answer == 'ok') {
+				formMes.innerText = 'Ваше сообщение успешно отправлено!';
+				dropzone.removeAllFiles();
+				form.reset();
+				btn.innerHTML = 'Отправить';
+				btn.removeAttribute('disabled');
+				setTimeout(function(){
+					formMes.innerText = '';
+				}, 3000)
+			}
+		}else{
+			alert('ОШИБКА! Перезагрузите страницу и попробуйте снова.')
+		}
 
-					if(res.answer == 'ok') {
-						formMes.innerText = 'Ваше сообщение успешно отправлено!';
-						dropzone.removeAllFiles();
-						this.reset();
-						btn.innerHTML = 'Отправить';
-						btn.removeAttribute('disabled');
-						setTimeout(function(){
-							formMes.innerText = '';
-						}, 3000)
-					}
 
-				}
-			});
-		request.send(data);
-	})
+	};
+
+	// form.addEventListener('submit', function(e){
+	// 	e.preventDefault();
+	// 	btn.innerHTML = 'Отправляем...';
+	// 	btn.setAttribute('disabled', true);
+	// 	let name = document.getElementById('name-field').value;
+	// 	let phone = document.getElementById('phone-field').value;
+	// 	let agree = document.getElementById('agree-field').value;
+	// 	// let data = new FormData();
+
+	// 	const request = new XMLHttpRequest();
+	// 	const url = "mail.php";
+	// 	const data = 'name=' + name + '&phone=' + phone + '&agree=' + agree;
+
+	// 	request.open("POST", url, true);
+	// 	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
+	// 	request.addEventListener("readystatechange", () => {
+	// 		if(request.readyState === 4 && request.status === 200) {  
+	// 				let res = JSON.parse(request.responseText);
+
+	// 				if (!res.validation && !checkingRequiredFields(this, res.massages)) {
+	// 					document.querySelector('.success-message').style.display = 'none';
+	// 					btn.innerHTML = 'Отправить';
+	// 					btn.removeAttribute('disabled');
+	// 					return false;
+	// 				}
+
+	// 				if (res.answer == 'error') {
+	// 					alert(res.error);
+	// 					btn.innerHTML = 'Отправить';
+	// 					btn.removeAttribute('disabled');
+	// 					return false;
+	// 				}
+
+	// 				if(res.answer == 'ok') {
+	// 					formMes.innerText = 'Ваше сообщение успешно отправлено!';
+	// 					dropzone.removeAllFiles();
+	// 					this.reset();
+	// 					btn.innerHTML = 'Отправить';
+	// 					btn.removeAttribute('disabled');
+	// 					setTimeout(function(){
+	// 						formMes.innerText = '';
+	// 					}, 3000)
+	// 				}
+
+	// 			}
+	// 		});
+	// 	request.send(data);
+	// })
 
 });
