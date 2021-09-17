@@ -53,14 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			e.preventDefault();
 
 			attr = el.getAttribute('data-source');
+			add_screenshot = document.querySelector('.add-screenshot');
 
 			mapBlock.style.height = '0px';
-			document.querySelector('.add-screenshot').style.height = '0px';
+			if(add_screenshot) add_screenshot.style.height = '0px';
 
 			if ( el.classList.contains('active') ) {
 
 				el.classList.remove('active');
-				document.querySelector('.add-screenshot').classList.remove('active');
+				if(add_screenshot) add_screenshot.classList.remove('active');
 
 				mapBlock.addEventListener('transitionend', function () {
 					map.style.height = 0;
@@ -72,11 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				reviews.forEach( (elem) => {
 					elem.classList.remove('active');
-					document.querySelector('.add-screenshot').classList.remove('active');
+					if(add_screenshot) add_screenshot.classList.remove('active');
 				});
 				el.classList.add('active');
 				setTimeout(()=>{
-					document.querySelector('.add-screenshot').classList.add('active');
+					if(add_screenshot) add_screenshot.classList.add('active');
 				}, 300)
 
 				setTimeout(() => {
@@ -85,12 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
 					}
 					map.style.height = (mapBlock.clientWidth + 30) + 'px';
 					yandexMap.style.height = (mapBlock.clientWidth + 30) + 'px';
-					mapBlock.style.height = (mapBlock.clientWidth + 30) + 'px';					
+					mapBlock.style.height = (mapBlock.clientWidth + 30) + 'px';
 					scrollSmooth('.add-review');
 					clicked = true;
 				}, 300)
 				setTimeout(()=>{
-					document.querySelector('.add-screenshot').style.height = 'auto';
+					if(add_screenshot) add_screenshot.style.height = 'auto';
 				}, 300)
 			}
 
@@ -165,10 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		myMap.setCenter(avr(center,placemarks.length));
 	}
 
+	let uploadField = document.querySelector('#file-upload');
+
+	if(uploadField) {
+
 	let dropzoneError = document.querySelector('.error-message');
 	let dropzoneSuccess = document.querySelector('.success-message');
-
-	let uploadField = document.querySelector('#file-upload');
 
 	let dropzone = new Dropzone(uploadField, {
 		url: 'upload.php',
@@ -199,6 +202,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		init: function(){
 			// console.log(this)
 			this.element.innerHTML = this.options.dictDefaultMessage;
+			this.on("maxfilesexceeded", function(file){
+				console.log("maxfilesexceeded");
+			});
+			this.on('addedfile', function(file) {
+				console.log("addedfile");
+				if (this.files.length > 1) {
+					this.removeFile(this.files[0]);
+				}
+			})
 		},
 		thumbnail: function(file, dataUrl) {
 			if (file.previewElement) {
@@ -237,9 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			const url = "delete.php";
 			request.open("POST", url, true);
-			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			request.addEventListener("readystatechange", () => {
-				if(request.readyState === 4 && request.status === 200) {  
+				if(request.readyState === 4 && request.status === 200) {
 					dropzoneSuccess.innerText = request.responseText;
 					dropzoneSuccess.style.display = 'block';
 					// console.log(request.responseText);
@@ -373,5 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		})
 	})
+
+	}
 
 });

@@ -738,11 +738,12 @@ form small a
 .file-upload
 	border: 1px dashed #000
 	min-height: 0
-	padding: 3rem 2rem
+	&:not(.dz-started)
+		padding: 3rem 2rem
 	.dz-message
 		margin: 0 auto
 	.dz-preview
-		margin: 0
+		// margin: 0
 		.dz-image
 			margin: 0 auto
 
