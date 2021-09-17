@@ -412,6 +412,165 @@ hr
 		max-width: 100%
 		width: 100%
 
+.add-screenshot
+	transition: height .3s ease-out
+	// overflow: hidden
+	display: block
+	height: auto	
+	&:not(.active)
+		height: 0
+		display: none
+
+form
+	max-width: 400px
+	width: 100%
+	margin: 0 auto
+
+.kia-form-group
+	height: 60px
+	transition: all .25s ease-out
+	background-color: transparent
+	position: relative
+	display: flex
+	flex-direction: column-reverse
+	font-size: 15px
+	label
+		position: absolute
+		left: 0
+		top: 70%
+		transform: translateY(-50%)
+		transform-origin: left top
+		cursor: text
+		transition: all 0.25s
+		color: #697279
+		font-size: 15px
+		.error-message
+			color: red
+			opacity: 0
+			transition: all 0.25s
+	input
+		border: none
+		height: 70%
+		width: 100%
+		padding: 5px 0 0
+		border-bottom: 1px solid #cdd0d2
+		outline: 0
+		// position: relative
+		// z-index: 1
+		background-color: transparent !important
+		&:focus:required:invalid ~ label > .error-message
+			opacity: 1
+		&:focus
+			border: none
+			border-bottom: 1px solid #000
+	input:focus ~ label,
+	input:not(:placeholder-shown) ~ label
+		top: 33%
+		left: 0
+		transform: translateY(-50%) scale(0.8)
+	&.disabled
+		cursor: default
+		opacity: 0.6
+		input, label
+			cursor: default
+.d-flex
+	display: flex
+	align-items: center
+
+.form-group
+	text-align: left
+	margin-top: 1.5rem
+
+.checkbox-control 
+	display: table
+	position: relative
+	cursor: pointer
+	margin: 0
+
+.agree
+	position: absolute
+	z-index: -1
+	opacity: 0
+	width: 0
+	height: 0
+	margin: 0
+
+.checkbox-indicator
+	position: relative
+	display: inline-block
+	vertical-align: middle
+	height: 20px
+	width: 20px
+	border: 1px solid $text
+	box-sizing: border-box
+	margin-right: 10px
+	margin-top: -5px
+	transition: all .2s
+	opacity: .2
+
+.checkbox-indicator:after
+	content: ""
+	width: 10px
+	height: 10px
+	background-image: url(/img/icons/icon-checkbox.svg)
+	background-size: cover
+	background-position: 50%
+	position: absolute
+	top: 0
+	bottom: 0
+	left: 0
+	right: 0
+	margin: auto
+	opacity: 0
+	transition: all .2s
+
+.checkbox-control .agree:checked~.checkbox-indicator,
+.checkbox-control .agree:checked~.checkbox-indicator:after,
+.checkbox-indicator:hover 
+	opacity: 1
+
+form small
+	font-size: 14px
+	font-weight: 300
+
+form small a
+	text-decoration: none
+	border-bottom: 1px solid $text
+	box-shadow: inset 0 0 0 0 $text
+	color: $text
+	font-weight: 300
+
+.btn
+	background-color: $text
+	color: #fff
+	border: none
+	font-weight: 700
+	padding: 15px 30px
+
+.swal2-close:hover
+	color: $text !important
+.policy-title
+	color: $text
+	font-size: 18px
+	text-align: left
+	border-bottom: 1px solid #cdd0d2
+	padding: 1rem 0 1.5rem
+	@include media-breakpoint-down(md)
+		font-size: 16px
+
+.policy-text
+	color: $text
+	text-align: left
+	font-size: 15px
+	ol, ul
+		padding-left: 23px
+	@include media-breakpoint-down(md)
+		font-size: 14px
+
+.swal2-html-container
+	@include media-breakpoint-down(md)
+		margin: 1em !important
+
 .dealer-link
 	position: absolute
 	width: 25%
@@ -571,4 +730,40 @@ hr
 		opacity: 1
 
 
+// Dropzone
+.kia-dropzone
+	max-width: 400px
+	width: 100%
+	margin: 2.5rem auto 0
+.file-upload
+	border: 1px dashed #000
+	min-height: 0
+	&:not(.dz-started)
+		padding: 3rem 2rem
+	.dz-message
+		margin: 0 auto
+	.dz-preview
+		// margin: 0
+		.dz-image
+			margin: 0 auto
 
+.success-message, .error-message
+	max-width: 400px
+	width: 100%
+	font-size: 12px
+	text-align: left
+	margin: .5rem auto
+	display: none
+
+.success-message
+	color: $green
+.error-message
+	color: $accent
+
+.form-message
+	font-weight: bold
+	margin-top: 1rem
+	color: $green
+
+.btn[disabled]
+	opacity: 0.6
