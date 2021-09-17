@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			if (res.answer == 'error') {
 				Swal.fire({
-					title: 'ОШИБКА!',
+					title: 'Ошибка',
 					text: res.error,
 					icon: 'error',
 					iconColor: '#eA0029',
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			if(res.answer == 'ok') {
 				Swal.fire({
-					title: 'Успех!',
+					title: 'Спасибо',
 					text: 'Ваше сообщение успешно отправлено!',
 					icon: 'success',
 					iconColor: '#f3c300',
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}else{
 			Swal.fire({
-				title: 'ОШИБКА!',
+				title: 'Ошибка',
 				text: 'Перезагрузите страницу и попробуйте снова',
 				icon: 'error',
 				iconColor: '#eA0029',
