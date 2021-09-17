@@ -202,11 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		init: function(){
 			// console.log(this)
 			this.element.innerHTML = this.options.dictDefaultMessage;
-			this.on("maxfilesexceeded", function(file){
-				console.log("maxfilesexceeded");
-			});
 			this.on('addedfile', function(file) {
-				console.log("addedfile");
 				if (this.files.length > 1) {
 					this.removeFile(this.files[0]);
 				}

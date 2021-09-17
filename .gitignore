@@ -1,3 +1,4 @@
 .alexsab
 *.php
 sftp-config.json
+/uploads/*
