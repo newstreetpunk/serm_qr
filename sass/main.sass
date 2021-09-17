@@ -555,12 +555,21 @@ form small a
 	text-align: left
 	border-bottom: 1px solid #cdd0d2
 	padding: 1rem 0 1.5rem
+	@include media-breakpoint-down(md)
+		font-size: 16px
 
 .policy-text
 	color: $text
 	text-align: left
 	font-size: 15px
+	ol, ul
+		padding-left: 23px
+	@include media-breakpoint-down(md)
+		font-size: 14px
 
+.swal2-html-container
+	@include media-breakpoint-down(md)
+		margin: 1em !important
 
 .dealer-link
 	position: absolute
