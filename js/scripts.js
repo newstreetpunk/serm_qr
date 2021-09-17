@@ -306,6 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					let res = JSON.parse(request.responseText);
 
 					if (!res.validation && !checkingRequiredFields(this, res.massages)) {
+						document.querySelector('.success-message').style.display = 'none';
 						btn.innerHTML = 'Отправить';
 						btn.removeAttribute('disabled');
 						return false;
