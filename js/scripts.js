@@ -233,9 +233,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				dropzoneError.style.display = 'none';
 				dropzoneSuccess.innerText = response.answer;
 				dropzoneSuccess.style.display = 'block';
-					// this.defaultOptions.success(file);
+				// this.defaultOptions.success(file);
 			}
-				// console.log(res);
+			// console.log(res);
 		},
 		removedfile: function (file) {
 			file.previewElement.remove();
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			if(res.answer == 'ok') {
 				Swal.fire({
 					title: 'Спасибо',
-					text: 'Ваше сообщение успешно отправлено!',
+					text: 'Ваш скриншот был успешно отправлен!',
 					icon: 'success',
 					iconColor: '#f3c300',
 					backdrop: 'rgba(0,0,0,0.7)',
