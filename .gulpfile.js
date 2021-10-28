@@ -17,6 +17,8 @@ const { src, dest, parallel, series, watch, task } = require('gulp'),
 	concat         = require('gulp-concat'),
 	browserSync    = require('browser-sync').create(),
 	uglify         = require('gulp-uglify-es').default,
+	terser         = require("gulp-terser"),
+	babel          = require('gulp-babel'),
 	autoprefixer   = require('gulp-autoprefixer'),
 	newer          = require('gulp-newer'),
 	rsync          = require('gulp-rsync'),
@@ -53,6 +55,7 @@ projects.kia_qr = {
 	scripts: {
 		src: [
 			'node_modules/dropzone/dist/dropzone.js',
+			'node_modules/alpinejs/dist/cdn.js',
 			'node_modules/sweetalert2/dist/sweetalert2.all.js',
 			basename + '/js/scripts.js', // Custom scripts. Always at the end
 		],
@@ -109,7 +112,11 @@ function kia_qr_styles() {
 function kia_qr_scripts() {
 	return src(projects.kia_qr.scripts.src)
 	.pipe(concat(projects.kia_qr.scripts.output))
-	.pipe(uglify()) // Minify js (opt.)
+	// .pipe(babel({
+	// 	presets: ['es2015']
+	// }))
+	.pipe(terser()) // Minify js (opt.)
+	// .pipe(uglify()) // Minify js (opt.)
 	.pipe(header(projects.kia_qr.forProd))
 	.pipe(dest(projects.kia_qr.scripts.dest))
 	.pipe(browserSync.stream())

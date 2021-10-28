@@ -416,7 +416,7 @@ hr
 	transition: height .3s ease-out
 	// overflow: hidden
 	display: block
-	height: auto	
+	height: auto
 	&:not(.active)
 		height: 0
 		display: none
@@ -481,7 +481,7 @@ form
 	text-align: left
 	margin-top: 1.5rem
 
-.checkbox-control 
+.checkbox-control
 	display: table
 	position: relative
 	cursor: pointer
@@ -526,7 +526,7 @@ form
 
 .checkbox-control .agree:checked~.checkbox-indicator,
 .checkbox-control .agree:checked~.checkbox-indicator:after,
-.checkbox-indicator:hover 
+.checkbox-indicator:hover
 	opacity: 1
 
 form small
@@ -596,7 +596,7 @@ form small a
 	&__list
 		display: flex
 		align-items: stretch
-		justify-content: space-between
+		justify-content: space-around
 		margin: 20px 0
 	&__link
 		flex: 0 1 20%
@@ -627,11 +627,20 @@ form small a
 		width: auto
 		height: 100%
 	&__sublist
+		transition: height .3s ease-out
+		// overflow: hidden
+		// position: relative
+		display: flex
+		height: auto
+		justify-content: space-around
+		&:not(.active)
+			display: none
+			height: 0
 		padding: 20px 0
 		@include media-breakpoint-down(sm)
 			padding-top: 0
 	&__sublink
-		width: 45%
+		padding: 0 10px
 		text-align: center
 		display: inline-block
 		text-transform: uppercase
@@ -640,7 +649,6 @@ form small a
 		transition: opacity .3s ease
 		position: relative
 		@include media-breakpoint-down(sm)
-			width: 47%
 			font-size: 15px
 		&:before
 			content: ''

@@ -1,3 +1,37 @@
+// import Alpine from 'alpinejs'
+
+window.Alpine = Alpine;
+
+document.addEventListener('alpine:init', (data) => {
+	Alpine.data('places', () => ({
+
+		classified:  {
+			avito: '/img/icons/avito-logo.svg',
+			avtoru: '/img/icons/avtoRu-logo.svg',
+			drom: '/img/icons/drom-logo.svg',
+		},
+
+		activeShop: '',
+
+		existShop(attr) {
+			var show = false;
+			placemarks.forEach((obj) => {
+				console.log(attr,obj[attr]);
+				if(obj[attr] != "") show = true;
+			})
+			return show;
+		}
+
+	}))
+	// console.log('alpine:init');
+})
+
+document.addEventListener('alpine:initialized', () => {
+	// console.log('alpine initialized');
+})
+
+// Alpine.start();
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	const delears = document.querySelectorAll('.dealer-link');
@@ -6,37 +40,34 @@ document.addEventListener('DOMContentLoaded', () => {
 	const mapBlock = document.querySelector('.map-block');
 	const yandexMap = document.querySelector('#map');
 
+	const links = document.querySelectorAll('.classified__link');
+	const sublist = document.querySelector('.classified__sublist');
+	const sublinks = document.querySelectorAll('.classified__sublink');
+
 	let clicked = false;
 	let attr = '';
 
-	const source = {
-		google : {
-			"samara" : "https://g.page/Kiavsamare/review?rc",
-			"moscow" : "https://g.page/kiasmr/review?rc",
-			"mexico" : "https://g.page/Kiavsamare-mehzavod/review?rc",
-			"engels" : "https://g.page/Kiaengels/review?rc",
-			"szr" : "https://g.page/KiaSyzran/review?rc"
-		},
-		yandex : {
-			"samara" : "https://yandex.ru/profile/216059659516?intent=reviews",
-			"moscow" : "https://yandex.ru/profile/1179041515?intent=reviews",
-			"mexico" : "https://yandex.ru/profile/91221589795?intent=reviews",
-			"engels" : "https://yandex.ru/profile/1671033598?intent=reviews",
-			"szr" : "https://yandex.ru/profile/87743443177?intent=reviews"
-		},
-		gis : {
-			"samara" : "https://2gis.ru/samara/firm/2533803071703640/tab/reviews",
-			"moscow" : "https://2gis.ru/samara/firm/70000001019939556/tab/reviews",
-			"mexico" : "https://2gis.ru/samara/firm/70000001043828289/tab/reviews",
-			"engels" : "https://2gis.ru/samara/firm/70000001018721119/tab/reviews",
-			"szr" : "https://2gis.ru/samara/firm/70000001051678906/tab/reviews"
-		}
-	};
 
-	function setSourceLink(val, id){
-		return source[val][id];
+	function slideUp(container){
+
+		container.style.height = '0px';
+		container.addEventListener('transitionend', function () {
+			container.classList.remove('active');
+		}, {
+			once: true
+		});
 	}
 
+	function slideDown(container){
+
+		container.addEventListener('transitionend', function () {
+			container.classList.add('active');
+		});
+		setTimeout( () => {
+			container.style.height = container.scrollHeight + 'px';
+			container.closest('#map').style.height = container.scrollHeight + 'px';
+		}, 300);
+	}
 
 	function scrollSmooth(selector){
 		setTimeout( ()=>{
@@ -47,21 +78,27 @@ document.addEventListener('DOMContentLoaded', () => {
 		}, 300 );
 	}
 
+	function setClassifiedAttrValue() {
+		if(document.querySelector('.classified__link.active'))
+			if(document.querySelector('.classified__sublink.active'))
+				return document.querySelector('.classified__link.active').getAttribute('data-source') + document.querySelector('.classified__sublink.active').getAttribute('data-source')
+		return "";
+	}
 
-	reviews.forEach( (el) => {
+	if(reviews) reviews.forEach( (el) => {
 		el.addEventListener('click', (e) => {
 			e.preventDefault();
 
 			attr = el.getAttribute('data-source');
-			add_screenshot = document.querySelector('.add-screenshot');
+			// add_screenshot = document.querySelector('.add-screenshot');
 
 			mapBlock.style.height = '0px';
-			if(add_screenshot) add_screenshot.style.height = '0px';
+			// if(add_screenshot) add_screenshot.style.height = '0px';
 
 			if ( el.classList.contains('active') ) {
 
 				el.classList.remove('active');
-				if(add_screenshot) add_screenshot.classList.remove('active');
+				// if(add_screenshot) add_screenshot.classList.remove('active');
 
 				mapBlock.addEventListener('transitionend', function () {
 					map.style.height = 0;
@@ -73,12 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				reviews.forEach( (elem) => {
 					elem.classList.remove('active');
-					if(add_screenshot) add_screenshot.classList.remove('active');
+					// if(add_screenshot) add_screenshot.classList.remove('active');
 				});
 				el.classList.add('active');
-				setTimeout(()=>{
-					if(add_screenshot) add_screenshot.classList.add('active');
-				}, 300)
+				// setTimeout(()=>{
+				// 	if(add_screenshot) add_screenshot.classList.add('active');
+				// }, 300)
 
 				setTimeout(() => {
 					if (!clicked) {
@@ -90,10 +127,66 @@ document.addEventListener('DOMContentLoaded', () => {
 					scrollSmooth('.add-review');
 					clicked = true;
 				}, 300)
-				setTimeout(()=>{
-					if(add_screenshot) add_screenshot.style.height = 'auto';
-				}, 300)
+				// setTimeout(()=>{
+				// 	if(add_screenshot) add_screenshot.style.height = 'auto';
+				// }, 300)
 			}
+
+		});
+	});
+
+	if(links) links.forEach( (el) => {
+		el.addEventListener('click', (e) => {
+			e.preventDefault();
+
+			if ( el.classList.contains('active') ) return;
+
+			mapBlock.style.height = '0px';
+
+			map.style.height = 0;
+
+			// slideUp(mapBlock);
+			// slideUp(sublist);
+			links.forEach( (elem) => {
+				elem.classList.remove('active');
+			});
+			el.classList.add('active');
+
+			sublist.classList.add('active');
+
+			sublinks.forEach( (elem) => {
+				elem.classList.remove('active');
+			});
+
+			attr = setClassifiedAttrValue();
+		});
+	});
+
+	if(sublinks) sublinks.forEach( (elem) => {
+		elem.addEventListener('click', (e) => {
+			e.preventDefault();
+
+			if ( elem.classList.contains('active') ) return;
+
+			slideUp(mapBlock);
+			sublinks.forEach( (el) => {
+				el.classList.remove('active');
+			});
+			elem.classList.add('active');
+			// slideDown(mapBlock);
+
+			attr = setClassifiedAttrValue();
+
+			setTimeout(() => {
+				if (!clicked) {
+					ymaps.ready(init);
+				}
+				map.style.height = (mapBlock.clientWidth + 30) + 'px';
+				yandexMap.style.height = (mapBlock.clientWidth + 30) + 'px';
+				mapBlock.style.height = (mapBlock.clientWidth + 30) + 'px';
+				scrollSmooth('.classified__list');
+				clicked = true;
+			}, 300)
 
 		});
 	});
@@ -103,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	function init () {
 		const add = (a1, a2) => a1.map((e, i) => e + a2[i]);
 		const avr = (array, length) => array.map((e, i) => e/length);
+		var count = 0;
 		var center = [0,0];
 
 		var myMap = new ymaps.Map('map', {
@@ -143,13 +237,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			return b.position[1] - a.position[1];
 		});
 		placemarks.forEach((obj) => {
+			if(obj[attr] == "") return;
 			center = add(center,obj.position);
+			count++;
 			myPlacemark = new ymaps.Placemark(obj.position, {
 				name: obj.hintContent
 			}, {
 				hintLayout: HintLayout,
 				iconLayout: 'default#image',
-				iconImageHref: 'img/icons/kia-locator.svg?re',
+				iconImageHref: '/img/icons/kia-locator.svg?re',
 				iconImageSize: [42, 62],
 				iconImageOffset: [-21, -58],
 			});
@@ -157,14 +253,18 @@ document.addEventListener('DOMContentLoaded', () => {
 			myMap.geoObjects.add(myPlacemark);
 
 			myPlacemark.events.add('click', function (e) {
-				window.open(setSourceLink(attr, obj.id));
+				window.open(obj[attr]);
 				// console.log(obj.id);
 			});
 
 		});
 
-		myMap.setCenter(avr(center,placemarks.length));
+		myMap.setCenter(avr(center,count));
 	}
+
+
+
+
 
 	let uploadField = document.querySelector('#file-upload');
 
@@ -382,6 +482,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		})
 	})
 
-	}
+	} // end uploadField
 
 });
