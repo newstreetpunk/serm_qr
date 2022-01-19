@@ -506,7 +506,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	} // end uploadField
 
 	const qtyBlock = document.getElementById('service-quality');
-	const reviewBlock = document.querySelector('.add-review');
+	const reviewBlockGood = document.querySelector('#add-review-good');
+	const reviewBlockBad = document.querySelector('#add-review-bad');
 	const formComment = document.getElementById('form-comment');
 	const reviewList = document.getElementById('add-review__list');
 	if(qtyBlock) {
@@ -517,11 +518,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			}else{
 				slideUp(qtyBlock);
 				qtyBlock.classList.remove('icon-block');
-				reviewBlock.classList.add('active');
 				if(qty < 4){
 					formComment.classList.remove('d-none');
+					reviewBlockBad.classList.add('active');
 				}else if(qty >= 4){
 					reviewList.classList.remove('d-none');
+					reviewBlockGood.classList.add('active');
 				}else{
 					return;
 				}
