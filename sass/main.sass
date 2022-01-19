@@ -46,6 +46,13 @@ b, strong
 	height: 1px
 	margin: -1px
 
+input[tabindex="-1"]
+	opacity: 0
+	position: absolute
+	z-index: -100
+	max-width: 200px
+	height: 0
+
 main
 	@include media-breakpoint-down(sm)
 		flex: 1 0 auto

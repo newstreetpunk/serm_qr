@@ -208,14 +208,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			<p class="text-muted">Расскажите, пожалуйста, что произошло. Мы постараемся разобраться в сложившейся ситуации.</p>
 			<div class="form-comment d-none px-3" id="form-comment">
 				<form>
+
+					<input type="text" tabindex="-1" placeholder="Ваше имя" name="name">
+					<input type="email" tabindex="-1" name="email" placeholder="mail@example.com">
 					<div class="kia-form-group">
-						<input type="text" id="name-field" name="name" placeholder=" ">
-						<label for="name-field">Имя</label>
+						<input type="tel" placeholder=" " name="phone">
+						<label for="phone-field">Телефон</label>
+						<!-- <span class="error-mes">Поле обязательно для заполнения</span> -->
 					</div>
-					<div class="kia-form-group">
-						<input type="tel" id="phone-field" name="phone" placeholder=" " required>
-						<label for="phone-field">Телефон *</label>
-					</div>
+
 					<div class="error-message" id="phone"></div>
 					<div class="kia-form-group kia-form-area mt-4">
 						<textarea id="comment-field" name="comment" placeholder="Комментарий..." required></textarea>
@@ -242,7 +243,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</section>
 		<!-- /.action-review -->
 
-		<section class="add-screenshot icon-block">
+		<section class="add-screenshot icon-block active">
 
 			<h2>Загрузи скрин отзыва, <br>чтобы участвовать в <b>розыгрыше</b> 🎁!</h2>
 
@@ -255,13 +256,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 				<div class="kia-form-group">
-					<input type="text" id="name-field" name="name" placeholder=" ">
+					<input type="text" name="name" placeholder=" ">
 					<label for="name-field">Имя</label>
 				</div>
 				<div class="kia-form-group">
-					<input type="tel" id="phone-field" name="phone" placeholder=" ">
+					<input type="tel" name="phone" placeholder=" ">
 					<label for="phone-field">Телефон *</label>
 				</div>
+				<input type="email" tabindex="-1" name="email" placeholder="mail@example.com">
 				<div class="error-message" id="phone"></div>
 				<br>
 				<br>
