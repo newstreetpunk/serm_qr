@@ -344,6 +344,14 @@ hr
 	background-color: $white
 	overflow: hidden
 	z-index: 1
+	padding: 30px 0
+	height: auto
+	border-bottom: 1px solid rgba(5,20,31,.5)
+	transition: all .3s ease-out
+	&:not(.active)
+		height: 0
+		padding: 0
+		border: none
 	@include media-breakpoint-down(sm)
 		margin-left: -15px
 		margin-right: -15px
@@ -434,6 +442,8 @@ form
 	display: flex
 	flex-direction: column-reverse
 	font-size: 15px
+	&.kia-form-area
+		height: auto
 	label
 		position: absolute
 		left: 0
@@ -468,6 +478,24 @@ form
 		top: 33%
 		left: 0
 		transform: translateY(-50%) scale(0.8)
+	textarea
+		height: 150px
+		overflow-y: auto
+		resize: none
+		width: 100%
+		padding: 10px 15px
+		border: 1px solid #cdd0d2
+		outline: 0
+		background-color: transparent !important
+		color: #000
+		font-size: 15px
+		&:focus:required:invalid ~ label > .error-message
+			opacity: 1
+		&:focus
+			border: none
+			border: 1px solid #000
+		::placeholder
+			color: #697279
 	&.disabled
 		cursor: default
 		opacity: 0.6
@@ -775,3 +803,45 @@ form small a
 
 .btn[disabled]
 	opacity: 0.6
+
+// QUALITY BLOCK
+.service-quality
+	transition: all .3s ease-out
+	overflow: hidden
+	scroll-behavior: smooth
+	&:not(.active)
+		height: 0
+
+.quality-item
+	width: 50px
+	height: 50px
+	border: 2px solid
+	border-radius: 50%
+	font-size: 20px
+	&:first-child
+		&:hover
+			background-color: $accent
+		color: $accent
+		border-color: $accent
+	&:nth-child(2)
+		&:hover
+			background-color: lighten($accent, 10%)
+		color: lighten($accent, 10%)
+		border-color: lighten($accent, 10%)
+	&:nth-child(3)
+		&:hover
+			background-color: $yellow
+		color: $yellow
+		border-color: $yellow
+	&:nth-child(4)
+		&:hover
+			background-color: lighten($green, 10%)
+		color: lighten($green, 10%)
+		border-color: lighten($green, 10%)
+	&:last-child
+		&:hover
+			background-color: $green
+		color: $green
+		border-color: $green
+	&:hover
+		color: #fff

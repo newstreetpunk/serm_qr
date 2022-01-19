@@ -58,15 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	function slideDown(container){
+	function slideDown(container, withMap = true){
 
 		container.addEventListener('transitionend', function () {
 			container.classList.add('active');
 		});
-		setTimeout( () => {
-			container.style.height = container.scrollHeight + 'px';
-			container.closest('#map').style.height = container.scrollHeight + 'px';
-		}, 300);
+		if(withMap){
+			setTimeout( () => {
+				container.style.height = container.scrollHeight + 'px';
+				container.closest('#map').style.height = container.scrollHeight + 'px';
+			}, 300);
+		}
 	}
 
 	function scrollSmooth(selector){
@@ -262,10 +264,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		myMap.setCenter(avr(center,count));
 	}
 
-
-
-
-
 	let uploadField = document.querySelector('#file-upload');
 
 	if(uploadField) {
@@ -395,33 +393,66 @@ document.addEventListener('DOMContentLoaded', () => {
 		return valid;
 	}
 
-	const form = document.querySelector('form');
+	const forms = document.querySelectorAll('form');
 	let btn = document.querySelector('form button');
 
-	form.onsubmit = async (e) => {
-		e.preventDefault();
-		btn.innerHTML = 'Отправляем...';
-		btn.setAttribute('disabled', true);
+	forms.forEach(form => {
+			form.onsubmit = async (e) => {
+			e.preventDefault();
+			btn.innerHTML = 'Отправляем...';
+			btn.setAttribute('disabled', true);
 
-		let response = await fetch('mail.php', {
-			method: 'POST',
-			body: new FormData(form)
-		});
+			let response = await fetch('mail.php', {
+				method: 'POST',
+				body: new FormData(form)
+			});
 
-		if (response.status === 200) {
-			let res = await response.json();
-			console.log(res);
-			if (!res.validation && !checkingRequiredFields(this, res.massages)) {
-				document.querySelector('.success-message').style.display = 'none';
-				btn.innerHTML = 'Отправить';
-				btn.removeAttribute('disabled');
-				return false;
-			}
+			if (response.status === 200) {
+				let res = await response.json();
+				console.log(res);
+				if (!res.validation && !checkingRequiredFields(this, res.massages)) {
+					document.querySelector('.success-message').style.display = 'none';
+					btn.innerHTML = 'Отправить';
+					btn.removeAttribute('disabled');
+					return false;
+				}
 
-			if (res.answer == 'error') {
+				if (res.answer == 'error') {
+					Swal.fire({
+						title: 'Ошибка',
+						text: res.error,
+						icon: 'error',
+						iconColor: '#eA0029',
+						backdrop: 'rgba(0,0,0,0.7)',
+						showCloseButton: true,
+						closeButtonHtml: '&times;',
+						showConfirmButton: false
+					})
+					btn.innerHTML = 'Отправить';
+					btn.removeAttribute('disabled');
+					return false;
+				}
+
+				if(res.answer == 'ok') {
+					Swal.fire({
+						title: 'Спасибо',
+						text: 'Ваш скриншот был успешно отправлен!',
+						icon: 'success',
+						iconColor: '#f3c300',
+						backdrop: 'rgba(0,0,0,0.7)',
+						showCloseButton: true,
+						closeButtonHtml: '&times;',
+						confirmButtonColor: '#05141f'
+					});
+					form.reset();
+					dropzone.removeAllFiles();
+					btn.innerHTML = 'Отправить';
+					btn.removeAttribute('disabled');
+				}
+			}else{
 				Swal.fire({
 					title: 'Ошибка',
-					text: res.error,
+					text: 'Перезагрузите страницу и попробуйте снова',
 					icon: 'error',
 					iconColor: '#eA0029',
 					backdrop: 'rgba(0,0,0,0.7)',
@@ -431,38 +462,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				})
 				btn.innerHTML = 'Отправить';
 				btn.removeAttribute('disabled');
-				return false;
 			}
-
-			if(res.answer == 'ok') {
-				Swal.fire({
-					title: 'Спасибо',
-					text: 'Ваш скриншот был успешно отправлен!',
-					icon: 'success',
-					iconColor: '#f3c300',
-					backdrop: 'rgba(0,0,0,0.7)',
-					showCloseButton: true,
-					closeButtonHtml: '&times;',
-					confirmButtonColor: '#05141f'
-				});
-				form.reset();
-				dropzone.removeAllFiles();
-				btn.innerHTML = 'Отправить';
-				btn.removeAttribute('disabled');
-			}
-		}else{
-			Swal.fire({
-				title: 'Ошибка',
-				text: 'Перезагрузите страницу и попробуйте снова',
-				icon: 'error',
-				iconColor: '#eA0029',
-				backdrop: 'rgba(0,0,0,0.7)',
-				showCloseButton: true,
-				closeButtonHtml: '&times;',
-				showConfirmButton: false
-			})
-		}
-	};
+		};
+	})
+	
 
 	document.getElementById('popup_link').addEventListener('click', function(e){
 		e.preventDefault();
@@ -483,5 +486,29 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 
 	} // end uploadField
+
+	const qtyBlock = document.getElementById('service-quality');
+	const reviewBlock = document.querySelector('.add-review');
+	const formComment = document.getElementById('form-comment');
+	const reviewList = document.getElementById('add-review__list');
+	if(qtyBlock) {
+		qtyBlock.addEventListener('click', e => {
+			let qty = e.target.dataset.quality;
+			if(!qty) {
+				return;
+			}else{
+				slideUp(qtyBlock);
+				qtyBlock.classList.remove('icon-block');
+				reviewBlock.classList.add('active');
+				if(qty < 4){
+					formComment.classList.remove('d-none');
+				}else if(qty >= 4){
+					reviewList.classList.remove('d-none');
+				}else{
+					return;
+				}
+			}
+		})
+	}
 
 });

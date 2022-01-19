@@ -132,42 +132,106 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		</section>
 		<!-- /.social__list -->
 
-		<section class="add-review icon-block">
-			<h2>Оставить отзыв</h2>
-			<div class="add-review__list icon-block__list">
-
-				<a href="#" class="add-review__link" data-source="google">
-					<img src="img/icons/google-maps.svg" alt="Google" class="add-review__icon _active">
-					<img src="img/icons/google-maps-hover.svg" alt="Google" class="add-review__icon _hover">
-					<span>Google</span>
-				</a>
-
-				<a href="#" class="add-review__link" data-source="yandex">
-					<img src="img/icons/yandex-maps.svg" alt="Yandex" class="add-review__icon _active">
-					<img src="img/icons/yandex-maps-hover.svg" alt="Yandex" class="add-review__icon _hover">
-					<span>Yandex</span>
-				</a>
-
-				<a href="#" class="add-review__link" data-source="gis">
-					<img src="img/icons/2GIS.svg" alt="2Gis" class="add-review__icon _active">
-					<img src="img/icons/2GIS-hover.svg" alt="2Gis" class="add-review__icon _hover">
-					<span>2GIS</span>
-				</a>
-
+		<section class="service-quality icon-block active" id="service-quality">
+			<h2 class="">Пожалуйста, оцените качество сервиса</h2>
+			
+			<div class="quality-block d-flex justify-content-center gap-2 mb-1">
+				<a 
+					href="javascript:void(0)" 
+					class="quality-item d-flex align-items-center justify-content-center"
+					data-quality="1"
+				>1</a>
+				<a 
+					href="javascript:void(0)" 
+					class="quality-item d-flex align-items-center justify-content-center"
+					data-quality="2"
+				>2</a>
+				<a 
+					href="javascript:void(0)" 
+					class="quality-item d-flex align-items-center justify-content-center"
+					data-quality="3"
+				>3</a>
+				<a 
+					href="javascript:void(0)" 
+					class="quality-item d-flex align-items-center justify-content-center"
+					data-quality="4"
+				>4</a>
+				<a 
+					href="javascript:void(0)" 
+					class="quality-item d-flex align-items-center justify-content-center"
+					data-quality="5"
+				>5</a>
 			</div>
-			<!-- /.action-review__list -->
 
-			<div class="map">
-				<div class="map-block">
-					<h3>Выберите дилера:</h3>
+		</section>
 
-				<span id="map"></span>
+		<section class="add-review" id="add-review">
+			<h2 class="mb-2">Спасибо, нам очень приятно!</h2>
+			<p class="text-muted">Не могли бы Вы оставить отзыв, это поможет нам стать ещё лучше</p>
+			<div id="add-review__list" class="d-none">
+				<div class="add-review__list icon-block__list">
 
+					<a href="#" class="add-review__link" data-source="google">
+						<img src="img/icons/google-maps.svg" alt="Google" class="add-review__icon _active">
+						<img src="img/icons/google-maps-hover.svg" alt="Google" class="add-review__icon _hover">
+						<span>Google</span>
+					</a>
+
+					<a href="#" class="add-review__link" data-source="yandex">
+						<img src="img/icons/yandex-maps.svg" alt="Yandex" class="add-review__icon _active">
+						<img src="img/icons/yandex-maps-hover.svg" alt="Yandex" class="add-review__icon _hover">
+						<span>Yandex</span>
+					</a>
+
+					<a href="#" class="add-review__link" data-source="gis">
+						<img src="img/icons/2GIS.svg" alt="2Gis" class="add-review__icon _active">
+						<img src="img/icons/2GIS-hover.svg" alt="2Gis" class="add-review__icon _hover">
+						<span>2GIS</span>
+					</a>
+
+				</div>
+				<div class="map">
+					<div class="map-block">
+						<h3>Выберите дилера:</h3>
+						<span id="map"></span>
+					</div>
 				</div>
 
 			</div>
-			<!-- /.map -->
 
+			<div class="form-comment d-none px-3" id="form-comment">
+				<form>	
+					<div class="kia-form-group">
+						<input type="text" id="name-field" name="name" placeholder=" ">
+						<label for="name-field">Имя</label>
+					</div>
+					<div class="kia-form-group">
+						<input type="tel" id="phone-field" name="phone" placeholder=" " required>
+						<label for="phone-field">Телефон *</label>
+					</div>
+					<div class="error-message" id="phone"></div>
+					<div class="kia-form-group kia-form-area mt-4">
+						<textarea id="comment-field" name="comment" placeholder="Комментарий..." required></textarea>
+					</div>
+					<div class="error-message" id="comment"></div>
+					<br>
+					<br>
+					<button class="btn">Отправить</button>
+					<div class="form-message"></div>
+	
+					<div class="form-group">
+						<div class="d-flex">
+							<label class="checkbox-control">
+								<input type="checkbox" name="agree" class="agree" id="agree-field">
+								<span class="checkbox-indicator"></span>
+							</label>
+							<small>Я согласен на <a href="#popup" id="popup_link">обработку персональных данных</a></small>
+						</div>
+						<span class="error-message" id="agree"></span>
+					</div>
+				</form>
+			</div>
+						
 		</section>
 		<!-- /.action-review -->
 
@@ -185,11 +249,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 				<div class="kia-form-group">
 					<input type="text" id="name-field" name="name" placeholder=" ">
-					<label for="name">Имя</label>
+					<label for="name-field">Имя</label>
 				</div>
 				<div class="kia-form-group">
 					<input type="tel" id="phone-field" name="phone" placeholder=" ">
-					<label for="phone">Телефон *</label>
+					<label for="phone-field">Телефон *</label>
 				</div>
 				<div class="error-message" id="phone"></div>
 				<br>

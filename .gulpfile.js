@@ -56,6 +56,7 @@ projects.kia_qr = {
 		src: [
 			'node_modules/dropzone/dist/dropzone.js',
 			'node_modules/alpinejs/dist/cdn.js',
+			//basename + '/libs/dropzone/dropzone.js',
 			'node_modules/sweetalert2/dist/sweetalert2.all.js',
 			basename + '/js/scripts.js', // Custom scripts. Always at the end
 		],
@@ -88,7 +89,7 @@ function kia_qr_browsersync() {
 		base: projects.kia_qr.base,
 	}, function (){
 		browserSync.init({
-			// server: { baseDir: projects.kia_qr.base + '/' },
+			//server: { baseDir: projects.kia_qr.base + '/' },
 			proxy: '127.0.0.1:' + projects.kia_qr.port,
 			notify: false,
 			online: online
@@ -116,7 +117,7 @@ function kia_qr_scripts() {
 	// 	presets: ['es2015']
 	// }))
 	.pipe(terser()) // Minify js (opt.)
-	// .pipe(uglify()) // Minify js (opt.)
+	//.pipe(uglify()) // Minify js (opt.)
 	.pipe(header(projects.kia_qr.forProd))
 	.pipe(dest(projects.kia_qr.scripts.dest))
 	.pipe(browserSync.stream())
