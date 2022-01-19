@@ -374,18 +374,26 @@ document.addEventListener('DOMContentLoaded', () => {
 		element.addEventListener('input', maskphone);
 	});
 
-	document.querySelector('input[name=phone]').addEventListener('change', function(){
-		document.querySelector('.error-message#phone').style.display = 'none';
-	})
+	const fieldsPhone = document.querySelectorAll('input[name=phone]');
+	const fieldsErrorPhone = document.querySelectorAll('.error-message#phone');
+	const fieldsAgree = document.querySelectorAll('input[name=agree]');
+	const fieldsErrorAgree = document.querySelectorAll('.error-message#agree');
 
-	document.querySelector('input[name=agree]').addEventListener('change', function(){
-		document.querySelector('.error-message#agree').style.display = 'none';
+	fieldsPhone.forEach((el, i) => {
+		fieldsPhone[i].addEventListener('change', function(){
+			fieldsErrorPhone[i].style.display = 'none';
+		})
+	})
+	fieldsAgree.forEach((el, i) => {
+		fieldsAgree[i].addEventListener('change', function(){
+			fieldsErrorAgree[i].style.display = 'none';
+		})
 	})
 
 	function checkingRequiredFields(form, errors) {
 		let valid = true;
 		for (key in errors) {
-			let field = document.querySelector('.error-message#'+key);
+			let field = form.querySelector('.error-message#'+key);
 			field.innerText = errors[key];
 			field.style.display = 'block';
 			valid = false;
@@ -394,24 +402,34 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	const forms = document.querySelectorAll('form');
-	let btn = document.querySelector('form button');
-
 	forms.forEach(form => {
-			form.onsubmit = async (e) => {
+		let btn = form.querySelector('button');
+		form.onsubmit = async (e) => {
 			e.preventDefault();
 			btn.innerHTML = 'Отправляем...';
-			btn.setAttribute('disabled', true);
+			btn.setAttribute('disabled', true);	
 
+			const dataset = btn.dataset;
+			// console.log(dataset.form)
+			// return false;
+			let FD = new FormData(form);
+			FD.append('subject', dataset.subject);
+			FD.append('form', dataset.form);
+			if(dataset.file){
+				FD.append('file', dataset.file);
+			}
 			let response = await fetch('mail.php', {
 				method: 'POST',
-				body: new FormData(form)
+				body: FD
 			});
 
 			if (response.status === 200) {
 				let res = await response.json();
 				console.log(res);
-				if (!res.validation && !checkingRequiredFields(this, res.massages)) {
-					document.querySelector('.success-message').style.display = 'none';
+				if (!res.validation && !checkingRequiredFields(form, res.massages)) {
+					if(form.querySelector('.success-message')){
+						form.querySelector('.success-message').style.display = 'none';
+					}
 					btn.innerHTML = 'Отправить';
 					btn.removeAttribute('disabled');
 					return false;
