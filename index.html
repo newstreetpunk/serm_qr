@@ -140,27 +140,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 					href="javascript:void(0)"
 					class="quality-item d-flex align-items-center justify-content-center"
 					data-quality="1"
-				>1</a>
-				<a
-					href="javascript:void(0)"
+				></a>
+				<a 
+					href="javascript:void(0)" 
 					class="quality-item d-flex align-items-center justify-content-center"
 					data-quality="2"
-				>2</a>
-				<a
-					href="javascript:void(0)"
+				></a>
+				<a 
+					href="javascript:void(0)" 
 					class="quality-item d-flex align-items-center justify-content-center"
 					data-quality="3"
-				>3</a>
-				<a
-					href="javascript:void(0)"
+				></a>
+				<a 
+					href="javascript:void(0)" 
 					class="quality-item d-flex align-items-center justify-content-center"
 					data-quality="4"
-				>4</a>
+				></a>
 				<a
 					href="javascript:void(0)"
 					class="quality-item d-flex align-items-center justify-content-center"
 					data-quality="5"
-				>5</a>
+				></a>
 			</div>
 
 		</section>
@@ -212,19 +212,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 					<input type="text" tabindex="-1" placeholder="Ваше имя" name="name">
 					<input type="email" tabindex="-1" name="email" placeholder="mail@example.com">
 					<div class="kia-form-group">
-						<input type="tel" placeholder=" " name="phone">
-						<label for="phone-field">Телефон</label>
-						<!-- <span class="error-mes">Поле обязательно для заполнения</span> -->
+						<input type="tel" id="phone-field" name="phone" placeholder=" ">
+						<label for="phone-field">Телефон *</label>
 					</div>
 
 					<div class="error-message" id="phone"></div>
 					<div class="kia-form-group kia-form-area mt-4">
-						<textarea id="comment-field" name="comment" placeholder="Комментарий..." required></textarea>
+						<textarea id="comment-field" name="comment" placeholder="Комментарий..."></textarea>
 					</div>
 					<div class="error-message" id="comment"></div>
 					<br>
 					<br>
-					<button class="btn">Отправить</button>
+					<button class="btn" data-subject="Отзыв с сайта QR Kia" data-form="Отзыв QR Kia">Отправить</button>
 					<div class="form-message"></div>
 
 					<div class="form-group">
@@ -260,14 +259,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 					<label for="name-field">Имя</label>
 				</div>
 				<div class="kia-form-group">
-					<input type="tel" name="phone" placeholder=" ">
-					<label for="phone-field">Телефон *</label>
+					<input type="tel" id="phone-field2" name="phone" placeholder=" ">
+					<label for="phone-field2">Телефон *</label>
 				</div>
 				<input type="email" tabindex="-1" name="email" placeholder="mail@example.com">
 				<div class="error-message" id="phone"></div>
 				<br>
 				<br>
-				<button class="btn">Отправить</button>
+				<button class="btn" data-file="true" data-subject="Скриншот отзыва на Киа" data-form="Розыгрыш QR Kia">Отправить</button>
 				<div class="form-message"></div>
 
 				<div class="form-group">
