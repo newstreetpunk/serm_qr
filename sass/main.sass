@@ -583,9 +583,30 @@ form small a
 .btn
 	background-color: $text
 	color: #fff
-	border: none
+	border: 1px solid #000
 	font-weight: 700
-	padding: 15px 30px
+	padding: 17px 40px
+	border-radius: 0
+	font-size: 15px
+	font-weight: bold
+	span
+		border-bottom: 1px solid transparent
+		transition: all .25s ease-out
+	&:hover
+		color: #fff
+		span
+			border-color: #fff
+	&.btn-white
+		background-color: #fff
+		color: #000
+		&:hover
+			color: #000
+			span
+				border-color: #000
+
+.swal-buttons
+	.btn
+		padding: 12px 24px
 
 .swal2-close:hover
 	color: $text !important
@@ -827,26 +848,14 @@ form small a
 .quality-item
 	width: 50px
 	height: 50px
-	transition: all .3s ease
 	background-size: cover
 	background-position: center
-	&:first-child
-		background-image: url(../img/icons/smiles/kia-smile-1.svg)
-		&:hover
-			background-image: url(../img/icons/smiles/kia-smile-1-hover.svg)
-	&:nth-child(2)
-		background-image: url(../img/icons/smiles/kia-smile-2.svg)
-		&:hover
-			background-image: url(../img/icons/smiles/kia-smile-2-hover.svg)
-	&:nth-child(3)
-		background-image: url(../img/icons/smiles/kia-smile-3.svg)
-		&:hover
-			background-image: url(../img/icons/smiles/kia-smile-3-hover.svg)
-	&:nth-child(4)
-		background-image: url(../img/icons/smiles/kia-smile-4.svg)
-		&:hover
-			background-image: url(../img/icons/smiles/kia-smile-4-hover.svg)
-	&:last-child
-		background-image: url(../img/icons/smiles/kia-smile-5.svg)
-		&:hover
-			background-image: url(../img/icons/smiles/kia-smile-5-hover.svg)
+	img
+		transition: all .25s ease
+	.hover
+		opacity: 0
+	&:hover
+		.default
+			opacity: 0
+		.hover
+			opacity: 1

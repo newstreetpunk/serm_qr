@@ -264,12 +264,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		myMap.setCenter(avr(center,count));
 	}
 
-	let uploadField = document.querySelector('#file-upload');
+	const uploadField = document.querySelector('#file-upload');
+	const kiaDropzone = document.querySelector('.kia-dropzone'); 
 
 	if(uploadField) {
 
-	let dropzoneError = document.querySelector('.error-message');
-	let dropzoneSuccess = document.querySelector('.success-message');
+	let dropzoneError = kiaDropzone.querySelector('.error-message');
+	let dropzoneSuccess = kiaDropzone.querySelector('.success-message');
 
 	let dropzone = new Dropzone(uploadField, {
 		url: 'upload.php',
@@ -369,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		this.value = num.join('');
 	};
 
-	$$("input[name=phone]").forEach(function (element) {
+	$$("input[name=phone], input[name=tmp-phone]").forEach(function (element) {
 		element.addEventListener('focus', maskphone);
 		element.addEventListener('input', maskphone);
 	});
@@ -378,6 +379,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const fieldsErrorPhone = document.querySelectorAll('.error-message#phone');
 	const fieldsAgree = document.querySelectorAll('input[name=agree]');
 	const fieldsErrorAgree = document.querySelectorAll('.error-message#agree');
+	const fieldsComment = document.querySelectorAll('[name=comment]');
+	const fieldsErrorComment = document.querySelectorAll('.error-message#comment');
 
 	fieldsPhone.forEach((el, i) => {
 		fieldsPhone[i].addEventListener('change', function(){
@@ -387,6 +390,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	fieldsAgree.forEach((el, i) => {
 		fieldsAgree[i].addEventListener('change', function(){
 			fieldsErrorAgree[i].style.display = 'none';
+		})
+	})
+	fieldsComment.forEach((el, i) => {
+		fieldsComment[i].addEventListener('change', function(){
+			fieldsErrorComment[i].style.display = 'none';
 		})
 	})
 
@@ -401,76 +409,33 @@ document.addEventListener('DOMContentLoaded', () => {
 		return valid;
 	}
 
-	const forms = document.querySelectorAll('form');
-	forms.forEach(form => {
-		let btn = form.querySelector('button');
-		form.onsubmit = async (e) => {
-			e.preventDefault();
-			btn.innerHTML = 'Отправляем...';
-			btn.setAttribute('disabled', true);	
+	async function sendForm (form, btn, formData, textSucces = 'Спасибо за Ваш комментарий, в ближайшее время мы с Вами свяжемся.') {
+		let res;
+		console.log(textSucces)
+		if (formData.get('file')) {
+			textSucces = 'Ваш скриншот был успешно отправлен!';
+		}
+		let response = await fetch('mail.php', {
+			method: 'POST',
+			body: formData
+		});
 
-			const dataset = btn.dataset;
-			// console.log(dataset.form)
-			// return false;
-			let FD = new FormData(form);
-			FD.append('subject', dataset.subject);
-			FD.append('form', dataset.form);
-			if(dataset.file){
-				FD.append('file', dataset.file);
+		if (response.status === 200) {
+			res = await response.json();
+			console.log(res);
+			if (!res.validation && !checkingRequiredFields(form, res.massages)) {
+				if(form.querySelector('.success-message')){
+					form.querySelector('.success-message').style.display = 'none';
+				}
+				btn.innerHTML = 'Отправить';
+				btn.removeAttribute('disabled');
+				return false;
 			}
-			let response = await fetch('mail.php', {
-				method: 'POST',
-				body: FD
-			});
 
-			if (response.status === 200) {
-				let res = await response.json();
-				console.log(res);
-				if (!res.validation && !checkingRequiredFields(form, res.massages)) {
-					if(form.querySelector('.success-message')){
-						form.querySelector('.success-message').style.display = 'none';
-					}
-					btn.innerHTML = 'Отправить';
-					btn.removeAttribute('disabled');
-					return false;
-				}
-
-				if (res.answer == 'error') {
-					Swal.fire({
-						title: 'Ошибка',
-						text: res.error,
-						icon: 'error',
-						iconColor: '#eA0029',
-						backdrop: 'rgba(0,0,0,0.7)',
-						showCloseButton: true,
-						closeButtonHtml: '&times;',
-						showConfirmButton: false
-					})
-					btn.innerHTML = 'Отправить';
-					btn.removeAttribute('disabled');
-					return false;
-				}
-
-				if(res.answer == 'ok') {
-					Swal.fire({
-						title: 'Спасибо',
-						text: 'Ваш скриншот был успешно отправлен!',
-						icon: 'success',
-						iconColor: '#f3c300',
-						backdrop: 'rgba(0,0,0,0.7)',
-						showCloseButton: true,
-						closeButtonHtml: '&times;',
-						confirmButtonColor: '#05141f'
-					});
-					form.reset();
-					dropzone.removeAllFiles();
-					btn.innerHTML = 'Отправить';
-					btn.removeAttribute('disabled');
-				}
-			}else{
+			if (res.answer == 'error') {
 				Swal.fire({
 					title: 'Ошибка',
-					text: 'Перезагрузите страницу и попробуйте снова',
+					text: res.error,
 					icon: 'error',
 					iconColor: '#eA0029',
 					backdrop: 'rgba(0,0,0,0.7)',
@@ -480,7 +445,137 @@ document.addEventListener('DOMContentLoaded', () => {
 				})
 				btn.innerHTML = 'Отправить';
 				btn.removeAttribute('disabled');
+				return false;
 			}
+
+			if(res.answer == 'ok' && formData.get('file')) {
+				Swal.fire({
+					title: 'Спасибо',
+					text: textSucces,
+					icon: 'success',
+					iconColor: '#f3c300',
+					backdrop: 'rgba(0,0,0,0.7)',
+					showCloseButton: true,
+					closeButtonHtml: '&times;',
+					confirmButtonColor: '#05141f'
+				});
+				form.reset();
+				dropzone.removeAllFiles();
+				btn.innerHTML = 'Отправить';
+				btn.removeAttribute('disabled');
+			}else{
+				form.closest('.add-review').innerHTML = `<p class="text-muted mb-0">${textSucces}</p>`
+				return true;
+			}
+		}else{
+			Swal.fire({
+				title: 'Ошибка',
+				text: 'Перезагрузите страницу и попробуйте снова',
+				icon: 'error',
+				iconColor: '#eA0029',
+				backdrop: 'rgba(0,0,0,0.7)',
+				showCloseButton: true,
+				closeButtonHtml: '&times;',
+				showConfirmButton: false
+			})
+			btn.innerHTML = 'Отправить';
+			btn.removeAttribute('disabled');
+		}
+	}
+
+	const forms = document.querySelectorAll('form');
+
+	forms.forEach(form => {
+		let btn = form.querySelector('button');
+		form.onsubmit = async (e) => {
+			e.preventDefault();
+			btn.innerHTML = 'Отправляем...';
+			btn.setAttribute('disabled', true);	
+
+			const dataset = btn.dataset;
+			let formData = new FormData(form);				
+			formData.append('subject', dataset.subject);
+			formData.append('form', dataset.form);
+
+			if(dataset.file){
+				formData.append('file', dataset.file);
+				sendForm(form, btn, formData);
+			}else{
+				if(!formData.get('phone')){
+					formData.delete('phone')
+				}
+				if(formData.get('phone') && formData.get('comment') && formData.get('agree') || !formData.get('comment') || !formData.get('agree')){
+					sendForm(form, btn, formData);	
+				}
+
+				if(!formData.get('phone') && formData.get('comment') && formData.get('agree')){
+					Swal.fire({
+						html: 'Спасибо за Ваш комментарий. Если Вы хотите чтобы мы с Вами связались, пожалуйста, оставьте свой номер телефона<br>' +
+						'<div class="kia-form-group">' +
+						'<input type="text" tabindex="-1" placeholder="Ваше имя" name="name">' +
+						'<input type="email" tabindex="-1" name="email" placeholder="mail@example.com">' +
+						'<input type="tel" id="phone-field-swal" name="phone" placeholder=" " required>' +
+						'<label for="phone-field-swal">Телефон</label>' +
+						'</div>' +
+						'<div class="error-message mx-0" id="phone"></div>' +
+						'<div class="swal-buttons d-flex justify-content-center gap-2 mt-4">' +
+						'<button type="button" class="btn" id="sendPhone"><span>Отправить</span></button>' +
+						'<button type="button" class="btn btn-white" id="send"><span>Отправить без телефона</span></button>' +
+						'</div>',
+						backdrop: 'rgba(0,0,0,0.7)',
+						allowOutsideClick: false,
+						allowEscapeKey: false,
+						showCloseButton: false,
+						showDenyButton: false,
+						showCancelButton: false,
+						showConfirmButton: false,
+						padding: '20px'
+					})
+
+					let phoneField = document.querySelector('.swal2-html-container input[name=phone]');
+					let phoneErrorField = document.querySelector('.swal2-html-container .error-message#phone');
+					let sendBtn = document.querySelector('.swal2-html-container #send');
+					let sendPhoneBtn = document.querySelector('.swal2-html-container #sendPhone');
+					phoneField.addEventListener('focus', maskphone);
+					phoneField.addEventListener('input', maskphone);
+					sendBtn.addEventListener('click', e => {
+						let send = sendForm(form, btn, formData, 'Спасибо за Ваш комментарий!');
+						send
+						.then( res => {
+							if(res) Swal.close();
+						})
+						.catch(error => {
+							Swal.showValidationMessage(
+								`Request failed: ${error}`
+								)
+						})
+					})
+					sendPhoneBtn.addEventListener('click', e => {
+						let phoneVal = phoneField.value;
+						if (!phoneVal.length) {						
+							phoneErrorField.innerText = 'Поле обязательно для заполнения';
+							phoneErrorField.style.display = 'block';
+							return false;
+						}
+						else if(!/\+7 [0-9]{3} [0-9]{3}-[0-9]{2}-[0-9]{2}/.test(phoneVal)){
+							phoneErrorField.innerText = 'Введен некорректный номер телефона';
+							phoneErrorField.style.display = 'block';
+							return false;
+						}
+						formData.append('phone', phoneVal);
+						let send = sendForm(form, btn, formData);
+						send
+						.then( res => {
+							if(res) Swal.close();
+						})
+						.catch(error => {
+							Swal.showValidationMessage(
+								`Request failed: ${error}`
+								)
+						})
+					})
+				}
+			}		
 		};
 	})
 	
@@ -512,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const reviewList = document.getElementById('add-review__list');
 	if(qtyBlock) {
 		qtyBlock.addEventListener('click', e => {
-			let qty = e.target.dataset.quality;
+			let qty = e.target.closest('.quality-item').dataset.quality;
 			if(!qty) {
 				return;
 			}else{
