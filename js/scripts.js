@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	let clicked = false;
 	let attr = '';
 
-
 	function slideUp(container){
 
 		container.style.height = '0px';
@@ -265,10 +264,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	const uploadField = document.querySelector('#file-upload');
-	const kiaDropzone = document.querySelector('.kia-dropzone'); 
 
 	if(uploadField) {
 
+	const kiaDropzone = document.querySelector('.kia-dropzone');
 	let dropzoneError = kiaDropzone.querySelector('.error-message');
 	let dropzoneSuccess = kiaDropzone.querySelector('.success-message');
 
@@ -356,11 +355,25 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	var $$$ = function (name) { return document.querySelector(name) },
-	$$ = function (name) { return document.querySelectorAll(name) };
+	} // end uploadField
 
-	function maskphone(e) {
-		var num = this.value.replace('+7', '').replace(/\D/g, '').split(/(?=.)/), i = num.length;
+	function maskphone(form) {
+
+		form.querySelector('.error-message#phone').style.display = 'none';
+
+		var num = this.value.replace(/^(\+7|8)/g, '').replace(/\D/g, '').split(/(?=.)/),
+			i = num.length;
+
+		console.log(num, num.length == 1 && num[0] == "" && this.required, num.length != 10 || [... new Set(num)].length == 1, this.required, form);
+
+		if (num.length == 1 && num[0] == "" && this.required) {
+			checkingRequiredFields( form, JSON.parse('{"phone":"Поле обязательно для заполнения"}') )
+			return false;
+		} else if(num.length != 10 || [... new Set(num)].length == 1) {
+			checkingRequiredFields( form, JSON.parse('{"phone":"Некорректный номер телефона"}') )
+			return false;
+		}
+
 		if (0 <= i) num.unshift('+7');
 		if (1 <= i) num.splice(1, 0, ' ');
 		if (4 <= i) num.splice(5, 0, ' ');
@@ -368,33 +381,23 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (9 <= i) num.splice(12, 0, '-');
 		if (11 <= i) num.splice(15, num.length - 15);
 		this.value = num.join('');
+		return true;
 	};
 
-	$$("input[name=phone], input[name=tmp-phone]").forEach(function (element) {
-		element.addEventListener('focus', maskphone);
-		element.addEventListener('input', maskphone);
+	document.querySelectorAll("input[name=phone]").forEach(function (el) {
+		// element.addEventListener('focus', maskphone.bind(element, element.closest('form')) );
+		// element.addEventListener('input', maskphone.bind(element, element.closest('form')) );
+		el.addEventListener('change', maskphone.bind(el, el.closest('form')) );
 	});
 
-	const fieldsPhone = document.querySelectorAll('input[name=phone]');
-	const fieldsErrorPhone = document.querySelectorAll('.error-message#phone');
-	const fieldsAgree = document.querySelectorAll('input[name=agree]');
-	const fieldsErrorAgree = document.querySelectorAll('.error-message#agree');
-	const fieldsComment = document.querySelectorAll('[name=comment]');
-	const fieldsErrorComment = document.querySelectorAll('.error-message#comment');
-
-	fieldsPhone.forEach((el, i) => {
-		fieldsPhone[i].addEventListener('change', function(){
-			fieldsErrorPhone[i].style.display = 'none';
+	document.querySelectorAll('input[name=agree]').forEach((el) => {
+		el.addEventListener('change', function(){
+			el.closest('form').querySelector('.error-message#agree').style.display = 'none';
 		})
 	})
-	fieldsAgree.forEach((el, i) => {
-		fieldsAgree[i].addEventListener('change', function(){
-			fieldsErrorAgree[i].style.display = 'none';
-		})
-	})
-	fieldsComment.forEach((el, i) => {
-		fieldsComment[i].addEventListener('change', function(){
-			fieldsErrorComment[i].style.display = 'none';
+	document.querySelectorAll('[name=comment]').forEach((el) => {
+		el.addEventListener('change', function(){
+			el.closest('form').querySelector('.error-message#comment').style.display = 'none';
 		})
 	})
 
@@ -402,6 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		let valid = true;
 		for (key in errors) {
 			let field = form.querySelector('.error-message#'+key);
+			console.log(key, errors[key], field);
 			field.innerText = errors[key];
 			field.style.display = 'block';
 			valid = false;
@@ -409,13 +413,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		return valid;
 	}
 
-	async function sendForm (form, btn, formData, textSucces = 'Спасибо за Ваш комментарий, в ближайшее время мы с Вами свяжемся.') {
+	async function sendForm (form, btn, formData, textSucces = 'Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.') {
 		let res;
 		console.log(textSucces)
 		if (formData.get('file')) {
 			textSucces = 'Ваш скриншот был успешно отправлен!';
 		}
-		let response = await fetch('mail.php', {
+		let response = await fetch('/mail.php', {
 			method: 'POST',
 			body: formData
 		});
@@ -470,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}else{
 			Swal.fire({
 				title: 'Ошибка',
-				text: 'Перезагрузите страницу и попробуйте снова',
+				text: 'Перезагрузите страницу и&nbsp;попробуйте снова',
 				icon: 'error',
 				iconColor: '#eA0029',
 				backdrop: 'rgba(0,0,0,0.7)',
@@ -483,17 +487,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	const forms = document.querySelectorAll('form');
-
-	forms.forEach(form => {
+	document.querySelectorAll('form').forEach(form => {
 		let btn = form.querySelector('button');
 		form.onsubmit = async (e) => {
 			e.preventDefault();
 			btn.innerHTML = 'Отправляем...';
-			btn.setAttribute('disabled', true);	
+			btn.setAttribute('disabled', true);
 
 			const dataset = btn.dataset;
-			let formData = new FormData(form);				
+			let formData = new FormData(form);
 			formData.append('subject', dataset.subject);
 			formData.append('form', dataset.form);
 
@@ -505,12 +507,12 @@ document.addEventListener('DOMContentLoaded', () => {
 					formData.delete('phone')
 				}
 				if(formData.get('phone') && formData.get('comment') && formData.get('agree') || !formData.get('comment') || !formData.get('agree')){
-					sendForm(form, btn, formData);	
+					sendForm(form, btn, formData);
 				}
 
 				if(!formData.get('phone') && formData.get('comment') && formData.get('agree')){
 					Swal.fire({
-						html: 'Спасибо за Ваш комментарий. Если Вы хотите чтобы мы с Вами связались, пожалуйста, оставьте свой номер телефона<br>' +
+						html: '<h2>Спасибо за&nbsp;Ваш комментарий.</h2><p>Если Вы&nbsp;хотите чтобы мы&nbsp;с&nbsp;Вами связались, пожалуйста, оставьте свой номер телефона</p><br>' +
 						'<div class="kia-form-group">' +
 						'<input type="text" tabindex="-1" placeholder="Ваше имя" name="name">' +
 						'<input type="email" tabindex="-1" name="email" placeholder="mail@example.com">' +
@@ -536,10 +538,10 @@ document.addEventListener('DOMContentLoaded', () => {
 					let phoneErrorField = document.querySelector('.swal2-html-container .error-message#phone');
 					let sendBtn = document.querySelector('.swal2-html-container #send');
 					let sendPhoneBtn = document.querySelector('.swal2-html-container #sendPhone');
-					phoneField.addEventListener('focus', maskphone);
-					phoneField.addEventListener('input', maskphone);
+					phoneField.addEventListener('focus', maskphone.bind(phoneField, document.querySelector('.swal2-html-container')));
+					phoneField.addEventListener('input', maskphone.bind(phoneField, document.querySelector('.swal2-html-container')));
 					sendBtn.addEventListener('click', e => {
-						let send = sendForm(form, btn, formData, 'Спасибо за Ваш комментарий!');
+						let send = sendForm(form, btn, formData, 'Спасибо за&nbsp;Ваш комментарий!');
 						send
 						.then( res => {
 							if(res) Swal.close();
@@ -551,18 +553,19 @@ document.addEventListener('DOMContentLoaded', () => {
 						})
 					})
 					sendPhoneBtn.addEventListener('click', e => {
-						let phoneVal = phoneField.value;
-						if (!phoneVal.length) {						
-							phoneErrorField.innerText = 'Поле обязательно для заполнения';
-							phoneErrorField.style.display = 'block';
+
+						if(!maskphone.call(phoneField, document.querySelector('.swal2-html-container'))) {
 							return false;
 						}
-						else if(!/\+7 [0-9]{3} [0-9]{3}-[0-9]{2}-[0-9]{2}/.test(phoneVal)){
-							phoneErrorField.innerText = 'Введен некорректный номер телефона';
-							phoneErrorField.style.display = 'block';
-							return false;
+
+						formData.append('phone', phoneField.value);
+						if(document.querySelector('.swal2-html-container input[name=name]')) {
+							formData.append('name', document.querySelector('.swal2-html-container input[name=name]').value);
 						}
-						formData.append('phone', phoneVal);
+						if(document.querySelector('.swal2-html-container input[name=email]')) {
+							formData.append('email', document.querySelector('.swal2-html-container input[name=email]').value);
+						}
+
 						let send = sendForm(form, btn, formData);
 						send
 						.then( res => {
@@ -575,10 +578,9 @@ document.addEventListener('DOMContentLoaded', () => {
 						})
 					})
 				}
-			}		
+			}
 		};
 	})
-	
 
 	document.getElementById('popup_link').addEventListener('click', function(e){
 		e.preventDefault();
@@ -597,8 +599,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		})
 	})
-
-	} // end uploadField
 
 	const qtyBlock = document.getElementById('service-quality');
 	const reviewBlockGood = document.querySelector('#add-review-good');
