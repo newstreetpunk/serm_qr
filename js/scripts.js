@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		var num = this.value.replace(/^(\+7|8)/g, '').replace(/\D/g, '').split(/(?=.)/),
 			i = num.length;
 
-		console.log(num, num.length == 1 && num[0] == "" && this.required, num.length != 10 || [... new Set(num)].length == 1, this.required, form);
+		// console.log(num, num.length == 1 && num[0] == "" && this.required, num.length != 10 || [... new Set(num)].length == 1, this.required, form);
 
 		if (num.length == 1 && num[0] == "" && this.required) {
 			checkingRequiredFields( form, JSON.parse('{"phone":"Поле обязательно для заполнения"}') )
@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		let valid = true;
 		for (key in errors) {
 			let field = form.querySelector('.error-message#'+key);
-			console.log(key, errors[key], field);
+			// console.log(key, errors[key], field);
 			field.innerText = errors[key];
 			field.style.display = 'block';
 			valid = false;
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	async function sendForm (form, btn, formData, textSucces = 'Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.') {
 		let res;
-		console.log(textSucces)
+		// console.log(textSucces)
 		if (formData.get('file')) {
 			textSucces = 'Ваш скриншот был успешно отправлен!';
 		}
@@ -464,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					confirmButtonColor: '#05141f'
 				});
 				form.reset();
-				dropzone.removeAllFiles();
+				document.querySelector('#file-upload').dropzone.removeAllFiles();
 				btn.innerHTML = 'Отправить';
 				btn.removeAttribute('disabled');
 			}else{
