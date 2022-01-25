@@ -260,6 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			myMap.geoObjects.add(myPlacemark);
 
 			myPlacemark.events.add('click', function (e) {
+				sendGood(rate, attr, obj[attr]);
 				window.open(obj[attr]);
 				// console.log(obj.id);
 			});
@@ -417,6 +418,31 @@ document.addEventListener('DOMContentLoaded', () => {
 			valid = false;
 		}
 		return valid;
+	}
+
+	async function sendGood (rate, map, url) {
+
+		let formData = new FormData();
+		formData.append('rate', rate);
+		formData.append('url', url);
+		switch (map) {
+			case 'google':
+				formData.append('map', 'Google');
+				break;
+			case 'yandex':
+				formData.append('map', 'Яндекс');
+				break;
+			case 'gis':
+				formData.append('map', '2Гис');
+				break;
+			default:
+				break;
+		}
+
+		let response = await fetch('/good.php', {
+			method: 'POST',
+			body: formData
+		});
 	}
 
 	async function sendForm (form, btn, formData, textSucces = 'Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.') {
