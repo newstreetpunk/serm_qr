@@ -16,7 +16,7 @@ document.addEventListener('alpine:init', (data) => {
 		existShop(attr) {
 			var show = false;
 			placemarks.forEach((obj) => {
-				console.log(attr,obj[attr]);
+				// console.log(attr,obj[attr]);
 				if(obj[attr] != "") show = true;
 			})
 			return show;
@@ -46,10 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	let clicked = false;
 	let attr = '';
+	let rate = 0;
 
 	function slideUp(container){
 
-		container.style.height = '0px';
+		if(container.style.height != "")
+			container.style.height = '0px';
+		if(container.style.padding != "")
+			container.style.padding = '0';
+		if(container.style['max-height'] != "")
+			container.style['max-height'] = '0px';
 		container.addEventListener('transitionend', function () {
 			container.classList.remove('active');
 		}, {
@@ -498,6 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			let formData = new FormData(form);
 			formData.append('subject', dataset.subject);
 			formData.append('form', dataset.form);
+			formData.append('rate', rate);
 
 			if(dataset.file){
 				formData.append('file', dataset.file);
@@ -559,11 +566,13 @@ document.addEventListener('DOMContentLoaded', () => {
 						}
 
 						formData.append('phone', phoneField.value);
-						if(document.querySelector('.swal2-html-container input[name=name]')) {
-							formData.append('name', document.querySelector('.swal2-html-container input[name=name]').value);
+						let swalName = document.querySelector('.swal2-html-container input[name=name]');
+						if(swalName) {
+							formData.append('name', swalName.value);
 						}
-						if(document.querySelector('.swal2-html-container input[name=email]')) {
-							formData.append('email', document.querySelector('.swal2-html-container input[name=email]').value);
+						let swalEmail = document.querySelector('.swal2-html-container input[name=email]');
+						if(swalEmail) {
+							formData.append('email', swalEmail.value);
 						}
 
 						let send = sendForm(form, btn, formData);
@@ -600,24 +609,25 @@ document.addEventListener('DOMContentLoaded', () => {
 		})
 	})
 
-	const qtyBlock = document.getElementById('service-quality');
+	const qtyBlock = document.querySelector('.quality-block');
 	const reviewBlockGood = document.querySelector('#add-review-good');
 	const reviewBlockBad = document.querySelector('#add-review-bad');
 	const formComment = document.getElementById('form-comment');
 	const reviewList = document.getElementById('add-review__list');
 	if(qtyBlock) {
 		qtyBlock.addEventListener('click', e => {
-			let qty = e.target.closest('.quality-item').dataset.quality;
-			if(!qty) {
+			rate = e.target.closest('.quality-item').dataset.quality;
+			if(!rate) {
 				return;
 			}else{
-				slideUp(qtyBlock);
-				qtyBlock.classList.remove('icon-block');
-				if(qty < 4){
-					formComment.classList.remove('d-none');
+				// slideUp(qtyBlock.closest('#service-quality'));
+				qtyBlock.closest('#service-quality').classList.remove('active');
+				// qtyBlock.classList.remove('icon-block');
+				if(rate < 4){
+					// formComment.classList.remove('d-none');
 					reviewBlockBad.classList.add('active');
-				}else if(qty >= 4){
-					reviewList.classList.remove('d-none');
+				}else if(rate >= 4){
+					// reviewList.classList.remove('d-none');
 					reviewBlockGood.classList.add('active');
 				}else{
 					return;
