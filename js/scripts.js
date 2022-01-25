@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}, {
 				hintLayout: HintLayout,
 				iconLayout: 'default#image',
-				iconImageHref: '/img/icons/kia-locator.svg?re',
+				iconImageHref: '../img/icons/kia-locator.svg?re',
 				iconImageSize: [42, 62],
 				iconImageOffset: [-21, -58],
 			});
