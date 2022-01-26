@@ -15,10 +15,9 @@ document.addEventListener('alpine:init', (data) => {
 
 		existShop(attr) {
 			var show = false;
-			placemarks.forEach((obj) => {
-				// console.log(attr,obj[attr]);
-				if(obj[attr] != "") show = true;
-			})
+			for (obj in placemarks) {
+				if(placemarks[obj][attr] != "") show = true;
+			}
 			return show;
 		}
 
@@ -240,15 +239,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		);
 
-		placemarks.sort(function(a, b) {
-			return b.position[1] - a.position[1];
-		});
-		placemarks.forEach((obj) => {
-			if(obj[attr] == "") return;
-			center = add(center,obj.position);
+		let keysSorted = Object.keys(placemarks).sort(function(a,b){return placemarks[b].position[1]-placemarks[a].position[1]})
+
+		Object.values(keysSorted).forEach((obj) => {
+			if(placemarks[obj][attr] == "") return;
+			center = add(center,placemarks[obj].position);
 			count++;
-			myPlacemark = new ymaps.Placemark(obj.position, {
-				name: obj.hintContent
+			myPlacemark = new ymaps.Placemark(placemarks[obj].position, {
+				name: placemarks[obj].hintContent
 			}, {
 				hintLayout: HintLayout,
 				iconLayout: 'default#image',
@@ -260,11 +258,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			myMap.geoObjects.add(myPlacemark);
 
 			myPlacemark.events.add('click', function (e) {
-				sendGood(rate, attr, obj[attr], obj.hintContent);
-				window.open(obj[attr]);
-				// console.log(obj.id);
+				sendGood(rate, attr, placemarks[obj][attr], placemarks[obj].hintContent);
+				window.open(placemarks[obj][attr]);
+				// console.log(placemarks[obj].id);
 			});
-
 		});
 
 		myMap.setCenter(avr(center,count));
@@ -663,7 +660,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		};
 	})
 
-	document.getElementById('popup_link').addEventListener('click', function(e){
+	let popupLink = document.getElementById('popup_link');
+	if(popupLink) popupLink.addEventListener('click', function(e) {
 		e.preventDefault();
 		Swal.fire({
 			html: policy,
