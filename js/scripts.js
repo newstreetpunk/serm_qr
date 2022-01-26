@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			myMap.geoObjects.add(myPlacemark);
 
 			myPlacemark.events.add('click', function (e) {
-				sendGood(rate, attr, obj[attr]);
+				sendGood(rate, attr, obj[attr], obj.hintContent);
 				window.open(obj[attr]);
 				// console.log(obj.id);
 			});
@@ -420,11 +420,29 @@ document.addEventListener('DOMContentLoaded', () => {
 		return valid;
 	}
 
-	async function sendGood (rate, map, url) {
+	async function sendGood (rate, map, link, dealer) {
 
 		let formData = new FormData();
 		formData.append('rate', rate);
-		formData.append('url', url);
+		formData.append('link', link);
+		formData.append('dealer', dealer);
+
+		let url = window.location.href;
+		let replUrl = 'referer=' + url.replace('?', '&');
+		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : url);
+
+		replUrl.split('&').forEach(function(el){
+			pair = el.split('=');
+			formData.append(pair[0], pair[1]);
+		});
+		if(source.search != window.location.search) {
+			source.search.replace('?', '&').split('&').forEach(function(el){
+				pair = el.split('=');
+				formData.append(pair[0], pair[1]);
+			});
+		}
+
+
 		switch (map) {
 			case 'google':
 				formData.append('map', 'Google');
@@ -443,6 +461,18 @@ document.addEventListener('DOMContentLoaded', () => {
 			method: 'POST',
 			body: formData
 		});
+
+		if (response.status === 200) {
+			res = await response.json();
+			console.log(res);
+		}
+	}
+
+	function getCookie(name) {
+		var matches = document.cookie.match(new RegExp(
+		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+		))
+		return matches ? decodeURIComponent(matches[1]) : undefined
 	}
 
 	async function sendForm (form, btn, formData, textSucces = 'Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.') {
@@ -451,6 +481,22 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (formData.get('file')) {
 			textSucces = 'Ваш скриншот был успешно отправлен!';
 		}
+
+		let url = window.location.href;
+		let replUrl = 'referer=' + url.replace('?', '&');
+		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : url);
+
+		replUrl.split('&').forEach(function(el){
+			pair = el.split('=');
+			formData.append(pair[0], pair[1]);
+		});
+		if(source.search != window.location.search) {
+			source.search.replace('?', '&').split('&').forEach(function(el){
+				pair = el.split('=');
+				formData.append(pair[0], pair[1]);
+			});
+		}
+
 		let response = await fetch('/mail.php', {
 			method: 'POST',
 			body: formData
