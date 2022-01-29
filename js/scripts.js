@@ -414,16 +414,18 @@ document.addEventListener('DOMContentLoaded', () => {
 			field.style.display = 'block';
 			valid = false;
 		}
-		setTimeout( ()=>{
+		if(errors){
+			setTimeout( ()=>{
 			// console.log(Object.keys( errors )[0]);
 			form
 				.querySelector('.error-message#'+Object.keys( errors )[0])
 				.previousElementSibling
 				.scrollIntoView({
-				behavior: 'smooth',
-				block: 'start'
-			});
-		}, 300 );
+					behavior: 'smooth',
+					block: 'start'
+				});
+			}, 300 );
+		}
 		return valid;
 	}
 
