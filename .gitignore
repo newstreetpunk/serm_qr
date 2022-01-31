@@ -2,3 +2,4 @@
 *.php
 sftp-config.json
 /uploads/*
+inc/
