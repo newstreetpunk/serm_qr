@@ -2,6 +2,15 @@ $border-color: $text !default
 .border-dotted
 	border: 1px dotted $border-color
 
+.link-decoration
+	transition: all .25s ease
+	text-decoration: underline
+	color: $text
+	font-weight: 400
+	&:hover
+		text-decoration: none
+		color: $text
+
 // SIZES
 .w-52
 	width: 52px
