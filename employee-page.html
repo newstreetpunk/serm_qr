@@ -37,14 +37,38 @@
 
 		<main>
 
-			<form action="">
+			<form 
+				x-data="{photoName: null, photoPreview: null}" 
+				@submit.prevent="console.log('Submit'); return false;"
+			>
 				<div class="avatar-wrapper padding-calc">
-					<div class="kia-dropzone">
-						<div class="file-upload" id="file-upload"></div>
-						<div class="error-message" id="photo"></div>
-						<div class="success-message"></div>
+					<input 
+						type="file" 
+						class="d-none" 
+						x-ref="photo"
+						x-on:change="
+                            photoName = $refs.photo.files[0] ? $refs.photo.files[0].name : null;
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                                photoPreview = $refs.photo.files[0] ? e.target.result : null;
+                            };
+                            $refs.photo.files[0] ? reader.readAsDataURL($refs.photo.files[0]) : '';
+                        "
+					>
+					<div
+						@click="$refs.photo.click()" 
+						class="photo-upload border-dotted d-flex align-items-center justify-content-center" 
+						:class="{'d-none': photoPreview}"
+						style="padding: 55% 0;"
+						>
+						Фото
 					</div>
-					<!-- <img src="img/users/1.jpg" alt="User Name" class="w-100"> -->
+					<img 
+						@click="$refs.photo.click()"
+						:src="photoPreview" 
+						class="w-100"
+						:class="{'d-none': !photoPreview}" 
+					/>
 				</div>
 				<div class="form-group position-relative">
 					<label for="name" class="position-absolute text-muted">ФИО</label>
