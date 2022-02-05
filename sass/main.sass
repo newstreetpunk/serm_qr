@@ -1,6 +1,8 @@
 @import "vars"
 @import "fonts"
+@import "utl"
 @import "libs"
+
 
 
 html
@@ -869,3 +871,44 @@ form small a
 		flex-wrap: wrap
 		button
 			width: 100%
+
+// Employee Page
+body.employee
+	text-align: left
+	font-size: 18px
+	// font-weight: 500
+	+media-breakpoint-down(sm)
+		font-size: 16px
+	.wrapper
+		max-width: 425px
+		padding: 0 30px
+		+media-breakpoint-down(sm)
+			padding: 0 15px
+	.logo-img
+		width: 90px
+	.logo-line
+		width: 1px
+		height: 20px
+		background-color: $text
+		margin: 0 3%
+	.logo-text
+		font-size: 18px
+	.logo-title
+		padding: 0
+
+.padding-calc
+	padding-left: calc(91px + 6%)
+
+
+.avatar-wrapper
+	margin-bottom: 30px
+	img
+		width: 100%
+
+input.padding-calc
+	border-color: rgba(#000, .3) !important
+	outline: none
+	transition: all .25s ease
+	text-overflow: ellipsis
+	&:focus
+		border-color: rgba(#000, 1) !important
