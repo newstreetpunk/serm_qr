@@ -36,67 +36,36 @@
 		</header>
 
 		<main>
-
-			<form 
-				x-data="{photoName: null, photoPreview: null}" 
-				@submit.prevent="console.log('Submit'); return false;"
-			>
+			<div class="contact-card">
 				<div class="avatar-wrapper padding-calc">
-					<input 
-						type="file" 
-						class="d-none" 
-						x-ref="photo"
-						x-on:change="
-                            photoName = $refs.photo.files[0] ? $refs.photo.files[0].name : null;
-                            const reader = new FileReader();
-                            reader.onload = (e) => {
-                                photoPreview = $refs.photo.files[0] ? e.target.result : null;
-                            };
-                            $refs.photo.files[0] ? reader.readAsDataURL($refs.photo.files[0]) : '';
-                        "
-					>
-					<div
-						@click="$refs.photo.click()" 
-						class="photo-upload border-dotted d-flex align-items-center justify-content-center" 
-						:class="{'d-none': photoPreview}"
-						style="padding: 55% 0; cursor: pointer;"
-						>
-						Фото
-					</div>
-					<img 
-						@click="$refs.photo.click()"
-						:src="photoPreview" 
-						class="w-100"
-						:class="{'d-none': !photoPreview}" 
-					/>
+					<img src="img/users/1.jpg" class="w-100" />
 				</div>
 				<div class="form-group position-relative">
-					<label for="name" class="position-absolute text-muted">ФИО</label>
-					<input type="text" id="name" name="name" class="w-100 padding-calc border-0 border-bottom pt-0 pb-3" value="Константин Константинов">
+					<label class="position-absolute text-muted">ФИО</label>
+					<div class="w-100 padding-calc border-0 border-bottom pt-0 pb-3">Константин Константинович Константинов</div>
 				</div>
 				<div class="form-group position-relative">
-					<label for="department" class="position-absolute text-muted">Отдел</label>
-					<input type="text" id="department" name="department" class="w-100 padding-calc border-0 border-bottom pt-0 pb-3" value="Отдельный">
+					<label class="position-absolute text-muted">Отдел</label>
+					<div class="w-100 padding-calc border-0 border-bottom pt-0 pb-3">Отдельный</div>
 				</div>
 				<div class="form-group position-relative">
-					<label for="position" class="position-absolute text-muted">Должность</label>
-					<input type="text" id="position" name="position" class="w-100 padding-calc border-0 border-bottom pt-0 pb-3" value="Менеджер">
+					<label class="position-absolute text-muted">Должность</label>
+					<div class="w-100 padding-calc border-0 border-bottom pt-0 pb-3">Менеджер</div>
 				</div>
 				<div class="form-group position-relative">
-					<label for="work-phone" class="position-absolute text-muted">Рабочий</label>
-					<input type="tel" id="work-phone" name="work-phone" class="w-100 padding-calc border-0 border-bottom pt-0 pb-3" value="+7 (999) 999-99-99">
+					<label class="position-absolute text-muted">Рабочий</label>
+					<div class="w-100 padding-calc border-0 border-bottom pt-0 pb-3">+7 (999) 999-99-99</div>
 				</div>
 				<div class="form-group position-relative">
-					<label for="mobile-phone" class="position-absolute text-muted">Мобильный</label>
-					<input type="tel" id="mobile-phone" name="mobile-phone" class="w-100 padding-calc border-0 border-bottom pt-0 pb-3" value="+7 (999) 999-99-99">
+					<label class="position-absolute text-muted">Мобильный</label>
+					<div class="w-100 padding-calc border-0 border-bottom pt-0 pb-3">+7 (999) 999-99-99</div>
 				</div>
 				<div class="form-group position-relative">
-					<label for="email" class="position-absolute text-muted">Должность</label>
-					<input type="email" id="email" name="email" class="w-100 padding-calc border-0 border-bottom pt-0 pb-3" value="konstantinov@kiasamara.ru">
+					<label class="position-absolute text-muted">Email</label>
+					<div class="w-100 padding-calc border-0 border-bottom pt-0 pb-3">konstantinov@kiasamara.ru</div>
 				</div>
-				<button type="submit" class="btn w-100 mt-4"><span>Сохранить карточку <span class="d-none d-sm-inline">контакта</span></span></button>
-			</form>
-
+				<button type="button" class="btn w-100 mt-4"><span>Сохранить карточку <span class="d-none d-sm-inline">контакта</span></span></button>
+			</div>
 		</main>
 
 		<section class="social__list icon-block border-0">
