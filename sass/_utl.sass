@@ -3,13 +3,23 @@ $border-color: $text !default
 	border: 1px dotted $border-color
 
 .link-decoration
-	transition: all .25s ease
-	text-decoration: underline
+	text-decoration: none
 	color: $text
 	font-weight: 400
+	position: relative
+	&:before
+		content: ''
+		width: 0
+		height: 1px
+		background-color: $text
+		position: absolute
+		left: 0
+		bottom: -4px
+		transition: width .25s ease-in-out
 	&:hover
-		text-decoration: none
 		color: $text
+		&:before
+			width: 100%
 
 // SIZES
 .w-52
