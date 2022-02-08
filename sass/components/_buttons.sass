@@ -1,0 +1,39 @@
+.btn
+	background-color: $text
+	color: #fff
+	border: 1px solid #000
+	font-weight: 700
+	padding: 17px 40px
+	border-radius: 0
+	font-size: 15px
+	font-weight: bold
+	span
+		position: relative
+		transition: all .25s ease-out
+		&:before
+			content: ''
+			width: 0
+			height: 1px
+			background-color: #fff
+			position: absolute
+			left: 0
+			bottom: -4px
+			transition: width .25s ease-in-out
+	&:hover
+		color: #fff
+		background-color: $btnHover
+		span
+			&:before
+				width: 100%
+	&.btn-white
+		background-color: #fff
+		color: #000
+		span
+			&:before
+				background-color: $text
+		&:hover
+			color: $text
+
+.swal-buttons
+	.btn
+		padding: 12px 24px
