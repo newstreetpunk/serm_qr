@@ -258,7 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			myMap.geoObjects.add(myPlacemark);
 
 			myPlacemark.events.add('click', function (e) {
-				sendGood(rate, attr, placemarks[obj][attr], placemarks[obj].hintContent);
+				if(["google", "yandex", "gis"].includes(attr))
+					sendGood(rate, attr, placemarks[obj][attr], placemarks[obj].hintContent);
 				window.open(placemarks[obj][attr]);
 				// console.log(placemarks[obj].id);
 			});
