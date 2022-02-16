@@ -774,24 +774,28 @@ document.addEventListener('DOMContentLoaded', () => {
 		};
 	})
 
-	let popupLink = document.getElementById('popup_link');
-	if(popupLink) popupLink.addEventListener('click', function(e) {
-		e.preventDefault();
-		Swal.fire({
-			html: policy,
-			width: 900,
-			backdrop: 'rgba(0,0,0,0.7)',
-			showCloseButton: true,
-			closeButtonHtml: '&times;',
-			showConfirmButton: false,
-			showClass: {
-				popup: 'animate__animated animate__fadeIn'
-			},
-			hideClass: {
-				popup: 'animate__animated animate__fadeOut'
-			}
+	let popupLinks = document.querySelectorAll('#popup_link');
+	if(popupLinks){
+		popupLinks.forEach(popupLink => {
+			popupLink.addEventListener('click', function(e) {
+				e.preventDefault();
+				Swal.fire({
+					html: policy,
+					width: 900,
+					backdrop: 'rgba(0,0,0,0.7)',
+					showCloseButton: true,
+					closeButtonHtml: '&times;',
+					showConfirmButton: false,
+					showClass: {
+						popup: 'animate__animated animate__fadeIn'
+					},
+					hideClass: {
+						popup: 'animate__animated animate__fadeOut'
+					}
+				})
+			})
 		})
-	})
+	}
 
 	const qtyBlock = document.querySelector('.quality-block');
 	const reviewBlockGood = document.querySelector('#add-review-good');
