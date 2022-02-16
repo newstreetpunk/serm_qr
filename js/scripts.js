@@ -31,6 +31,59 @@ document.addEventListener('alpine:initialized', () => {
 
 // Alpine.start();
 
+var getClientID = class {
+
+	clientID = {ym:[],ga:[],count:0};
+
+	constructor() {
+
+		if(!('clientID' in localStorage)) {
+			localStorage.clientID = JSON.stringify(this.clientID);
+		}
+
+		this.clientID = JSON.parse(localStorage.clientID);
+
+		this.clientID.count++;
+
+		if('ym' in document) {
+			let metrika = ym.a.map((m)=>{ return m[0]});
+
+			metrika.forEach((m)=>{
+				ym(m, 'getClientID', (cID) => {
+					this.push(this.clientID.ym, cID);
+				});
+			});
+		}
+
+		if('ga' in document) {
+			ga((tracker) => {
+				let cID = tracker.get('clientId');
+				this.push(this.clientID.ga, cID);
+			});
+		}
+
+		this.push(this.clientID.ga, this.getCookie('_ga'));
+		this.push(this.clientID.ym, this.getCookie('_ym_uid'));
+
+		localStorage.clientID = JSON.stringify(this.clientID);
+
+		return this.clientID;
+
+	}
+
+	getCookie(name) {
+		var matches = document.cookie.match(new RegExp(
+			"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+		))
+		return matches ? decodeURIComponent(matches[1]) : undefined
+	}
+
+	push(arr, cID) {
+		if(!arr.includes(cID)) arr.push(cID);
+	}
+
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	const delears = document.querySelectorAll('.dealer-link');
@@ -46,6 +99,37 @@ document.addEventListener('DOMContentLoaded', () => {
 	let clicked = false;
 	let attr = '';
 	let rate = 0;
+	const clientID = new getClientID();
+
+	function getCookie(name) {
+		var matches = document.cookie.match(new RegExp(
+			"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+		))
+		return matches ? decodeURIComponent(matches[1]) : undefined
+	};
+	function setCookie(name, value, props) {
+		props = props || {}
+		// console.log(props);
+		var exp = props.expires
+		if (typeof exp == "number" && exp) {
+			var d = new Date()
+			d.setTime(d.getTime() + exp*1000)
+			exp = props.expires = d
+		}
+		if(exp && exp.toUTCString) { props.expires = exp.toUTCString() }
+		value = encodeURIComponent(value)
+		var updatedCookie = name + "=" + value
+		for(var propName in props){
+			updatedCookie += "; " + propName
+			var propValue = props[propName]
+			if(propValue !== true){ updatedCookie += "=" + propValue }
+			// console.log(updatedCookie);
+		}
+		document.cookie = updatedCookie
+	};
+	function deleteCookie(name) {
+		setCookie(name, null, { 'domain':settings.domain,'path':'/','expires': -1 })
+	};
 
 	function slideUp(container){
 
@@ -258,7 +342,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			myMap.geoObjects.add(myPlacemark);
 
 			myPlacemark.events.add('click', function (e) {
-				sendGood(rate, attr, placemarks[obj][attr], placemarks[obj].hintContent);
+				if(["google", "yandex", "gis"].includes(attr)) {
+					if(getCookie("sentGoodFeedback") === undefined) {
+						setCookie("sentGoodFeedback", true, {'domain':location.hostname,'path':'/','expires': 3600*24*1});
+						sendGood(rate, attr, placemarks[obj][attr], placemarks[obj].hintContent);
+					}
+				}
 				window.open(placemarks[obj][attr]);
 				// console.log(placemarks[obj].id);
 			});
@@ -429,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		return valid;
 	}
 
-	async function sendGood (rate, map, link, dealer) {
+	async function sendGood(rate, map, link, dealer) {
 
 		let formData = new FormData();
 		formData.append('rate', rate);
@@ -466,6 +555,16 @@ document.addEventListener('DOMContentLoaded', () => {
 				break;
 		}
 
+		if(getCookie("fta") != undefined) {
+			formData.append('fta', true);
+		}
+		console.log(clientID, ('clientID' in localStorage));
+		if('clientID' in localStorage) {
+			formData.append('Посещение', clientID.count);
+			formData.append('Яндекс ID', clientID.ym);
+			formData.append('Google ID', clientID.ga);
+		}
+
 		let response = await fetch('/good.php', {
 			method: 'POST',
 			body: formData
@@ -477,14 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	function getCookie(name) {
-		var matches = document.cookie.match(new RegExp(
-		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-		))
-		return matches ? decodeURIComponent(matches[1]) : undefined
-	}
-
-	async function sendForm (form, btn, formData, textSucces = 'Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.') {
+	async function sendForm(form, btn, formData, textSucces = 'Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.') {
 		let res;
 		// console.log(textSucces)
 		if (formData.get('file')) {
@@ -504,6 +596,16 @@ document.addEventListener('DOMContentLoaded', () => {
 				pair = el.split('=');
 				formData.append(pair[0], pair[1]);
 			});
+		}
+
+		if(getCookie("fta") != undefined) {
+			formData.append('fta', true);
+		}
+
+		if('clientID' in localStorage) {
+			formData.append('Посещение', clientID.count);
+			formData.append('Яндекс ID', clientID.ym);
+			formData.append('Google ID', clientID.ga);
 		}
 
 		let response = await fetch('/mail.php', {

@@ -56,7 +56,6 @@ projects.kia_qr = {
 		src: [
 			'node_modules/dropzone/dist/dropzone.js',
 			'node_modules/alpinejs/dist/cdn.js',
-			//basename + '/libs/dropzone/dropzone.js',
 			'node_modules/sweetalert2/dist/sweetalert2.all.js',
 			basename + '/js/scripts.js', // Custom scripts. Always at the end
 		],
