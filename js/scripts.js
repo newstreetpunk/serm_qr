@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			myPlacemark.events.add('click', function (e) {
 				if(["google", "yandex", "gis"].includes(attr)) {
 					if(getCookie("sentGoodFeedback") === undefined) {
-						// setCookie("sentGoodFeedback", true, {'domain':location.hostname,'path':'/','expires': 3600*24*1});
+						setCookie("sentGoodFeedback", true, {'domain':location.hostname,'path':'/','expires': 3600*24*1});
 						sendGood(rate, attr, placemarks[obj][attr], placemarks[obj].hintContent);
 					}
 				}
@@ -555,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				break;
 		}
 
-		if(getCookie("fta") === undefined) {
+		if(getCookie("fta") != undefined) {
 			formData.append('fta', true);
 		}
 		console.log(clientID, ('clientID' in localStorage));
@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		}
 
-		if(getCookie("fta") === undefined) {
+		if(getCookie("fta") != undefined) {
 			formData.append('fta', true);
 		}
 
