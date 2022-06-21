@@ -84,6 +84,8 @@ var getClientID = class {
 
 }
 
+Dropzone.autoDiscover = false;
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	const delears = document.querySelectorAll('.dealer-link');
