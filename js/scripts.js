@@ -452,6 +452,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	} // end uploadField
 
+	function getUniqueID() {
+		var navigator_info = window.navigator;
+		var screen_info = window.screen;
+		var uid = '';
+		uid += navigator_info.vendor.replace(/\W+/g, '')+'-';
+		uid += navigator_info.mimeTypes.length+'-';
+		uid += navigator_info.userAgent.replace(/\D+/g, '')+'-';
+		uid += navigator_info.plugins.length+'-';
+		uid += (screen_info.width || '') + 'x';
+		uid += (screen_info.height || '') + 'x';
+		uid += screen_info.pixelDepth || '';
+		return uid;
+	}
+
 	function maskphone(form) {
 
 		form.querySelector('.error-message#phone').style.display = 'none';
@@ -560,6 +574,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		if(getCookie("fta") != undefined) {
 			formData.append('fta', true);
 		}
+
+		formData.append('uniqueID', getUniqueID());
+
 		console.log(clientID, ('clientID' in localStorage));
 		if('clientID' in localStorage) {
 			formData.append('Посещение', clientID.count);
@@ -599,6 +616,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				formData.append(pair[0], pair[1]);
 			});
 		}
+
+		formData.append('uniqueID', getUniqueID());
 
 		if(getCookie("fta") != undefined) {
 			formData.append('fta', true);
