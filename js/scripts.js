@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		myMap.behaviors.disable('scrollZoom');
 
-		HintLayout = ymaps.templateLayoutFactory.createClass( "<div class='kia-hint'>" +
+		HintLayout = ymaps.templateLayoutFactory.createClass( "<div class='map-hint'>" +
 			"{{ properties.name }}" +
 			"</div>", {
 				// Определяем метод getShape, который
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}, {
 				hintLayout: HintLayout,
 				iconLayout: 'default#image',
-				iconImageHref: '../img/icons/kia-locator.svg?re',
+				iconImageHref: '../img/icons/marker-map.svg?re',
 				iconImageSize: [42, 62],
 				iconImageOffset: [-21, -58],
 			});
@@ -362,9 +362,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	if(uploadField) {
 
-	const kiaDropzone = document.querySelector('.kia-dropzone');
-	let dropzoneError = kiaDropzone.querySelector('.error-message');
-	let dropzoneSuccess = kiaDropzone.querySelector('.success-message');
+	const theDropzone = document.querySelector('.the-dropzone');
+	let dropzoneError = theDropzone.querySelector('.error-message');
+	let dropzoneSuccess = theDropzone.querySelector('.success-message');
 
 	let dropzone = new Dropzone(uploadField, {
 		url: 'upload.php',
@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				if(!formData.get('phone') && formData.get('comment') && formData.get('agree')){
 					Swal.fire({
 						html: '<h2>Спасибо за&nbsp;Ваш комментарий.</h2><p>Если Вы&nbsp;хотите чтобы мы&nbsp;с&nbsp;Вами связались, пожалуйста, оставьте свой номер телефона</p><br>' +
-						'<div class="kia-form-group">' +
+						'<div class="qr-form-group">' +
 						'<input type="text" tabindex="-1" placeholder="Ваше имя" name="name">' +
 						'<input type="email" tabindex="-1" name="email" placeholder="mail@example.com">' +
 						'<input type="tel" id="phone-field-swal" name="phone" placeholder=" " required>' +
