@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}, {
 				hintLayout: HintLayout,
 				iconLayout: 'default#image',
-				iconImageHref: '../img/icons/marker-map.svg?re',
+				iconImageHref: placemarks[obj].marker,
 				iconImageSize: [42, 62],
 				iconImageOffset: [-21, -58],
 			});
