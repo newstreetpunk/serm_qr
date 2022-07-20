@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			myMap.geoObjects.add(myPlacemark);
 
 			myPlacemark.events.add('click', function (e) {
-				if(["google", "yandex", "gis"].includes(attr)) {
+				if(["google", "yandex", "gis", "zoon", "flamp", "yell", "avito"].includes(attr)) {
 					if(getCookie("sentGoodFeedback") === undefined) {
 						setCookie("sentGoodFeedback", true, {'domain':location.hostname,'path':'/','expires': 3600*24*1});
 						sendGood(rate, attr, placemarks[obj][attr], placemarks[obj].hintContent);
@@ -566,6 +566,18 @@ document.addEventListener('DOMContentLoaded', () => {
 				break;
 			case 'gis':
 				formData.append('map', '2Гис');
+				break;
+			case "zoon":
+				formData.append('map', 'Zoon');
+				break;
+			case 'flamp':
+				formData.append('map', 'Flamp');
+				break;
+			case 'yell':
+				formData.append('map', 'Yell');
+				break;
+			case 'avito':
+				formData.append('map', 'Avito');
 				break;
 			default:
 				break;
