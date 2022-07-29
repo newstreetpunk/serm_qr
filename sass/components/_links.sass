@@ -2,14 +2,16 @@ a
 	color: $yellow
 	font-weight: bold
 	text-decoration: none
+
+.can-hover a
 	transition: all .4s ease
 	&:hover
 		color: $text
 		text-decoration: none
-	@include media-breakpoint-up(lg)
-		&:hover
+		@include media-breakpoint-up(lg)
 			text-decoration: none
 			color: $yellow
+
 
 .link-decoration
 	text-decoration: none

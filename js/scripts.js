@@ -88,6 +88,11 @@ Dropzone.autoDiscover = false;
 
 document.addEventListener('DOMContentLoaded', () => {
 
+	var canHover = !(matchMedia('(hover: none)').matches);
+	if (canHover) {
+		document.body.classList.add('can-hover');
+	}
+
 	const delears = document.querySelectorAll('.dealer-link');
 	const reviews = document.querySelectorAll('.add-review__link');
 	const map = document.querySelector('.map');
@@ -839,6 +844,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		qtyBlock.addEventListener('click', e => {
 			rate = e.target.closest('.quality-item').dataset.quality;
 			if(!rate) {
+				console.log("didn't find data-quality");
 				return;
 			}else{
 				// slideUp(qtyBlock.closest('#service-quality'));
@@ -851,6 +857,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					// reviewList.classList.remove('d-none');
 					reviewBlockGood.classList.add('active');
 				}else{
+					console.log("smth wrong with rate");
 					return;
 				}
 			}
