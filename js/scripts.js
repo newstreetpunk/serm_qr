@@ -463,6 +463,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			formData.append('Яндекс ID', clientID.ym);
 			formData.append('Google ID', clientID.ga);
 		}
+		
+		switch(form.dataset.type) {
+			case "review":
+			case "screenshot":
+			case "friend":
+				formData.append('type', form.dataset.type);
+				break;
+			default:
+				break;
+		}
 
 		let response = await fetch('/mail.php', {
 			method: 'POST',
@@ -543,7 +553,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			let formData = new FormData(form);
 			formData.append('subject', dataset.subject);
 			formData.append('form', dataset.form);
-			formData.append('rate', rate);
+			if(rate != 0) {
+				formData.append('rate', rate);
+			}
 
 			if(dataset.file){
 				formData.append('file', dataset.file);
