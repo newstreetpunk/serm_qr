@@ -468,10 +468,19 @@ document.addEventListener('DOMContentLoaded', () => {
 			case "review":
 			case "screenshot":
 			case "friend":
+			case "friend_create":
 				formData.append('type', form.dataset.type);
 				break;
 			default:
 				break;
+		}
+
+		if(form.dataset.type == "friend_create") {
+			var stringForEncode = parseInt(formData.get('phone').replace(/\D/ig,"").substr(1)).toString(32).toUpperCase();
+			formData.append('code', stringForEncode);
+			var your = " вашего";
+			textSucces = "Код для" + your + " клиента: " + stringForEncode + "<br><br>\n";
+			textSucces += "Ссылка для" + your + " клиента:<br><a target=\"_blank\" href=\"https://qr.kia-engels.ru/ref/" + stringForEncode + "\">qr.kia-engels.ru/ref/" + stringForEncode + "</a>";
 		}
 
 		let response = await fetch('/mail.php', {
@@ -516,7 +525,11 @@ document.addEventListener('DOMContentLoaded', () => {
 					backdrop: 'rgba(0,0,0,0.7)',
 					showCloseButton: true,
 					closeButtonHtml: '&times;',
-					confirmButtonColor: '#05141f'
+					confirmButtonColor: '#05141f',
+					allowOutsideClick: false,
+					allowEscapeKey: false,
+					showDenyButton: false,
+					showCancelButton: false
 				});
 				if(formData.get('file')){
 					document.querySelector('#file-upload').dropzone.removeAllFiles();
