@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	async function sendForm(form, btn, formData, textSucces = 'Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.') {
+	async function sendForm(form, btn, formData, textSucces = 'Спасибо!') {
 		let res;
 		// console.log(textSucces)
 		if (formData.get('file')) {
@@ -486,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				if(form.querySelector('.success-message')){
 					form.querySelector('.success-message').style.display = 'none';
 				}
-				btn.innerHTML = 'Отправить';
+				btn.innerHTML = '<span>Отправить</span>';
 				btn.removeAttribute('disabled');
 				return false;
 			}
@@ -502,15 +502,15 @@ document.addEventListener('DOMContentLoaded', () => {
 					closeButtonHtml: '&times;',
 					showConfirmButton: false
 				})
-				btn.innerHTML = 'Отправить';
+				btn.innerHTML = '<span>Отправить</span>';
 				btn.removeAttribute('disabled');
 				return false;
 			}
 
-			if(res.answer == 'ok' && formData.get('file')) {
+			if(res.answer == 'ok') {
 				Swal.fire({
 					title: 'Спасибо',
-					text: textSucces,
+					html: textSucces,
 					icon: 'success',
 					iconColor: '#f3c300',
 					backdrop: 'rgba(0,0,0,0.7)',
@@ -518,12 +518,14 @@ document.addEventListener('DOMContentLoaded', () => {
 					closeButtonHtml: '&times;',
 					confirmButtonColor: '#05141f'
 				});
+				if(formData.get('file')){
+					document.querySelector('#file-upload').dropzone.removeAllFiles();
+				} else if(form.closest('.add-review')) {
+					form.closest('.add-review').innerHTML = `<p class="text-muted mb-0">${textSucces}</p>`
+				}
 				form.reset();
-				document.querySelector('#file-upload').dropzone.removeAllFiles();
-				btn.innerHTML = 'Отправить';
+				btn.innerHTML = '<span>Отправить</span>';
 				btn.removeAttribute('disabled');
-			}else{
-				form.closest('.add-review').innerHTML = `<p class="text-muted mb-0">${textSucces}</p>`
 				return true;
 			}
 		}else{
@@ -537,8 +539,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				closeButtonHtml: '&times;',
 				showConfirmButton: false
 			})
-			btn.innerHTML = 'Отправить';
+			btn.innerHTML = '<span>Отправить</span>';
 			btn.removeAttribute('disabled');
+			return false;
 		}
 	}
 
@@ -559,13 +562,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			if(dataset.file){
 				formData.append('file', dataset.file);
-				sendForm(form, btn, formData);
+				sendForm(form, btn, formData, "Спасибо за&nbsp;Ваш отзыв.");
 			}else{
 				if(!formData.get('phone')){
 					formData.delete('phone')
 				}
-				if(formData.get('phone') && formData.get('comment') && formData.get('agree') || !formData.get('comment') || !formData.get('agree')){
-					sendForm(form, btn, formData);
+				if(formData.get('phone') && formData.get('comment') && formData.get('agree')){
+					sendForm(form, btn, formData, "Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.");
+				} else if(!formData.get('comment') || !formData.get('agree')){
+					sendForm(form, btn, formData, "");
 				}
 
 				if(!formData.get('phone') && formData.get('comment') && formData.get('agree')){
@@ -626,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
 							formData.append('email', swalEmail.value);
 						}
 
-						let send = sendForm(form, btn, formData);
+						let send = sendForm(form, btn, formData, "Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.");
 						send
 						.then( res => {
 							if(res) Swal.close();
