@@ -479,8 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			var stringForEncode = parseInt(formData.get('phone').replace(/\D/ig,"").substr(1)).toString(32).toUpperCase();
 			formData.append('code', stringForEncode);
 			var your = " вашего";
-			textSucces = "Код для" + your + " клиента: " + stringForEncode + "<br><br>\n";
-			textSucces += "Ссылка для" + your + " клиента:<br><a target=\"_blank\" href=\"https://qr.kia-engels.ru/ref/" + stringForEncode + "\">qr.kia-engels.ru/ref/" + stringForEncode + "</a>";
+			textSucces = "";
 		}
 
 		let response = await fetch('/mail.php', {
@@ -517,6 +516,18 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 
 			if(res.answer == 'ok') {
+				if(res.gs.manager != "") {
+					your = "";
+					textSucces += "Этот клиент уже закреплен за менеджером: <b>" + res.gs.manager + "</b><br><br>\n";
+				}
+				if(res.gs.lineAdded) {
+					textSucces += "Код для" + your + " клиента: " + stringForEncode + "<br><br>\n";
+					textSucces += "Ссылка для" + your + " клиента:<br><a target=\"_blank\" href=\"https://qr.kia-engels.ru/ref/" + stringForEncode + "\">qr.kia-engels.ru/ref/" + stringForEncode + "</a>";
+					document.querySelector('.last-code').innerHTML += "<br><br>"+textSucces;
+				}
+				if(res.gs.httpcode) {
+					textSucces = "Что-то пошло не&nbsp;так, пожалуйста свяжитесь с&nbsp;техподдержкой<br><br><a target=\"_blank\" href=\"https://alexsab.t.me\">alexsab.t.me</a>";
+				}
 				Swal.fire({
 					title: 'Спасибо',
 					html: textSucces,
