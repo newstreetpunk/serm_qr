@@ -430,9 +430,31 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
+	function checkingRequiredSelect(selects){
+		let valid = true
+		selects.forEach(select => {
+			const selectValue = select.dataset.value;
+			const selectRequired = select.dataset.required;
+			if (typeof selectRequired != 'undefined' && selectValue == '') {
+				select.nextSibling.nextElementSibling.innerText = 'Выберите значение'
+				select.nextSibling.nextElementSibling.style.display = 'block'
+				valid = false
+			}
+		})
+		return valid
+	}
+
 	async function sendForm(form, btn, formData, textSucces = 'Спасибо!') {
 		let res;
 		// console.log(textSucces)
+
+		const selects = form.querySelectorAll('.kia-select')
+		if(selects.length && !checkingRequiredSelect(selects)){
+			btn.innerHTML = '<span>Отправить</span>';
+			btn.removeAttribute('disabled');
+			return
+		}
+
 		if (formData.get('file')) {
 			textSucces = 'Ваш скриншот был успешно отправлен!';
 		}
@@ -476,10 +498,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 
 		if(form.dataset.type == "friend_create") {
-			var stringForEncode = parseInt(formData.get('phone').replace(/\D/ig,"").substr(1)).toString(32).toUpperCase();
-			formData.append('code', stringForEncode);
-			var your = " вашего";
-			textSucces = "";
+			if (formData.get('phone')) {
+				var stringForEncode = parseInt(formData.get('phone').replace(/\D/ig,"").substr(1)).toString(32).toUpperCase();
+				formData.append('code', stringForEncode);
+				var your = " вашего";
+				textSucces = "";
+			}
 		}
 
 		let response = await fetch('/mail.php', {
