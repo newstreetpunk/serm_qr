@@ -572,6 +572,15 @@ document.addEventListener('DOMContentLoaded', () => {
 					form.closest('.add-review').innerHTML = `<p class="text-muted mb-0">${textSucces}</p>`
 				}
 				form.reset();
+				selects.forEach(select => {
+					const $label = select.querySelector('.kia-select-label');
+					const labelValue = select.dataset.label;
+					$label.innerText = labelValue;
+					select.setAttribute('data-value', '')
+					select.querySelectorAll('.kia-select-option input').forEach(option => {
+						option.checked = false
+					})
+				})
 				btn.innerHTML = '<span>Отправить</span>';
 				btn.removeAttribute('disabled');
 				return true;
