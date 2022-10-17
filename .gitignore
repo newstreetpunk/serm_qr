@@ -4,5 +4,5 @@ sftp-config.json
 /uploads/*
 inc/
 .well-known/acme-challenge/*
-img/employees/
+/storage/
 .htaccess
