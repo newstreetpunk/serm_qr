@@ -1,91 +1,3 @@
-// import Alpine from 'alpinejs'
-
-window.Alpine = Alpine;
-
-document.addEventListener('alpine:init', (data) => {
-	Alpine.data('places', () => ({
-
-		classified:  {
-			avito: '/img/icons/avito-logo.svg',
-			avtoru: '/img/icons/avtoRu-logo.svg',
-			drom: '/img/icons/drom-logo.svg',
-		},
-
-		activeShop: '',
-
-		existShop(attr) {
-			var show = false;
-			for (obj in placemarks) {
-				if(placemarks[obj][attr] != "") show = true;
-			}
-			return show;
-		}
-
-	}))
-	// console.log('alpine:init');
-})
-
-document.addEventListener('alpine:initialized', () => {
-	// console.log('alpine initialized');
-})
-
-// Alpine.start();
-
-var getClientID = class {
-
-	clientID = {ym:[],ga:[],count:0};
-
-	constructor() {
-
-		if(!('clientID' in localStorage)) {
-			localStorage.clientID = JSON.stringify(this.clientID);
-		}
-
-		this.clientID = JSON.parse(localStorage.clientID);
-
-		this.clientID.count++;
-
-		if('ym' in document) {
-			let metrika = ym.a.map((m)=>{ return m[0]});
-
-			metrika.forEach((m)=>{
-				ym(m, 'getClientID', (cID) => {
-					this.push(this.clientID.ym, cID);
-				});
-			});
-		}
-
-		if('ga' in document) {
-			ga((tracker) => {
-				let cID = tracker.get('clientId');
-				this.push(this.clientID.ga, cID);
-			});
-		}
-
-		this.push(this.clientID.ga, this.getCookie('_ga'));
-		this.push(this.clientID.ym, this.getCookie('_ym_uid'));
-
-		localStorage.clientID = JSON.stringify(this.clientID);
-
-		return this.clientID;
-
-	}
-
-	getCookie(name) {
-		var matches = document.cookie.match(new RegExp(
-			"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-		))
-		return matches ? decodeURIComponent(matches[1]) : undefined
-	}
-
-	push(arr, cID) {
-		if(!arr.includes(cID)) arr.push(cID);
-	}
-
-}
-
-Dropzone.autoDiscover = false;
-
 document.addEventListener('DOMContentLoaded', () => {
 
 	var canHover = !(matchMedia('(hover: none)').matches);
@@ -363,100 +275,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		myMap.setCenter(avr(center,count));
 	}
 
-	const uploadField = document.querySelector('#file-upload');
-
-	if(uploadField) {
-
-	const theDropzone = document.querySelector('.the-dropzone');
-	let dropzoneError = theDropzone.querySelector('.error-message');
-	let dropzoneSuccess = theDropzone.querySelector('.success-message');
-
-	let dropzone = new Dropzone(uploadField, {
-		url: 'upload.php',
-		addRemoveLinks: true,
-		parallelUploads: 1,
-		acceptedFiles: '.jpg,.jpeg,.png',
-		maxFiles: 1,
-		maxFilesize: 10,
-		dictDefaultMessage: '<div class="dz-message needsclick">Загрузить скриншот</div>',
-		dictFallbackMessage: "Ваш браузер не поддерживает загрузку перетаскиванием",
-		dictFallbackText: "Пожалуйста, используйте резервную форму ниже, чтобы загрузить свои файлы, как в старые добрые времена)",
-		dictFileTooBig: "Слишком большой файл ({{filesize}}Мб). Максимальный размер: {{maxFilesize}}Мб.",
-		dictInvalidFileType: "Вы не можете загрузить файлы этого типа.",
-		dictResponseError: "Сервер вернул ответ {{statusCode}}.",
-		dictCancelUpload: "Отменить загрузку",
-		dictUploadCanceled: "Загрузка завершена.",
-		dictCancelUploadConfirmation: "Вы уверены, что хотите отменить?",
-		dictRemoveFile: "Удалить файл",
-		dictRemoveFileConfirmation: "Хотите удалить файл?",
-		dictMaxFilesExceeded: 'Привышен лимит изображений',
-		dictFileSizeUnits: {
-			tb: "Тб",
-			gb: "Гб",
-			mb: "Мб",
-			kb: "Кб",
-			b: "байт"
-		},
-		init: function(){
-			// console.log(this)
-			this.element.innerHTML = this.options.dictDefaultMessage;
-			this.on('addedfile', function(file) {
-				if (this.files.length > 1) {
-					this.removeFile(this.files[0]);
-				}
-			})
-		},
-		thumbnail: function(file, dataUrl) {
-			if (file.previewElement) {
-				file.previewElement.classList.remove("dz-file-preview");
-				let images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-				for (let i = 0; i < images.length; i++) {
-					let thumbnailElement = images[i];
-					thumbnailElement.alt = file.name;
-					thumbnailElement.src = dataUrl;
-					url = dataUrl;
-				}
-				setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
-			}
-		},
-		success: function(file, response){
-			response = JSON.parse(response);
-			// console.log(file);
-			if (response.answer == 'error') {
-				dropzoneSuccess.style.display = 'none';
-				dropzoneError.innerText = response.error;
-				dropzoneError.style.display = 'block';
-				dropzone.removeFile(file);
-			}else{
-				dropzoneError.style.display = 'none';
-				dropzoneSuccess.innerText = response.answer;
-				dropzoneSuccess.style.display = 'block';
-				// this.defaultOptions.success(file);
-			}
-			// console.log(res);
-		},
-		removedfile: function (file) {
-			file.previewElement.remove();
-			dropzoneSuccess.style.display = 'none';
-			dropzoneError.style.display = 'none';
-			const request = new XMLHttpRequest();
-
-			const url = "delete.php";
-			request.open("POST", url, true);
-			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			request.addEventListener("readystatechange", () => {
-				if(request.readyState === 4 && request.status === 200) {
-					dropzoneSuccess.innerText = request.responseText;
-					dropzoneSuccess.style.display = 'block';
-					// console.log(request.responseText);
-				}
-			});
-			request.send();
-		}
-	});
-
-	} // end uploadField
-
 	function getUniqueID() {
 		var navigator_info = window.navigator;
 		var screen_info = window.screen;
@@ -612,9 +430,31 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	async function sendForm(form, btn, formData, textSucces = 'Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.') {
+	function checkingRequiredSelect(selects){
+		let valid = true
+		selects.forEach(select => {
+			const selectValue = select.dataset.value;
+			const selectRequired = select.dataset.required;
+			if (typeof selectRequired != 'undefined' && selectValue == '') {
+				select.nextSibling.nextElementSibling.innerText = 'Выберите значение'
+				select.nextSibling.nextElementSibling.style.display = 'block'
+				valid = false
+			}
+		})
+		return valid
+	}
+
+	async function sendForm(form, btn, formData, textSucces = 'Спасибо!') {
 		let res;
 		// console.log(textSucces)
+
+		const selects = form.querySelectorAll('.kia-select')
+		if(selects.length && !checkingRequiredSelect(selects)){
+			btn.innerHTML = '<span>Отправить</span>';
+			btn.removeAttribute('disabled');
+			return
+		}
+
 		if (formData.get('file')) {
 			textSucces = 'Ваш скриншот был успешно отправлен!';
 		}
@@ -645,6 +485,26 @@ document.addEventListener('DOMContentLoaded', () => {
 			formData.append('Яндекс ID', clientID.ym);
 			formData.append('Google ID', clientID.ga);
 		}
+		
+		switch(form.dataset.type) {
+			case "review":
+			case "screenshot":
+			case "friend":
+			case "friend_create":
+				formData.append('type', form.dataset.type);
+				break;
+			default:
+				break;
+		}
+
+		if(form.dataset.type == "friend_create") {
+			if (formData.get('phone')) {
+				var stringForEncode = parseInt(formData.get('phone').replace(/\D/ig,"").substr(1)).toString(32).toUpperCase();
+				formData.append('code', stringForEncode);
+				var your = " вашего";
+				textSucces = "";
+			}
+		}
 
 		let response = await fetch('/mail.php', {
 			method: 'POST',
@@ -658,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				if(form.querySelector('.success-message')){
 					form.querySelector('.success-message').style.display = 'none';
 				}
-				btn.innerHTML = 'Отправить';
+				btn.innerHTML = '<span>Отправить</span>';
 				btn.removeAttribute('disabled');
 				return false;
 			}
@@ -674,28 +534,55 @@ document.addEventListener('DOMContentLoaded', () => {
 					closeButtonHtml: '&times;',
 					showConfirmButton: false
 				})
-				btn.innerHTML = 'Отправить';
+				btn.innerHTML = '<span>Отправить</span>';
 				btn.removeAttribute('disabled');
 				return false;
 			}
 
-			if(res.answer == 'ok' && formData.get('file')) {
+			if(res.answer == 'ok') {
+				if(res.gs.manager != "") {
+					your = "";
+					textSucces += "Этот клиент уже закреплен за менеджером: <b>" + res.gs.manager + "</b><br><br>\n";
+				}
+				if(res.gs.lineAdded) {
+					textSucces += "Код для" + your + " клиента: " + stringForEncode + "<br><br>\n";
+					textSucces += "Ссылка для" + your + " клиента:<br><a target=\"_blank\" href=\"https://qr.kia-engels.ru/ref/" + stringForEncode + "\">qr.kia-engels.ru/ref/" + stringForEncode + "</a>";
+					document.querySelector('.last-code').innerHTML += "<br><br>"+textSucces;
+				}
+				if(res.gs.httpcode) {
+					textSucces = "Что-то пошло не&nbsp;так, пожалуйста свяжитесь с&nbsp;техподдержкой<br><br><a target=\"_blank\" href=\"https://alexsab.t.me\">alexsab.t.me</a>";
+				}
 				Swal.fire({
 					title: 'Спасибо',
-					text: textSucces,
+					html: textSucces,
 					icon: 'success',
 					iconColor: '#f3c300',
 					backdrop: 'rgba(0,0,0,0.7)',
 					showCloseButton: true,
 					closeButtonHtml: '&times;',
-					confirmButtonColor: '#05141f'
+					confirmButtonColor: '#05141f',
+					allowOutsideClick: false,
+					allowEscapeKey: false,
+					showDenyButton: false,
+					showCancelButton: false
 				});
+				if(formData.get('file')){
+					document.querySelector('#file-upload').dropzone.removeAllFiles();
+				} else if(form.closest('.add-review')) {
+					form.closest('.add-review').innerHTML = `<p class="text-muted mb-0">${textSucces}</p>`
+				}
 				form.reset();
-				document.querySelector('#file-upload').dropzone.removeAllFiles();
-				btn.innerHTML = 'Отправить';
+				selects.forEach(select => {
+					const $label = select.querySelector('.kia-select-label');
+					const labelValue = select.dataset.label;
+					$label.innerText = labelValue;
+					select.setAttribute('data-value', '')
+					select.querySelectorAll('.kia-select-option input').forEach(option => {
+						option.checked = false
+					})
+				})
+				btn.innerHTML = '<span>Отправить</span>';
 				btn.removeAttribute('disabled');
-			}else{
-				form.closest('.add-review').innerHTML = `<p class="text-muted mb-0">${textSucces}</p>`
 				return true;
 			}
 		}else{
@@ -709,8 +596,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				closeButtonHtml: '&times;',
 				showConfirmButton: false
 			})
-			btn.innerHTML = 'Отправить';
+			btn.innerHTML = '<span>Отправить</span>';
 			btn.removeAttribute('disabled');
+			return false;
 		}
 	}
 
@@ -725,17 +613,21 @@ document.addEventListener('DOMContentLoaded', () => {
 			let formData = new FormData(form);
 			formData.append('subject', dataset.subject);
 			formData.append('form', dataset.form);
-			formData.append('rate', rate);
+			if(rate != 0) {
+				formData.append('rate', rate);
+			}
 
 			if(dataset.file){
 				formData.append('file', dataset.file);
-				sendForm(form, btn, formData);
+				sendForm(form, btn, formData, "Спасибо за&nbsp;Ваш отзыв.");
 			}else{
 				if(!formData.get('phone')){
 					formData.delete('phone')
 				}
-				if(formData.get('phone') && formData.get('comment') && formData.get('agree') || !formData.get('comment') || !formData.get('agree')){
-					sendForm(form, btn, formData);
+				if(formData.get('phone') && formData.get('comment') && formData.get('agree')){
+					sendForm(form, btn, formData, "Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.");
+				} else if(!formData.get('comment') || !formData.get('agree')){
+					sendForm(form, btn, formData, "");
 				}
 
 				if(!formData.get('phone') && formData.get('comment') && formData.get('agree')){
@@ -796,7 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
 							formData.append('email', swalEmail.value);
 						}
 
-						let send = sendForm(form, btn, formData);
+						let send = sendForm(form, btn, formData, "Спасибо за&nbsp;Ваш комментарий, в&nbsp;ближайшее время мы&nbsp;с&nbsp;Вами свяжемся.");
 						send
 						.then( res => {
 							if(res) Swal.close();

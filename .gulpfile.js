@@ -57,6 +57,10 @@ projects.kia_qr = {
 			'node_modules/dropzone/dist/dropzone.js',
 			'node_modules/alpinejs/dist/cdn.js',
 			'node_modules/sweetalert2/dist/sweetalert2.all.js',
+			basename + '/js/alpine.js', // Custom scripts. Always at the end
+			basename + '/js/getClientID.js', // Custom scripts. Always at the end
+			basename + '/js/dropzone.js', // Custom scripts. Always at the end
+			basename + '/js/kia-select.js', // Custom scripts. Always at the end
 			basename + '/js/scripts.js', // Custom scripts. Always at the end
 		],
 		dest:       basename + '/js',
