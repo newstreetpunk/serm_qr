@@ -6,9 +6,9 @@ document.addEventListener('alpine:init', (data) => {
 	Alpine.data('places', () => ({
 
 		classified:  {
-			avito: '/img/icons/avito-logo.svg',
-			avtoru: '/img/icons/avtoRu-logo.svg',
-			drom: '/img/icons/drom-logo.svg',
+			avito: '/img/icons/classified/avito-logo.svg',
+			avtoru: '/img/icons/classified/avtoRu-logo.svg',
+			drom: '/img/icons/classified/drom-logo.svg',
 		},
 
 		activeShop: '',
