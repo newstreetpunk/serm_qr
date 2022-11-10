@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	let clicked = false;
 	let attr = '';
+	let attrName = '';
 	let rate = 0;
 	const clientID = new getClientID();
 
@@ -99,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			e.preventDefault();
 
 			attr = el.getAttribute('data-source');
+			attrName = el.getAttribute('data-source-name');
 			// add_screenshot = document.querySelector('.add-screenshot');
 
 			mapBlock.style.height = '0px';
@@ -261,10 +263,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			myMap.geoObjects.add(myPlacemark);
 
 			myPlacemark.events.add('click', function (e) {
-				if(["google", "yandex", "gis", "zoon", "flamp", "yell", "avito"].includes(attr)) {
+				if(["google", "yandex", "gis", "zoon", "flamp", "yell", "avito", "avto_provereno"].includes(attr)) {
 					if(getCookie("sentGoodFeedback") === undefined) {
 						setCookie("sentGoodFeedback", true, {'domain':location.hostname,'path':'/','expires': 3600*24*1});
-						sendGood(rate, attr, placemarks[obj][attr], placemarks[obj].hintContent);
+						sendGood(rate, attrName, placemarks[obj][attr], placemarks[obj].hintContent);
 					}
 				}
 				window.open(placemarks[obj][attr]);
@@ -357,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		return valid;
 	}
 
-	async function sendGood(rate, map, link, dealer) {
+	async function sendGood(rate, serviceName, link, dealer) {
 
 		let formData = new FormData();
 		formData.append('rate', rate);
@@ -379,32 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		}
 
-
-		switch (map) {
-			case 'google':
-				formData.append('map', 'Google');
-				break;
-			case 'yandex':
-				formData.append('map', 'Яндекс');
-				break;
-			case 'gis':
-				formData.append('map', '2Гис');
-				break;
-			case "zoon":
-				formData.append('map', 'Zoon');
-				break;
-			case 'flamp':
-				formData.append('map', 'Flamp');
-				break;
-			case 'yell':
-				formData.append('map', 'Yell');
-				break;
-			case 'avito':
-				formData.append('map', 'Avito');
-				break;
-			default:
-				break;
-		}
+		formData.append('map', serviceName);
 
 		if(getCookie("fta") != undefined) {
 			formData.append('fta', true);

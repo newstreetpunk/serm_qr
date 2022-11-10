@@ -16,7 +16,7 @@ document.addEventListener('alpine:init', (data) => {
 		existShop(attr) {
 			var show = false;
 			for (obj in placemarks) {
-				if(placemarks[obj][attr] != "") show = true;
+				if(typeof placemarks[obj][attr] != "undefined" && placemarks[obj][attr] != "") show = true;
 			}
 			return show;
 		}
