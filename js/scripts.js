@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						sendGood(rate, attrName, placemarks[obj][attr], placemarks[obj].hintContent);
 					}
 				}
-				let param = new URLSearchParams(getPair()).toString();
+				let param = new URLSearchParams(getPair(new URL(placemarks[obj][attr]))).toString();
 				let url = new URL(placemarks[obj][attr]);
 				url.search = "?" + param;
 				// console.log(decodeURI(url));
@@ -280,26 +280,26 @@ document.addEventListener('DOMContentLoaded', () => {
 		myMap.setCenter(avr(center,count));
 	}
 
-	function getPair() {
-		let result = {};
-		let url = window.location.href;
-		let replUrl = 'referer=' + url.replace('?', '&');
-		replUrl.split('&').forEach(function(el){
-			if(el != "") {
+	function getPair(openURL) {
+		let result = {referer: window.location.origin};
+		if(typeof openURL == "object") {
+			openURL.search.substr(1).split('&').forEach(function(el){
 				pair = el.split('=');
 				result[pair[0]] = pair[1];
-			}
-		});
-
-		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : url);
-		if(source.search != window.location.search) {
-			source.search.replace('?', '&').split('&').forEach(function(el){
-				if(el != "") {
-					pair = el.split('=');
-					result[pair[0]] = pair[1];
-				}
 			});
 		}
+		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : url);
+		if(source.search != window.location.search) {
+			source.search.substr(1).split('&').forEach(function(el){
+				pair = el.split('=');
+				result[pair[0]] = pair[1];
+			});
+		}
+		window.location.search.substr(1).split('&').forEach(function(el){
+			pair = el.split('=');
+			result[pair[0]] = pair[1];
+		});
+
 		return result;
 	}
 
@@ -452,20 +452,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			textSucces = 'Ваш скриншот был успешно отправлен!';
 		}
 
-		let url = window.location.href;
-		let replUrl = 'referer=' + url.replace('?', '&');
-		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : url);
-
-		replUrl.split('&').forEach(function(el){
-			pair = el.split('=');
+		let data = getPair();
+		Object.entries(data).forEach(function(pair){
 			formData.append(pair[0], pair[1]);
 		});
-		if(source.search != window.location.search) {
-			source.search.replace('?', '&').split('&').forEach(function(el){
-				pair = el.split('=');
-				formData.append(pair[0], pair[1]);
-			});
-		}
 
 		formData.append('uniqueID', getUniqueID());
 
@@ -478,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			formData.append('Яндекс ID', clientID.ym);
 			formData.append('Google ID', clientID.ga);
 		}
-		
+
 		switch(form.dataset.type) {
 			case "review":
 			case "screenshot":
