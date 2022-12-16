@@ -269,12 +269,37 @@ document.addEventListener('DOMContentLoaded', () => {
 						sendGood(rate, attrName, placemarks[obj][attr], placemarks[obj].hintContent);
 					}
 				}
-				window.open(placemarks[obj][attr]);
-				// console.log(placemarks[obj].id);
+				let param = new URLSearchParams(getPair()).toString();
+				let url = new URL(placemarks[obj][attr]);
+				url.search = "?" + param;
+				window.open(url);
 			});
 		});
 
 		myMap.setCenter(avr(center,count));
+	}
+
+	function getPair() {
+		let result = {};
+		let url = window.location.href;
+		let replUrl = 'referer=' + url.replace('?', '&');
+		replUrl.split('&').forEach(function(el){
+			if(el != "") {
+				pair = el.split('=');
+				result[pair[0]] = pair[1];
+			}
+		});
+
+		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : url);
+		if(source.search != window.location.search) {
+			source.search.replace('?', '&').split('&').forEach(function(el){
+				if(el != "") {
+					pair = el.split('=');
+					result[pair[0]] = pair[1];
+				}
+			});
+		}
+		return result;
 	}
 
 	function getUniqueID() {
@@ -366,20 +391,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		formData.append('link', link);
 		formData.append('dealer', dealer);
 
-		let url = window.location.href;
-		let replUrl = 'referer=' + url.replace('?', '&');
-		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : url);
-
-		replUrl.split('&').forEach(function(el){
-			pair = el.split('=');
+		let data = getPair();
+		Object.entries(data).forEach(function(pair){
 			formData.append(pair[0], pair[1]);
 		});
-		if(source.search != window.location.search) {
-			source.search.replace('?', '&').split('&').forEach(function(el){
-				pair = el.split('=');
-				formData.append(pair[0], pair[1]);
-			});
-		}
 
 		formData.append('map', serviceName);
 
