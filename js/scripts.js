@@ -272,7 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				let param = new URLSearchParams(getPair()).toString();
 				let url = new URL(placemarks[obj][attr]);
 				url.search = "?" + param;
-				window.open(url);
+				// console.log(decodeURI(url));
+				window.open(decodeURI(url));
 			});
 		});
 
