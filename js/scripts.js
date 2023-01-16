@@ -128,16 +128,20 @@ document.addEventListener('DOMContentLoaded', () => {
 				// 	if(add_screenshot) add_screenshot.classList.add('active');
 				// }, 300)
 
-				setTimeout(() => {
-					if (!clicked) {
-						ymaps.ready(init);
-					}
-					map.style.height = (mapBlock.clientWidth + 30) + 'px';
-					yandexMap.style.height = (mapBlock.clientWidth + 30) + 'px';
-					mapBlock.style.height = (mapBlock.clientWidth + 30) + 'px';
-					scrollSmooth('.add-review');
-					clicked = true;
-				}, 300)
+				if(Object.keys(placemarks).length>1) {
+					setTimeout(() => {
+						if (!clicked) {
+							ymaps.ready(init);
+						}
+						map.style.height = (mapBlock.clientWidth + 30) + 'px';
+						yandexMap.style.height = (mapBlock.clientWidth + 30) + 'px';
+						mapBlock.style.height = (mapBlock.clientWidth + 30) + 'px';
+						scrollSmooth('.add-review');
+						clicked = true;
+					}, 300)
+				} else {
+					placeholderClick(attr, rate, attrName, placemarks, Object.keys(placemarks)[0]);
+				}
 				// setTimeout(()=>{
 				// 	if(add_screenshot) add_screenshot.style.height = 'auto';
 				// }, 300)
@@ -263,21 +267,24 @@ document.addEventListener('DOMContentLoaded', () => {
 			myMap.geoObjects.add(myPlacemark);
 
 			myPlacemark.events.add('click', function (e) {
-				if(["google", "yandex", "gis", "zoon", "flamp", "yell", "avito", "avto_provereno"].includes(attr)) {
-					if(getCookie("sentGoodFeedback") === undefined) {
-						setCookie("sentGoodFeedback", true, {'domain':location.hostname,'path':'/','expires': 3600*24*1});
-						sendGood(rate, attrName, placemarks[obj][attr], placemarks[obj].hintContent);
-					}
-				}
-				let param = new URLSearchParams(getPair(new URL(placemarks[obj][attr]))).toString();
-				let url = new URL(placemarks[obj][attr]);
-				url.search = "?" + param;
-				// console.log(decodeURI(url));
-				window.open(decodeURI(url));
+				placeholderClick(attr, rate, attrName, placemarks, obj);
 			});
 		});
 
 		myMap.setCenter(avr(center,count));
+	}
+
+	function placeholderClick(attr, rate, attrName, placemarks, obj) {
+		if(["google", "yandex", "gis", "zoon", "flamp", "yell", "avito", "avto_provereno"].includes(attr)) {
+			if(getCookie("sentGoodFeedback") === undefined) {
+				setCookie("sentGoodFeedback", true, {'domain':location.hostname,'path':'/','expires': 3600*24*1});
+				sendGood(rate, attrName, placemarks[obj][attr], placemarks[obj].hintContent);
+			}
+		}
+		let param = new URLSearchParams(getPair(new URL(placemarks[obj][attr]))).toString();
+		let url = new URL(placemarks[obj][attr]);
+		url.search = "?" + param;
+		window.open(decodeURI(url));
 	}
 
 	function getPair(openURL) {
