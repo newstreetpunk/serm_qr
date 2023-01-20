@@ -724,23 +724,25 @@ document.addEventListener('DOMContentLoaded', () => {
 	const reviewList = document.getElementById('add-review__list');
 	if(qtyBlock) {
 		qtyBlock.addEventListener('click', e => {
-			rate = e.target.closest('.quality-item').dataset.quality;
-			if(!rate) {
-				console.log("didn't find data-quality");
-				return;
-			}else{
-				// slideUp(qtyBlock.closest('#service-quality'));
-				qtyBlock.closest('#service-quality').classList.remove('active');
-				// qtyBlock.classList.remove('icon-block');
-				if(rate < 4){
-					// formComment.classList.remove('d-none');
-					reviewBlockBad.classList.add('active');
-				}else if(rate >= 4){
-					// reviewList.classList.remove('d-none');
-					reviewBlockGood.classList.add('active');
-				}else{
-					console.log("smth wrong with rate");
+			if(e.target.closest('.quality-item')) {
+				rate = e.target.closest('.quality-item').dataset.quality;
+				if(!rate) {
+					console.log("didn't find data-quality");
 					return;
+				}else{
+					// slideUp(qtyBlock.closest('#service-quality'));
+					qtyBlock.closest('#service-quality').classList.remove('active');
+					// qtyBlock.classList.remove('icon-block');
+					if(rate < 4){
+						// formComment.classList.remove('d-none');
+						reviewBlockBad.classList.add('active');
+					}else if(rate >= 4){
+						// reviewList.classList.remove('d-none');
+						reviewBlockGood.classList.add('active');
+					}else{
+						console.log("smth wrong with rate");
+						return;
+					}
 				}
 			}
 		})
