@@ -290,19 +290,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	function getPair(openURL) {
 		let result = {referer: window.location.origin};
 		if(typeof openURL == "object") {
-			openURL.search.substr(1).split('&').forEach(function(el){
+			openURL.search.substring(1).split('&').forEach(function(el){
 				pair = el.split('=');
 				result[pair[0]] = pair[1];
 			});
 		}
-		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : url);
+		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : window.location);
 		if(source.search != window.location.search) {
-			source.search.substr(1).split('&').forEach(function(el){
+			source.search.substring(1).split('&').forEach(function(el){
 				pair = el.split('=');
 				result[pair[0]] = pair[1];
 			});
 		}
-		window.location.search.substr(1).split('&').forEach(function(el){
+		window.location.search.substring(1).split('&').forEach(function(el){
 			pair = el.split('=');
 			result[pair[0]] = pair[1];
 		});
@@ -489,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		if(form.dataset.type == "friend_create") {
 			if (formData.get('phone')) {
-				var stringForEncode = parseInt(formData.get('phone').replace(/\D/ig,"").substr(1)).toString(32).toUpperCase();
+				var stringForEncode = parseInt(formData.get('phone').replace(/\D/ig,"").substring(1)).toString(32).toUpperCase();
 				formData.append('code', stringForEncode);
 				var your = " вашего";
 				textSucces = "";
