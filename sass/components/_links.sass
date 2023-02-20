@@ -1,16 +1,13 @@
-a
-	color: $yellow
-	font-weight: bold
+a:not(.btn)
+	color: $text
+	// font-weight: bold
 	text-decoration: none
 
-.can-hover a
+.can-hover a:not(.btn)
 	transition: all .4s ease
 	&:hover
-		color: $text
+		color: $yellow
 		text-decoration: none
-		@include media-breakpoint-up(lg)
-			text-decoration: none
-			color: $yellow
 
 
 .link-decoration
