@@ -6,3 +6,4 @@ inc/
 .well-known/acme-challenge/*
 /storage/
 .htaccess
+.DS_Store
