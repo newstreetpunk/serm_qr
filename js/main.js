@@ -289,30 +289,37 @@ document.addEventListener('DOMContentLoaded', () => {
 				sendGood(rate, attrName, placemarks[obj][attr], placemarks[obj].hintContent);
 			}
 		}
-		let param = new URLSearchParams(getPair(new URL(placemarks[obj][attr]))).toString();
+		// let param = new URLSearchParams(getPair(new URL(placemarks[obj][attr]))).toString();
+		let param = Object.entries(getPair(new URL(placemarks[obj][attr]))).map(([key, value]) => `${key}=${value}`).join('&');
 		let url = new URL(placemarks[obj][attr]);
 		url.search = "?" + param;
 		window.open(decodeURI(url));
 	}
 
 	function getPair(openURL) {
-		let result = {referer: window.location.origin};
+		let result = {referer: encodeURIComponent(window.location.origin)};
 		if(typeof openURL == "object") {
 			openURL.search.substring(1).split('&').forEach(function(el){
-				var pair = el.split('=');
-				result[pair[0]] = pair[1];
+				if(el!=""){
+					var pair = el.split('=');
+					result[pair[0]] = pair[1];
+				}
 			});
 		}
 		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : window.location);
 		if(source.search != window.location.search) {
 			source.search.substring(1).split('&').forEach(function(el){
-				var pair = el.split('=');
-				result[pair[0]] = pair[1];
+				if(el!=""){
+					var pair = el.split('=');
+					result[pair[0]] = pair[1];
+				}
 			});
 		}
 		window.location.search.substring(1).split('&').forEach(function(el){
-			var pair = el.split('=');
-			result[pair[0]] = pair[1];
+			if(el!=""){
+				var pair = el.split('=');
+				result[pair[0]] = pair[1];
+			}
 		});
 
 		return result;
