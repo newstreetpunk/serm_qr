@@ -1,4 +1,4 @@
-var getClientID = class {
+window.getClientID = class {
 
 	clientID = {ym:[],ga:[],count:0};
 

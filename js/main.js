@@ -1,3 +1,11 @@
+import '../node_modules/dropzone/dist/dropzone.js';
+import '../node_modules/alpinejs/dist/cdn.js';
+import '../node_modules/sweetalert2/dist/sweetalert2.all.js';
+import './alpine';
+import './dropzone';
+import './getClientID';
+import './kia-select';
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	var canHover = !(matchMedia('(hover: none)').matches);
@@ -19,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	let attr = '';
 	let attrName = '';
 	let rate = 0;
-	const clientID = new getClientID();
+	const clientID = new window.getClientID();
 
 	function getCookie(name) {
 		var matches = document.cookie.match(new RegExp(
@@ -291,19 +299,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		let result = {referer: window.location.origin};
 		if(typeof openURL == "object") {
 			openURL.search.substring(1).split('&').forEach(function(el){
-				pair = el.split('=');
+				var pair = el.split('=');
 				result[pair[0]] = pair[1];
 			});
 		}
 		let source = new URL(getCookie('__gtm_campaign_url') ? getCookie('__gtm_campaign_url') : window.location);
 		if(source.search != window.location.search) {
 			source.search.substring(1).split('&').forEach(function(el){
-				pair = el.split('=');
+				var pair = el.split('=');
 				result[pair[0]] = pair[1];
 			});
 		}
 		window.location.search.substring(1).split('&').forEach(function(el){
-			pair = el.split('=');
+			var pair = el.split('=');
 			result[pair[0]] = pair[1];
 		});
 

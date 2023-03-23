@@ -5,16 +5,7 @@ require('laravel-mix-serve');
 // require('mix-tailwindcss');
 
 mix
-	.js([
-		'node_modules/dropzone/dist/dropzone.js',
-		'node_modules/alpinejs/dist/cdn.js',
-		'node_modules/sweetalert2/dist/sweetalert2.all.js',
-		'js/alpine.js', // Custom scripts. Always at the end
-		'js/getClientID.js', // Custom scripts. Always at the end
-		'js/dropzone.js', // Custom scripts. Always at the end
-		'js/kia-select.js', // Custom scripts. Always at the end
-		'js/main.js' // Custom scripts. Always at the end
-	], 'js/scripts.min.js')
+	.js('js/main.js', 'js/scripts.min.js')
 	.sass('sass/main.sass', 'css/styles.min.css')
 	// .tailwind()
 	.setPublicPath('/')
