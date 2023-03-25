@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		myMap.behaviors.disable('scrollZoom');
 
-		HintLayout = ymaps.templateLayoutFactory.createClass( "<div class='map-hint'>" +
+		var HintLayout = ymaps.templateLayoutFactory.createClass( "<div class='map-hint'>" +
 			"{{ properties.name }}" +
 			"</div>", {
 				// Определяем метод getShape, который
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			if(placemarks[obj][attr] == "") return;
 			center = add(center,placemarks[obj].position);
 			count++;
-			myPlacemark = new ymaps.Placemark(placemarks[obj].position, {
+			var myPlacemark = new ymaps.Placemark(placemarks[obj].position, {
 				name: placemarks[obj].hintContent
 			}, {
 				hintLayout: HintLayout,
