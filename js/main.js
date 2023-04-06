@@ -1,6 +1,5 @@
 import '../node_modules/dropzone/dist/dropzone.js';
 import '../node_modules/alpinejs/dist/cdn.js';
-// import '../node_modules/sweetalert2/dist/sweetalert2.all.js';
 import Swal from 'sweetalert2';
 import './alpine';
 import './dropzone';
@@ -344,18 +343,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		form.querySelector('.error-message#phone').style.display = 'none';
 
-		var num = this.value.replace(/^(\+7|8)/g, '').replace(/\D/g, '').split(/(?=.)/),
+		var num = this.value.replace(/^(\+7|7|8)/g, '').replace(/\D/g, '').split(/(?=.)/),
 			i = num.length;
 
 		// console.log(num, num.length == 1 && num[0] == "" && this.required, num.length != 10 || [... new Set(num)].length == 1, this.required, form);
 
-		// if (num.length == 1 && num[0] == "" && this.required) {
-		// 	checkingRequiredFields( form, JSON.parse('{"phone":"Поле обязательно для заполнения"}') )
-		// 	return false;
-		// } else if(num.length != 10 || [... new Set(num)].length == 1) {
-		// 	checkingRequiredFields( form, JSON.parse('{"phone":"Некорректный номер телефона"}') )
-		// 	return false;
-		// }
+		if (num.length == 1 && num[0] == "" && this.required) {
+			checkingRequiredFields( form, JSON.parse('{"phone":"Поле обязательно для заполнения"}') )
+			return false;
+		} else if(num.length != 10 || [... new Set(num)].length == 1) {
+			checkingRequiredFields( form, JSON.parse('{"phone":"Некорректный номер телефона"}') )
+			return false;
+		}
 
 		if (0 <= i) num.unshift('+7');
 		if (1 <= i) num.splice(1, 0, ' ');

@@ -7,7 +7,7 @@
     "watch-poll": "mix watch -- --watch-options-poll=8000",
     "hot": "mix watch --hot",
     "prod": "npm run production",
-    "production": "TAILWIND_MODE=build  mix --production"
+    "production": "mix --production"
   },
   "devDependencies": {
     "alpinejs": "^3.11.1",
