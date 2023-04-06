@@ -1,6 +1,7 @@
 import '../node_modules/dropzone/dist/dropzone.js';
 import '../node_modules/alpinejs/dist/cdn.js';
-import '../node_modules/sweetalert2/dist/sweetalert2.all.js';
+// import '../node_modules/sweetalert2/dist/sweetalert2.all.js';
+import Swal from 'sweetalert2';
 import './alpine';
 import './dropzone';
 import './getClientID';
@@ -348,13 +349,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		// console.log(num, num.length == 1 && num[0] == "" && this.required, num.length != 10 || [... new Set(num)].length == 1, this.required, form);
 
-		if (num.length == 1 && num[0] == "" && this.required) {
-			checkingRequiredFields( form, JSON.parse('{"phone":"Поле обязательно для заполнения"}') )
-			return false;
-		} else if(num.length != 10 || [... new Set(num)].length == 1) {
-			checkingRequiredFields( form, JSON.parse('{"phone":"Некорректный номер телефона"}') )
-			return false;
-		}
+		// if (num.length == 1 && num[0] == "" && this.required) {
+		// 	checkingRequiredFields( form, JSON.parse('{"phone":"Поле обязательно для заполнения"}') )
+		// 	return false;
+		// } else if(num.length != 10 || [... new Set(num)].length == 1) {
+		// 	checkingRequiredFields( form, JSON.parse('{"phone":"Некорректный номер телефона"}') )
+		// 	return false;
+		// }
 
 		if (0 <= i) num.unshift('+7');
 		if (1 <= i) num.splice(1, 0, ' ');
@@ -367,8 +368,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	document.querySelectorAll("input[name=phone]").forEach(function (el) {
-		// element.addEventListener('focus', maskphone.bind(element, element.closest('form')) );
-		// element.addEventListener('input', maskphone.bind(element, element.closest('form')) );
+		// el.addEventListener('focus', maskphone.bind(el, el.closest('form')) );
+		el.addEventListener('input', maskphone.bind(el, el.closest('form')) );
 		el.addEventListener('change', maskphone.bind(el, el.closest('form')) );
 	});
 
@@ -385,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function checkingRequiredFields(form, errors) {
 		let valid = true;
-		for (key in errors) {
+		for (const key in errors) {
 			let field = form.querySelector('.error-message#'+key);
 			// console.log(key, errors[key], field);
 			field.innerText = errors[key];
@@ -593,7 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}else{
 			Swal.fire({
 				title: 'Ошибка',
-				text: 'Перезагрузите страницу и&nbsp;попробуйте снова',
+				html: 'Перезагрузите страницу и&nbsp;попробуйте снова',
 				icon: 'error',
 				iconColor: '#eA0029',
 				backdrop: 'rgba(0,0,0,0.7)',
