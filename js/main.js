@@ -261,6 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		Object.values(keysSorted).forEach((obj) => {
 			if(placemarks[obj][attr] == "") return;
 			center = add(center,placemarks[obj].position);
+			if(placemarks[obj].mapZoom) zoom = placemarks[obj].mapZoom;
 			count++;
 			var myPlacemark = new ymaps.Placemark(placemarks[obj].position, {
 				name: placemarks[obj].hintContent
@@ -280,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 
 		myMap.setCenter(avr(center,count));
+		myMap.setZoom(zoom);
 	}
 
 	function placeholderClick(attr, rate, attrName, placemarks, obj) {
