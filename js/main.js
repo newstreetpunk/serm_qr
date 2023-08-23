@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	async function sendGood(rate, serviceName, link, dealer) {
-
+		let res;
 		let formData = new FormData();
 		formData.append('rate', rate);
 		formData.append('link', link);
@@ -547,9 +547,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 
 			if(res.answer == 'ok') {
-				if(res.gs.manager != "") {
+				if(res.gs.manager) {
 					your = "";
-					textSucces += "Этот клиент уже закреплен за менеджером: <b>" + res.gs.manager + "</b><br><br>\n";
+					textSucces += "<br>Этот клиент уже закреплен за менеджером: <b>" + res.gs.manager + "</b><br><br>\n";
 				}
 				if(res.gs.lineAdded) {
 					textSucces += "Код для" + your + " клиента: " + stringForEncode + "<br><br>\n";
