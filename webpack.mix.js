@@ -21,8 +21,10 @@ if (mix.inProduction()) {
 	mix.sourceMaps().webpackConfig({ devtool: 'inline-source-map' });
 	mix.browserSync({
 		proxy: '127.0.0.1:8080',
-		files: ['**.html', '**/*.php', 'css/*.css', 'js/scripts.js'],
+		files: ['**.html', '**/*.php', 'css/*.css', 'js/*.js'],
 		// server: { baseDir: "./", },
+		watch: true,
+		open: true,
 		notify: false
 	});
 }

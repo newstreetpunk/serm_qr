@@ -61,7 +61,7 @@ projects.kia_qr = {
 			basename + '/js/getClientID.js', // Custom scripts. Always at the end
 			basename + '/js/dropzone.js', // Custom scripts. Always at the end
 			basename + '/js/kia-select.js', // Custom scripts. Always at the end
-			basename + '/js/scripts.js', // Custom scripts. Always at the end
+			basename + '/js/main.js', // Custom scripts. Always at the end
 		],
 		dest:       basename + '/js',
 		output:     'scripts.min.js',

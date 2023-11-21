@@ -22,7 +22,18 @@ document.addEventListener('alpine:init', (data) => {
 		}
 
 	}))
-	// console.log('alpine:init');
+	Alpine.data('actions', () => ({
+		open: false,
+		title: '',
+		formSubject: '',
+		formName: '',
+		action(title = '', formSubject = '', formName = ''){
+			this.title = title;
+			this.formSubject = formSubject;
+			this.formName = formName;
+			this.open = true;
+		}
+	}))
 })
 
 document.addEventListener('alpine:initialized', () => {
