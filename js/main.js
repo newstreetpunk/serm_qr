@@ -5,6 +5,7 @@ import './alpine';
 import './dropzone';
 import './getClientID';
 import './kia-select';
+import './qr-generation';
 
 document.addEventListener('DOMContentLoaded', () => {
 
