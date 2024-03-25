@@ -29,7 +29,7 @@ export default defineConfig({
         classified: path.resolve(__dirname, 'classified.html'),
         recommendation: path.resolve(__dirname, 'recommendation.html'),
         script: path.resolve(__dirname, 'js/main.js'),
-        style: path.resolve(__dirname, 'sass/main.scss'),
+        style: path.resolve(__dirname, 'sass/main.sass'),
       }
     }
   },
