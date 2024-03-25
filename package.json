@@ -1,15 +1,20 @@
 {
   "private": true,
   "scripts": {
-    "dev": "vite --host --open",
-    "build": "vite build --emptyOutDir",
-    "preview": "vite preview"
+    "dev": "APP_ENV=development vite --host --open",
+    "build": "APP_ENV=production vite build --emptyOutDir",
+    "preview": "APP_ENV=production vite preview",
+    "\n# WINDOWS SCRIPTS:": "",
+    "dev_win": "cross-env APP_ENV=development vite --host --open",
+    "build_win": "cross-env APP_ENV=production vite build --emptyOutDir",
+    "preview_win": "cross-env APP_ENV=production vite preview"
   },
   "devDependencies": {
     "alpinejs": "^3.13.7",
     "autoprefixer": "^10.4.19",
     "bootstrap": "^5.3.3",
     "browser-sync": "^3.0.2",
+    "cross-env": "^7.0.3",
     "dropzone": "^5.9.3",
     "jquery": "^3.7.1",
     "magnific-popup": "^1.1.0",

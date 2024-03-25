@@ -17,7 +17,7 @@ export default defineConfig({
         ]),
         // splitVendorChunkPlugin(),
       ],
-  base: '/',
+  base: process.env.APP_ENV === 'development' ? '/' : '',
   build: {
     outDir: path.resolve(__dirname, '_site'),
     emptyOutDir: true,
