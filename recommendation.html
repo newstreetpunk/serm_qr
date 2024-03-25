@@ -19,7 +19,7 @@
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="img/kia/favicon.ico" type="image/x-icon">
 	<!-- Style -->
-	<link rel="stylesheet" href="css/styles.min.css">
+	<link href="/sass/main.sass" rel="stylesheet" />
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -41,7 +41,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			<div class="w-50 position-absolute top-0 end-0 bg-decor d-none d-lg-block"></div>
 			<div class="container">
 				<div class="d-lg-flex align-items-stretch">
-		
+
 					<div class="w-lg-50 pe-lg-4">
 						<a href="#" class="d-inline-block mb-5 logo-gorod">
 							<img src="img/recommend/kia-engels-logo-gor.png" alt="ALT">
@@ -49,7 +49,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 						<div class="big-title fs-1 fw-medium mb-2">Привет!</div>
 						<div class="big-descr fs-3 lh-1 mb-5">Мы рады приветствовать тебя<br class="d-none d-md-block"> на сайте дилерского центра<br class="d-none d-md-block"> АЦ Юго-Запад.</div>
 						<div class="text-uppercase fw-bold fs-6">Если ты тут, значит твой друг - наш друг!</div>
-		
+
 						<div class="d-flex align-items-start mb-lg-5">
 							<div class="w-50 mt-4 pe-3">
 								<svg width="68" height="61" viewBox="0 0 68 61" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,37 +66,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 								<small class="mb-0 fw-medium fs-md-6">Заполняй форму заявки,<br class="d-none d-md-block"> указанную ниже и<br class="d-none d-md-block"> мы сами тебе позвоним.</small>
 							</div>
 						</div>
-		
+
 						<div class="big-descr fs-3 lh-1 d-none d-lg-block">Надеемся, что это положит начало<br class="d-none d-md-block"> нашей долгой и крепкой дружбы!</div>
 					</div>
-		
+
 					<div class="w-lg-50 d-flex align-items-center ps-lg-4">
 						<form class="friend-form mt-3 mt-lg-0 mb-5 mb-lg-0">
-						
+
 							<div class="qr-form-group">
 								<input type="tel" id="friend_number" name="friend_number" placeholder=" ">
 								<label for="friend_number" class="text-uppercase">Кодовое слово</label>
 							</div>
 							<small class="text-left d-block">номер телефона человека, давшего рекомендацию, чтобы мы начислили бонус и твоему другу</small>
-						
+
 							<div class="qr-form-group">
 								<input type="text" id="name" name="name" placeholder=" ">
 								<label for="name" class="text-uppercase">Имя</label>
 							</div>
-						
+
 							<div class="qr-form-group">
 								<input type="tel" id="phone" name="phone" placeholder=" " required="">
 								<label for="phone" class="text-uppercase">Телефон *</label>
 							</div>
 							<div class="error-message" id="phone"></div>
-						
+
 							<input type="email" tabindex="-1" name="email" placeholder="mail@example.com">
 							<br>
 							<br>
 							<button class="btn mx-auto d-block d-lg-inline-block" data-file="true" data-subject="Страница рекомендаций" data-form="Страница рекомендаций"><span>Отправить</span></button>
-						
+
 							<div class="form-message"></div>
-						
+
 							<div class="form-group">
 								<div class="d-flex">
 									<label class="checkbox-control">
@@ -109,12 +109,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 							</div>
 						</form>
 					</div>
-		
+
 					<div class="big-descr fs-3 lh-1 mb-5 d-block d-lg-none">Надеемся, что это положит начало нашей долгой и крепкой дружбы!</div>
-		
+
 				</div>
 			</div>
-		</section>	
+		</section>
 	</main>
 
 	<script>
@@ -260,7 +260,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	</script>
 
 	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&loadByRequire=1" type="text/javascript"></script>
-	<script src="js/scripts.min.js?12345678"></script>
+	<script type="module" src="/js/main.js"></script>
 
 </body>
 </html>
