@@ -26,6 +26,7 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, 'index.html'),
         employee_page: path.resolve(__dirname, 'employee-page.html'),
+        empty: path.resolve(__dirname, 'empty.html'),
         classified: path.resolve(__dirname, 'classified.html'),
         recommendation: path.resolve(__dirname, 'recommendation.html'),
         script: path.resolve(__dirname, 'js/main.js'),
