@@ -2,18 +2,24 @@
   "private": true,
   "scripts": {
     "dev": "APP_ENV=development vite --host --open",
+    "test": "concurrently \"APP_ENV=development vite --port 5133\" \"APP_ENV=development php -S 127.0.0.1:5134 -t ./\"",
     "build": "APP_ENV=production vite build --emptyOutDir",
     "preview": "APP_ENV=production vite preview",
+    "prod": "APP_ENV=production vite build --emptyOutDir && rm -rf assets && mv _site/assets assets && mv _site/.vite/manifest.json assets/manifest.json && rm -rf _site",
     "\n# WINDOWS SCRIPTS:": "",
     "dev_win": "cross-env APP_ENV=development vite --host --open",
+    "test": "concurrently \"cross-env APP_ENV=development vite --port 5133\" \"cross-env APP_ENV=development php -S 127.0.0.1:5134 -t ./\"",
     "build_win": "cross-env APP_ENV=production vite build --emptyOutDir",
-    "preview_win": "cross-env APP_ENV=production vite preview"
+    "preview_win": "cross-env APP_ENV=production vite preview",
+    "prod_win": "cross-env APP_ENV=production vite build --emptyOutDir && rm -rf assets && mv _site/assets assets && mv _site/.vite/manifest.json assets/manifest.json && rm -rf _site",
+    "": ""
   },
   "devDependencies": {
     "alpinejs": "^3.13.7",
     "autoprefixer": "^10.4.19",
     "bootstrap": "^5.3.3",
     "browser-sync": "^3.0.2",
+    "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "dropzone": "^5.9.3",
     "jquery": "^3.7.1",
