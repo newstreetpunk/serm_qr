@@ -9,7 +9,7 @@ const options = {
 		type: "rounded"
 	},
 	backgroundOptions: {
-		color: "#f8f8f8",
+		color: "#ffffff",
 	},
 	imageOptions: {
 		crossOrigin: "anonymous",
