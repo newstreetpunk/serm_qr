@@ -766,4 +766,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		})
 	}
 
+	const saveBtn = document.querySelector('.save-vcard')
+	if (/mobile|iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()) && saveBtn) {
+		saveBtn.classList.add('mobile');
+	} else {
+		// code for non-mobile devices
+	}
+
 });

@@ -45,11 +45,14 @@
 		padding: 12px 24px
 
 .save-vcard
-	position: fixed
-	left: 50%
-	transform: translateX(-50%)
-	bottom: 16px
-	z-index: 100
-	box-shadow: 0 0 30px rgba($midnight, .3)
-	max-width: 288px
 	width: 100%
+	margin-top: 1rem
+	&.mobile
+		position: fixed
+		left: 50%
+		transform: translateX(-50%)
+		bottom: 16px
+		z-index: 100
+		box-shadow: 0 0 30px rgba($midnight, .3)
+		max-width: 90%
+		margin-top: 0
