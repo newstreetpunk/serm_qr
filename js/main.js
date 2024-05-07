@@ -233,6 +233,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		myMap.behaviors.disable('scrollZoom');
 
+		var clusterer = new ymaps.Clusterer({
+			preset: 'islands#VioletClusterIcons',
+			groupByCoordinates: false,
+			clusterDisableClickZoom: true,
+			clusterHideIconOnBalloonOpen: false,
+			geoObjectHideIconOnBalloonOpen: false,
+			openBalloonOnClick: false
+	  })
+
 		var HintLayout = ymaps.templateLayoutFactory.createClass( "<div class='map-hint'>" +
 			"{{ properties.name }}" +
 			"</div>", {
@@ -262,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		Object.values(keysSorted).forEach((obj) => {
 			if(placemarks[obj][attr] == "") return;
 			center = add(center,placemarks[obj].position);
+			console.log(center, placemarks[obj].position);
 			if(placemarks[obj].zoom) {
 				zoom = placemarks[obj].zoom;
 			}
@@ -277,11 +287,26 @@ document.addEventListener('DOMContentLoaded', () => {
 				iconImageOffset: [-21, -58],
 			});
 
-			myMap.geoObjects.add(myPlacemark);
+			clusterer.add(myPlacemark);
+			myMap.geoObjects.add(clusterer);
 
 			myPlacemark.events.add('click', function (e) {
 				placeholderClick(attr, rate, attrName, placemarks, obj);
 			});
+		});
+
+		clusterer.events.add('click', function (e) {
+			e.preventDefault()
+			console.log(e);
+			var centerCluster = [0,0]
+			e.originalEvent.currentTarget._geoBounds.forEach(item => {
+				centerCluster = add(centerCluster, item)
+				console.log(item);
+			})
+			console.log(centerCluster);
+			myMap.setCenter([53.248467, 50.215370]);
+			console.log(avr(centerCluster, 2));
+			myMap.setZoom(18);
 		});
 
 		myMap.setCenter(avr(center,count));

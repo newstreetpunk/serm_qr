@@ -584,26 +584,72 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- /.wrapper -->
 
 	<script>
-		let placemarks = [
-		{
-			position: [53.1836, 50.153],
-			hintContent: 'КИА Центр Самара',
-			id: 'samara',
-			marker: '/img/icons/marker-map.svg?re',
+		let placemarks = {
+		"msk": {
+			"position": [53.248659, 50.21551],
+			"hintContent": "Dongfeng центр на Московском",
+			"address": "г. Самара, Московское шоссе, дом 262 А",
+			"address_vcf": ";;Московское шоссе, дом 262 А;Самара;Самарская;443125;Россия",
+			"id": "msk",
+			"yandex": "https://yandex.ru/profile/217397686275?intent=reviews",
+			"yandex_app": "yandexmaps://maps.yandex.ru/?oid=217397686275",
+			"gis": "https://2gis.ru/samara/firm/70000001081850346/tab/reviews",
+			"gis_app": "dgis://2gis.ru/samara/firm/70000001081850346/tab/reviews",
+			"avito": "",
+			"avto_provereno": "",
+			"avito_new": "",
+			"avito_old": "",
+			"avito_review": "",
+			"avtoru_new": "",
+			"avtoru_old": "",
+			"drom_new": "",
+			"drom_old": "",
+			"marker": "/img/dfm/dfm-locator.svg"
 		},
-		{
-			position: [53.2487, 50.2155],
-			hintContent: 'КИА Центр на Московском',
-			id: 'moscow',
-			marker: '/img/icons/marker-map.svg?re',
+		"yug": {
+			"position": [53.140109, 50.180009],
+			"hintContent": "Dongfeng центр на Южном",
+			"address": "г. Самара, Южное шоссе, дом 12 В",
+			"address_vcf": ";;Южное шоссе, дом 12 В;Самара;Самарская;443085;Россия",
+			"id": "yug",
+			"yandex": "https://yandex.ru/profile/173170479346?intent=reviews",
+			"yandex_app": "yandexmaps://maps.yandex.ru/?oid=173170479346",
+			"gis": "https://2gis.ru/samara/firm/70000001086542796/tab/reviews",
+			"gis_app": "dgis://2gis.ru/samara/firm/70000001086542796/tab/reviews",
+			"avito": "",
+			"avto_provereno": "",
+			"avito_new": "",
+			"avito_old": "",
+			"avito_review": "",
+			"avtoru_new": "",
+			"avtoru_old": "",
+			"drom_new": "",
+			"drom_old": "",
+			"marker": "/img/dfm/dfm-locator.svg"
 		},
-		{
-			position: [53.291231, 50.285478],
-			hintContent: 'КИА Центр Мехзавод',
-			id: 'mexico',
-			marker: '/img/icons/marker-map.svg?re',
+		"kcnam": {
+			"position": [53.248467, 50.215370],
+			"hintContent": "Киа Центр на Московском",
+			"address": "г Самара, Московское шоссе, 262 А",
+			"address_vcf": ";;Московское шоссе, 262 А;Самара;Самарская;443125;Россия",
+			"id": "moscow",
+			"google": "https://g.page/kiasmr/review?rc",
+			"yandex": "https://yandex.ru/profile/1179041515?intent=reviews",
+			"yandex_app": "yandexmaps://maps.yandex.ru/?oid=1179041515",
+			"gis": "https://2gis.ru/samara/firm/70000001019939556/tab/reviews",
+			"gis_app": "dgis://2gis.ru/samara/firm/70000001019939556/tab/reviews",
+			"avito": "https://www.avito.ru/user/c3dc71a035df1bde846f84421a9b9b55/profile?page_from=public_profile&review_add_trigger=seller_link&review_page_from=public_profile&src=seller_link#open-reviews",
+			"avto_provereno": "https://www.avito.ru/user/49f0e456086095769c208c87190bb8b6/profile?page_from=public_profile&review_add_trigger=seller_link&review_page_from=public_profile&src=seller_link#open-reviews",
+			"avito_new": "https://www.avito.ru/user/c3dc71a035df1bde846f84421a9b9b55/profile",
+			"avito_old": "https://www.avito.ru/user/49f0e456086095769c208c87190bb8b6/profile",
+			"avito_review": "",
+			"avtoru_new": "https://auto.ru/diler-oficialniy/cars/all/kia_centr_na_moskovskom_samara/",
+			"avtoru_old": "",
+			"drom_new": "",
+			"drom_old": "",
+			"marker": "/img/kia/locator.svg"
 		}
-		];
+	};
 
 		const policy = `<h2 class="policy-title">СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ ПОСЕТИТЕЛЕЙ САЙТА</h2>
 			<div class="policy-text">
