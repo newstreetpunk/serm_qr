@@ -257,11 +257,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		);
 
-		let keysSorted = Object.keys(placemarks).sort(function(a,b){return placemarks[b].position[1]-placemarks[a].position[1]})
+		let keysSorted = Object.keys(placemarks).sort(function(a,b){return placemarks[a].position[1]-placemarks[b].position[1]})
 
 		Object.values(keysSorted).forEach((obj) => {
 			if(placemarks[obj][attr] == "") return;
 			center = add(center,placemarks[obj].position);
+			if(placemarks[obj].zoom) {
+				zoom = placemarks[obj].zoom;
+			}
 			if(placemarks[obj].mapZoom) zoom = placemarks[obj].mapZoom;
 			count++;
 			var myPlacemark = new ymaps.Placemark(placemarks[obj].position, {
