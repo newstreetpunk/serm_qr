@@ -240,8 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			clusterHideIconOnBalloonOpen: false,
 			geoObjectHideIconOnBalloonOpen: false,
 			openBalloonOnClick: false,
-			hasBalloon: false,
-			maxZoom: 18,
+			hasBalloon: false
 	  })
 
 		var HintLayout = ymaps.templateLayoutFactory.createClass( "<div class='map-hint'>" +
@@ -299,8 +298,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		clusterer.events.add('click', function (e) {
 			e.preventDefault()
 			setTimeout(()=>{
-				myMap.setZoom(18);
-			},10)
+				myMap.setZoom(19);
+			},50)
 		});
 
 		myMap.setCenter(avr(center,count));
