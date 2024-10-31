@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	const delears = document.querySelectorAll('.dealer-link');
-	const reviews = document.querySelectorAll('.add-review__link');
+	const reviews = document.querySelectorAll('#add-review-good .add-review__link');
 	const map = document.querySelector('.map');
 	const mapBlock = document.querySelector('.map-block');
 	const yandexMap = document.querySelector('#map');
