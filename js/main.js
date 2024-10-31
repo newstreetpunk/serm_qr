@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function placeholderClick(attr, rate, attrName, placemarks, obj) {
 		if(["google", "yandex", "gis", "zoon", "flamp", "yell", "avito", "avto_provereno"].includes(attr)) {
-			if(getCookie("sentGoodFeedback") === undefined) {
+			if(getCookie("sentGoodFeedback") === undefined || location.search.includes("utm_campaign=cafe")) {
 				setCookie("sentGoodFeedback", true, {'domain':location.hostname,'path':'/','expires': 3600*24*1});
 				sendGood(rate, attrName, placemarks[obj][attr], placemarks[obj].hintContent);
 			}
