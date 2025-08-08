@@ -1,22 +1,23 @@
 import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import liveReload from 'vite-plugin-live-reload'
+import sass from 'sass'
 // import postcss from 'vite-plugin-postcss';
 import path from "path";
 
 export default defineConfig({
-    plugins: [
-        // vue(),
-        liveReload([
-          // edit live reload paths according to your source code
-          // for example:
-          // __dirname + '../(app|config|views)/**/*.html',
-          // using this for our example:
-          __dirname + './inc/**/*.php',
-          __dirname + './inc/**/*.json',
-          __dirname + './*.html',
-        ]),
-        // splitVendorChunkPlugin(),
-      ],
+  plugins: [
+    // vue(),
+    liveReload([
+      // edit live reload paths according to your source code
+      // for example:
+      // __dirname + '../(app|config|views)/**/*.html',
+      // using this for our example:
+      __dirname + './inc/**/*.php',
+      __dirname + './inc/**/*.json',
+      __dirname + './*.html',
+    ]),
+    // splitVendorChunkPlugin(),
+  ],
   base: process.env.APP_ENV === 'development' ? '/' : '',
   build: {
     outDir: path.resolve(__dirname, '_site'),
@@ -34,17 +35,6 @@ export default defineConfig({
       }
     }
   },
-//   plugins: [
-//     postcss({
-//         plugins: [
-//             require('bootstrap'),
-//             require('autoprefixer'),
-//             require('sass')({
-//                 includePaths: ['./sass'], // Укажите папку с вашими Sass/SCSS-файлами
-//             }),
-//         ],
-//     }),
-//   ],
   server: {
     // proxy: {
     //   '/api': {
@@ -55,5 +45,19 @@ export default defineConfig({
     strictPort: true,
     port: 5133,
     host: true
-  }
-})
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        implementation: sass, // Explicitly set the new API
+        silenceDeprecations: [
+          'legacy-js-api',
+          'import',
+          'mixed-decls',
+          'color-functions',
+          'global-builtin',
+        ]
+      },
+    },
+  },
+});
