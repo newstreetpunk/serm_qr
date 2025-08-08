@@ -1,4 +1,6 @@
-$border-color: $text !default
+@use "vars"
+
+$border-color: vars.$text !default
 .border-dotted
 	border: 1px dotted $border-color
 
@@ -19,8 +21,8 @@ $border-color: $text !default
 		transition: all .25s ease
 .icon-link-dark
 	svg
-		fill: $text
+		fill: vars.$text
 	&:hover
-		background-color: $text
+		background-color: vars.$text
 		svg
-			fill: $white
+			fill: vars.$white

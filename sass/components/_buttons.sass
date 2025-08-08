@@ -1,8 +1,11 @@
+@use "sass:color"
+@use "../vars"
+
 .btn
-	background-color: $text
+	background-color: vars.$text
 	-webkit-appearance: none
 	color: #fff
-	border: 1px solid $text
+	border: 1px solid vars.$text
 	font-weight: 700
 	padding: 17px 40px
 	border-radius: 0
@@ -21,24 +24,24 @@
 			bottom: -4px
 			transition: width .25s ease-in-out
 	&:hover
-		color: $yellow
-		background-color: $btnHover
+		color: vars.$yellow
+		background-color: vars.$btnHover
 		span
 			&:before
 				width: 100%
 	&.btn-white
 		background-color: #fff
-		color: $text
+		color: vars.$text
 		span
 			&:before
-				background-color: $text
+				background-color: vars.$text
 		&:hover
-			color: $text
+			color: vars.$text
 	&-cert
 		background-color: #034ea2
 		&:hover
-			color: $white
-			background-color: darken(#034ea2, 20%)
+			color: vars.$white
+			background-color: color.adjust(#034ea2, $lightness: -20%)
 
 .swal-buttons
 	.btn
@@ -53,6 +56,6 @@
 		transform: translateX(-50%)
 		bottom: 16px
 		z-index: 100
-		box-shadow: 0 0 30px rgba($midnight, .3)
+		box-shadow: 0 0 30px rgba(vars.$midnight, .3)
 		max-width: 90%
 		margin-top: 0

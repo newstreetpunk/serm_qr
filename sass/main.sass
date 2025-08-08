@@ -1,8 +1,32 @@
-@import "vars"
-@import "fonts"
-@import "utl"
-@import "libs"
-@import "components/components"
+@use "vars"
+@use "fonts"
+@use "utl"
+@use "libs"
+@use "components/components"
+
+@mixin media-breakpoint-down-lg
+	@media (max-width: 991.98px)
+		@content
+
+@mixin media-breakpoint-up-lg
+	@media (min-width: 992px)
+		@content
+
+@mixin media-breakpoint-down-md
+	@media (max-width: 767.98px)
+		@content
+
+@mixin media-breakpoint-up-md
+	@media (min-width: 768px)
+		@content
+
+@mixin media-breakpoint-down-sm
+	@media (max-width: 575.98px)
+		@content
+
+@mixin media-breakpoint-up-sm
+	@media (min-width: 576px)
+		@content
 
 
 [x-cloak]
@@ -18,10 +42,10 @@ body
 	min-width: 320px
 	position: relative
 	line-height: 1.6
-	font-family: $default-font
+	font-family: vars.$default-font
 	overflow-x: hidden
 	font-weight: 300
-	color: $text
+	color: vars.$text
 	text-align: center
 	scroll-behavior: smooth
 
@@ -49,7 +73,7 @@ input[tabindex="-1"]
 	height: 0
 
 main
-	@include media-breakpoint-down(sm)
+	@include media-breakpoint-down-sm
 		flex: 1 0 auto
 
 .qr-code
@@ -68,20 +92,20 @@ main
 
 
 header
-	@include media-breakpoint-down(sm)
+	@include media-breakpoint-down-sm
 		flex: 0 0 auto
 
 .logo
-	color: $black
+	color: vars.$black
 	display: flex
 	align-items: center
 	justify-content: space-between
 	margin: 50px 0 60px
 	position: relative
-	@include media-breakpoint-down(sm)
+	@include media-breakpoint-down-sm
 		margin: 30px 0
 	&:hover
-		color: $black
+		color: vars.$black
 	&-disable::before
 		content: ''
 		position: absolute
@@ -89,22 +113,22 @@ header
 		left: 43%
 		height: 100%
 		width: 2px
-		background-color: $midnight
-		@include media-breakpoint-down(sm)
+		background-color: vars.$midnight
+		@include media-breakpoint-down-sm
 			left: 42%
 	&-line
 		height: 72px
 		width: 2px
-		background-color: $midnight
+		background-color: vars.$midnight
 		margin: 0 14px
 		flex-shrink: 0
-		@include media-breakpoint-down(sm)
+		@include media-breakpoint-down-sm
 			height: 45px
 			margin: 0 10px
 	&-img
 		width: 200px
 		flex: 0 0 auto
-		@include media-breakpoint-down(sm)
+		@include media-breakpoint-down-sm
 			width: 35%
 		svg
 			width: 100%
@@ -114,28 +138,28 @@ header
 		flex-direction: column
 		justify-content: space-between
 		align-items: flex-start
-		font-size: calc($index * 1.4)
+		font-size: calc(vars.$index * 1.4)
 		font-weight: 500
-		gap: calc($index * 0.6)
+		gap: calc(vars.$index * 0.6)
 		flex-grow: 1
-		@include media-breakpoint-up(sm)
+		@include media-breakpoint-up-sm
 			font-size: 26px
 		span
 			line-height: 1.2
 	&-title
 		text-align: initial
 	&-subtitle
-		font-size: calc($index * 1.2)
-		color: $midnight
+		font-size: calc(vars.$index * 1.2)
+		color: vars.$midnight
 		font-weight: 300
 		text-align: initial
-		@include media-breakpoint-up(sm)
+		@include media-breakpoint-up-sm
 			font-size: 24px
 	&.logo-center
 		.logo-subtitle
 			margin-top: 3%
-			font-size: calc($index * 1.2)
-			@include media-breakpoint-up(sm)
+			font-size: calc(vars.$index * 1.2)
+			@include media-breakpoint-up-sm
 				font-size: 20px
 
 .appeal
@@ -143,19 +167,19 @@ header
 	font-size: 24px
 	letter-spacing: 0.6px
 	line-height: 1.4
-	@include media-breakpoint-down(sm)
+	@include media-breakpoint-down-sm
 		font-size: 20px
 		br
 			display: none
 	b
-		color: $green
+		color: vars.$green
 		font-weight: 500
 .map-hint
 	padding: 5px 10px
 	font-size: 16px
 	text-align: center
-	background-color: $black
-	color: rgba($white, .8)
+	background-color: vars.$black
+	color: rgba(vars.$white, .8)
 	line-height: 1.4
 	white-space: nowrap
 	display: inline-block
@@ -171,7 +195,7 @@ header
 	padding: 0 15px
 	margin: 0 auto
 	position: relative
-	@include media-breakpoint-down(sm)
+	@include media-breakpoint-down-sm
 		display: flex
 		flex-direction: column
 
@@ -179,7 +203,7 @@ html, body, .wrapper
 	min-height: 100%
 
 .bottom-mobile
-	@include media-breakpoint-down(sm)
+	@include media-breakpoint-down-sm
 		flex: 0 0 auto
 
 h2, h3
@@ -192,11 +216,11 @@ h2
 	// text-transform: uppercase
 	span
 		font-weight: 700
-		color: $yellow
+		color: vars.$yellow
 
 .icon-block
 	padding: 30px 0
-	border-bottom: 1px solid rgba($midnight, .5)
+	border-bottom: 1px solid rgba(vars.$midnight, .5)
 	&:last-child
 		border-bottom: 0
 	&__list
@@ -205,6 +229,9 @@ h2
 		align-items: center
 		flex-wrap: wrap
 		width: 100%
+		// @include media-breakpoint-down-sm
+		// 	flex-direction: column
+		// 	align-items: start
 
 .icon-link
 	flex: 0 0 80px
@@ -212,10 +239,10 @@ h2
 	margin: 1%
 	&:hover
 		span
-			color: rgba($midnight, .8)
+			color: rgba(vars.$midnight, .8)
 	span
 		line-height: 1.2
-		color: rgba($midnight, .5)
+		color: rgba(vars.$midnight, .5)
 		transition: all .25s ease
 		display: block
 	svg
@@ -236,22 +263,23 @@ h2
 			flex: 1
 		&:hover
 			svg
-				background-color: $midnight
+				background-color: vars.$midnight
 				path
-					fill: $white
+					fill: vars.$white
 		svg
-			border: 1.5px solid $midnight
+			border: 1.5px solid vars.$midnight
 			border-radius: 50%
 			margin-bottom: 10px
+			flex-shrink: 0
 			path
-				fill: $midnight
+				fill: vars.$midnight
 				transition: all .25s ease
 
 
 .social
 	&__link
 		background-color: transparent
-		color: $accent
+		color: vars.$accent
 		display: flex
 		align-items: center
 		justify-content: center
@@ -263,7 +291,7 @@ h2
 		height: 53px
 		margin: 1%
 		border-radius: 50px
-		border: 2px solid $accent
+		border: 2px solid vars.$accent
 		// @media (max-width: 390px)
 		// 	margin: 2% 6%
 		// @media (max-width: 335px)
@@ -272,56 +300,56 @@ h2
 			display: none
 
 		&:hover
-			color: $white
-			background-color: $green
+			color: vars.$white
+			background-color: vars.$green
 			svg
-				fill: $white
+				fill: vars.$white
 		svg
 			width: 29px
 			height: 100%
 			transition: all .4s
 		&--vk
-			border-color: $vk
-			color: $vk
+			border-color: vars.$vk
+			color: vars.$vk
 			svg
-				fill: $vk
+				fill: vars.$vk
 			&:hover
-				background-color: $vk
-				color: $white
+				background-color: vars.$vk
+				color: vars.$white
 				svg
-					fill: $white
+					fill: vars.$white
 		&--ok
-			border-color: $od
-			color: $od
+			border-color: vars.$od
+			color: vars.$od
 			svg
-				fill: $od
+				fill: vars.$od
 			&:hover
-				background-color: $od
-				color: $white
+				background-color: vars.$od
+				color: vars.$white
 		&--facebook
-			border-color: $fb
-			color: $fb
+			border-color: vars.$fb
+			color: vars.$fb
 			svg
-				fill: $fb
+				fill: vars.$fb
 			&:hover
-				background-color: $fb
-				color: $white
+				background-color: vars.$fb
+				color: vars.$white
 		&--youtube
-			border-color: $youtube
-			color: $youtube
+			border-color: vars.$youtube
+			color: vars.$youtube
 			svg
-				fill: $youtube
+				fill: vars.$youtube
 			&:hover
-				background-color: $youtube
-				color: $white
+				background-color: vars.$youtube
+				color: vars.$white
 		&--tiktok
-			border-color: $tiktok
-			color: $tiktok
+			border-color: vars.$tiktok
+			color: vars.$tiktok
 			width: 53px
 			height: 53px
 			&:hover
-				background-color: $tiktok
-				color: $white
+				background-color: vars.$tiktok
+				color: vars.$white
 		&--instagram
 			border: none
 			background: linear-gradient(45deg, #FFD521 0%, #F50000 37%, #B900B4 65%, #00B9FF 100%)
@@ -336,7 +364,7 @@ h2
 				right: 2px
 				bottom: 2px
 				left: 2px
-				background-color: $white
+				background-color: vars.$white
 				z-index: -1
 				border-radius: inherit
 				opacity: 1
@@ -345,17 +373,17 @@ h2
 				fill: url(#SVGID_1_)
 				transition: all .4s
 			&:hover
-				color: $white
+				color: vars.$white
 				background: linear-gradient(45deg, #FFD521 0%, #F50000 37%, #B900B4 65%, #00B9FF 100%)
 				&:before
 					opacity: 0
 				svg
-					fill: $white
+					fill: vars.$white
 		&--telegram
 			// border-color: $telegram
 			border: none
 			background: linear-gradient(#2AABEE 0,#229ED9 100%)
-			color: $telegram
+			color: vars.$telegram
 			position: relative
 			z-index: 1
 			&:before
@@ -366,21 +394,21 @@ h2
 				right: 2px
 				bottom: 2px
 				left: 2px
-				background-color: $white
+				background-color: vars.$white
 				z-index: -1
 				border-radius: inherit
 				opacity: 1
 				transition: all .4s
 			svg
 				transform: translate(-2.1px, 1.35px)
-				fill: $telegram
+				fill: vars.$telegram
 			&:hover
 				// background-color: $telegram
 				background: linear-gradient(#2AABEE 0,#229ED9 100%)
 				&:before
 					opacity: 0
 				svg
-					fill: $white
+					fill: vars.$white
 
 hr
 	opacity: 1
@@ -400,16 +428,16 @@ hr
 		transform: scale(1)
 		&:hover
 			transform: scale(1.1)
-		@include media-breakpoint-down(lg)
+		@include media-breakpoint-down-lg
 			&.viber-pc
 				display: none
-		@include media-breakpoint-up(lg)
+		@include media-breakpoint-up-lg
 			&.viber-mobile
 				display: none
 
 .add-review
 	position: relative
-	background-color: $white
+	background-color: vars.$white
 	overflow: hidden
 	z-index: 1
 	padding: 30px 0
@@ -426,7 +454,7 @@ hr
 		max-height: 0
 		padding: 0
 		border: none
-	@include media-breakpoint-down(sm)
+	@include media-breakpoint-down-sm
 		margin-left: -15px
 		margin-right: -15px
 	&__list
@@ -441,22 +469,22 @@ hr
 		display: inline-block
 		width: 53px
 		font-weight: 500
-		color: rgba($midnight,.5)
+		color: rgba(vars.$midnight,.5)
 		transition: all .3s ease-out
 		span.name
 			display: block
 			margin-top: 60px
 		&.active
-			color: rgba($midnight,.8)
+			color: rgba(vars.$midnight,.8)
 			.add-review__icon._active
 				opacity: 0
 				visibility: hidden
 			.add-review__icon._hover
 				opacity: 1
 				visibility: visible
-		@include media-breakpoint-up(lg)
+		@include media-breakpoint-up-lg
 			&:hover
-				color: rgba($midnight,.8)
+				color: rgba(vars.$midnight,.8)
 				.add-review__icon._active
 					opacity: 0
 					visibility: hidden
@@ -606,7 +634,7 @@ form
 	vertical-align: middle
 	height: 20px
 	width: 20px
-	border: 1px solid $text
+	border: 1px solid vars.$text
 	box-sizing: border-box
 	margin-right: 10px
 	margin-top: -5px
@@ -639,27 +667,27 @@ form small
 	font-weight: 300
 
 .swal2-close:hover
-	color: $text !important
+	color: vars.$text !important
 .policy-title
-	color: $text
+	color: vars.$text
 	font-size: 18px
 	text-align: left
 	border-bottom: 1px solid #cdd0d2
 	padding: 1rem 0 1.5rem
-	@include media-breakpoint-down(md)
+	@include media-breakpoint-down-md
 		font-size: 16px
 
 .policy-text
-	color: $text
+	color: vars.$text
 	text-align: left
 	font-size: 15px
 	ol, ul
 		padding-left: 23px
-	@include media-breakpoint-down(md)
+	@include media-breakpoint-down-md
 		font-size: 14px
 
 .swal2-html-container
-	@include media-breakpoint-down(md)
+	@include media-breakpoint-down-md
 		margin: 1em !important
 
 .dealer-link
@@ -694,7 +722,7 @@ form small
 		position: relative
 		display: inline-block
 		padding-bottom: 3px
-		@include media-breakpoint-down(sm)
+		@include media-breakpoint-down-sm
 			flex: 0 1 26%
 		&:before
 			content: ''
@@ -705,7 +733,7 @@ form small
 			left: 50%
 			top: 100%
 			transform: translate(-50%, 5px)
-			background-color: $yellow
+			background-color: vars.$yellow
 			filter: blur(1px)
 			border-radius: 50% / 100%
 			opacity: 0
@@ -728,18 +756,18 @@ form small
 			display: none
 			height: 0
 		padding: 20px 0
-		@include media-breakpoint-down(sm)
+		@include media-breakpoint-down-sm
 			padding-top: 0
 	&__sublink
 		padding: 0 10px
 		text-align: center
 		display: inline-block
 		text-transform: uppercase
-		color: $text
+		color: vars.$text
 		opacity: 0.7
 		transition: opacity .3s ease-out
 		position: relative
-		@include media-breakpoint-down(sm)
+		@include media-breakpoint-down-sm
 			font-size: 15px
 		&:before
 			content: ''
@@ -750,14 +778,14 @@ form small
 			left: 50%
 			top: 100%
 			transform: translate(-50%, 5px)
-			background-color: $yellow
+			background-color: vars.$yellow
 			filter: blur(1px)
 			border-radius: 50% / 100%
 			opacity: 0
 			transition: all .3s ease-out
 		&:hover, &.active
 			opacity: 1
-			color: $text
+			color: vars.$text
 			&:before
 				opacity: 1
 				transform: translate(-50%, 0)
@@ -772,10 +800,10 @@ form small
 	width: 100%
 	height: 100%
 	overflow: hidden
-	color: $midnight
+	color: vars.$midnight
 	transition: opacity .7s ease
 	opacity: 0
-	background-color: rgba($midnight, .55)
+	background-color: rgba(vars.$midnight, .55)
 	&:after,
 	&:before
 		box-sizing: border-box
@@ -791,7 +819,7 @@ form small
 		content: ''
 		-webkit-animation: rotation 1s linear infinite
 		animation: rotation 1s linear infinite
-		border: solid 8px $white
+		border: solid 8px vars.$white
 		border-left-color: transparent
 		border-radius: 50%
 
@@ -856,14 +884,14 @@ form small
 	display: none
 
 .success-message
-	color: $green
+	color: vars.$green
 .error-message
-	color: $accent
+	color: vars.$accent
 
 .form-message
 	font-weight: bold
 	margin-top: 1rem
-	color: $green
+	color: vars.$green
 
 .btn[disabled]
 	opacity: 0.6
@@ -900,7 +928,7 @@ form small
 			opacity: 1
 
 .swal-buttons
-	@include media-breakpoint-down(sm)
+	@include media-breakpoint-down-sm
 		flex-wrap: wrap
 		button
 			width: 100%
@@ -910,19 +938,19 @@ body.employee
 	text-align: left
 	font-size: 18px
 	// font-weight: 500
-	+media-breakpoint-down(sm)
+	+media-breakpoint-down-sm
 		font-size: 16px
 	.wrapper
 		max-width: 425px
 		padding: 0 30px
-		+media-breakpoint-down(sm)
+		+media-breakpoint-down-sm
 			padding: 0 15px
 	.logo-img
 		width: 90px
 	.logo-line
 		width: 1px
 		height: 20px
-		background-color: $text
+		background-color: vars.$text
 		margin: 0 3%
 	.logo-text
 		font-size: 18px
@@ -951,15 +979,15 @@ body.employee
 	height: 103%
 
 .w-lg-50
-	+media-breakpoint-up(lg)
+	+media-breakpoint-up-lg
 		width: 50%
 
 .friend-form
-	+media-breakpoint-down(lg)
+	+media-breakpoint-down-lg
 		max-width: 100% !important
 
 .fs-md-6
-	+media-breakpoint-up(md)
+	+media-breakpoint-up-md
 		font-size: 1rem !important
 
 

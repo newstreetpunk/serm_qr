@@ -1,26 +1,28 @@
+@use "../vars"
+
 .kia-select
-	border: 1px solid $border
+	border: 1px solid vars.$border
 	position: relative
 	&.active
-		border: 1px solid $black
+		border: 1px solid vars.$black
 		.kia-select-label
-			color: $black
+			color: vars.$black
 		.kia-select-arrow
 			transform: rotate(-180deg)
 			svg
 				line
-					stroke: $black
+					stroke: vars.$black
 		.kia-select-dropdown
 			opacity: 1
 			visibility: visible
 	&.selected
-		border: 1px solid $black
+		border: 1px solid vars.$black
 		.kia-select-label
-			color: $black
+			color: vars.$black
 	&-head
 		cursor: pointer
 	&-label
-		color: $h123
+		color: vars.$h123
 		white-space: nowrap
 		overflow: hidden
 		text-overflow: ellipsis
@@ -32,7 +34,7 @@
 			width: 10px
 			height: 10px
 			line
-				stroke: $h123
+				stroke: vars.$h123
 				transition: all .25s ease
 	&-dropdown
 		position: absolute
@@ -43,8 +45,8 @@
 		left: -1px
 		z-index: 10
 		transition: all .25s ease
-		background-color: $white
-		border: 1px solid $black
+		background-color: vars.$white
+		border: 1px solid vars.$black
 		max-height: 200px
 		overflow-y: auto
 		&::-webkit-scrollbar
@@ -68,8 +70,8 @@
 			transition: all .25s ease
 			cursor: pointer
 			font-size: 16px
-			color: $black
+			color: vars.$black
 			&:hover
-				background-color: $bg
+				background-color: vars.$bg
 		input:checked ~ span
-			background-color: $bg
+			background-color: vars.$bg
