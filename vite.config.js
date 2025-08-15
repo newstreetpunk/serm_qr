@@ -1,8 +1,11 @@
-import { defineConfig, splitVendorChunkPlugin } from 'vite'
+import { defineConfig } from 'vite'
 import liveReload from 'vite-plugin-live-reload'
 import sass from 'sass'
 // import postcss from 'vite-plugin-postcss';
 import path from "path";
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [

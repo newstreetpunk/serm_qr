@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "APP_ENV=development vite --host --open",
     "php": "concurrently \"APP_ENV=development vite --port 5133\" \"APP_ENV=development php -S 127.0.0.1:5134 -t ./\"",
