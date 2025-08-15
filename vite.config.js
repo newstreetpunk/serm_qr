@@ -61,6 +61,16 @@ export default defineConfig({
           'global-builtin',
         ]
       },
+      sass: {
+        implementation: sass,
+        silenceDeprecations: [
+          'legacy-js-api',
+          'import',
+          'mixed-decls',
+          'color-functions',
+          'global-builtin',
+        ]
+      },
     },
   },
 });
