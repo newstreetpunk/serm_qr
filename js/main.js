@@ -690,6 +690,10 @@ document.addEventListener('DOMContentLoaded', () => {
 					phoneField.addEventListener('focus', maskphone.bind(phoneField, document.querySelector('.swal2-html-container')));
 					phoneField.addEventListener('input', maskphone.bind(phoneField, document.querySelector('.swal2-html-container')));
 					sendBtn.addEventListener('click', e => {
+						sendBtn.innerHTML = '<span>Отправляем...</span>';
+						sendBtn.setAttribute('disabled', true);
+						sendPhoneBtn.setAttribute('disabled', true);
+						
 						let send = sendForm(form, btn, formData, 'Спасибо за&nbsp;Ваш комментарий!');
 						send
 						.then( res => {
@@ -700,12 +704,21 @@ document.addEventListener('DOMContentLoaded', () => {
 								`Request failed: ${error}`
 								)
 						})
+						.finally(() => {
+							sendBtn.innerHTML = '<span>Отправить без телефона</span>';
+							sendBtn.removeAttribute('disabled');
+							sendPhoneBtn.removeAttribute('disabled');
+						})
 					})
 					sendPhoneBtn.addEventListener('click', e => {
 
 						if(!maskphone.call(phoneField, document.querySelector('.swal2-html-container'))) {
 							return false;
 						}
+
+						sendPhoneBtn.innerHTML = '<span>Отправляем...</span>';
+						sendPhoneBtn.setAttribute('disabled', true);
+						sendBtn.setAttribute('disabled', true);
 
 						formData.append('phone', phoneField.value);
 						let swalName = document.querySelector('.swal2-html-container input[name=name]');
@@ -726,6 +739,11 @@ document.addEventListener('DOMContentLoaded', () => {
 							Swal.showValidationMessage(
 								`Request failed: ${error}`
 								)
+						})
+						.finally(() => {
+							sendPhoneBtn.innerHTML = '<span>Отправить</span>';
+							sendPhoneBtn.removeAttribute('disabled');
+							sendBtn.removeAttribute('disabled');
 						})
 					})
 				}
