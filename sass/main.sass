@@ -229,6 +229,7 @@ h2
 		align-items: center
 		flex-wrap: wrap
 		width: 100%
+		column-gap: 10px;
 		// @include media-breakpoint-down-sm
 		// 	flex-direction: column
 		// 	align-items: start
@@ -274,6 +275,16 @@ h2
 			path
 				fill: vars.$midnight
 				transition: all .25s ease
+		&.accent
+			svg
+				border-color: vars.$accent
+				path
+					fill: vars.$accent
+			&:hover
+				svg
+					background-color: vars.$accent
+					path
+						fill: vars.$white
 
 
 .social
