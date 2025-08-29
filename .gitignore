@@ -10,3 +10,4 @@ inc/
 node_modules/*
 assets
 _site
+.env
