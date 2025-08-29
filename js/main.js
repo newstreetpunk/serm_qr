@@ -1,6 +1,6 @@
 import '../node_modules/dropzone/dist/dropzone.js';
 import '../node_modules/alpinejs/dist/cdn.js';
-import Swal from 'sweetalert2';
+import Swal from './vanilla-swal';
 import './alpine';
 import './dropzone';
 import './getClientID';

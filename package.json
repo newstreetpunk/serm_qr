@@ -33,7 +33,6 @@
     "sass": "^1.90.0",
     "sass-loader": "^16.0.5",
     "slick-carousel": "^1.8.1",
-    "sweetalert2": "11.22.3",
     "swiper": "^11.2.10",
     "tailwindcss": "^4.1.11",
     "vite": "^7.1.1",
