@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+
+	<title>Quiz Форма</title>
+	<meta name="description" content="">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Custom Browsers Color Start -->
+	<meta name="theme-color" content="#ffffff">
+	<!-- Custom Browsers Color End -->
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="img/kia/favicon.ico" type="image/x-icon">
+	<!-- Style -->
+	<link href="/sass/main.sass" rel="stylesheet" />
+</head>
+<body>
+
+	<div class="wrapper">
+		<main>
+
+			<h1>Quiz Форма</h1>
+
+			<section class="section quiz">
+
+				<form class="quiz__form">
+					<div class="swiper quiz__form--slider">
+						<div class="swiper-wrapper">
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+									<h2 class="card__title">Качество обслуживания</h2>
+									<div class="card__description">При прохождении опроса выберите подходящую оценку <br/>(по шкале, где 1 - наихудшая оценка, 10 - наилучшая оценка)</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn" data-js-slide-next-btn>Начать</div>
+									</footer>
+
+								</div>
+							</div>
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+
+									<div class="qr-form-group quiz__form--group">
+										<input type="text" name="name-field" placeholder=" " value="Валерия Рузова">
+										<label for="name-field">ФИО продавца</label>
+									</div>
+
+									<div class="qr-form-group quiz__form--group">
+										<input type="text" name="name-field" placeholder=" " required>
+										<label for="name-field">ФИО покупателя</label>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn>Далее</div>
+									</footer>
+
+								</div>
+							</div>
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+
+									<div class=""><b>Насколько Вы остались довольны обслуживанием в данном дилерском центре?</b></div>
+									<div class="card__description">(Вспомните, пожалуйста, Ваши общие впечатления о покупке нового BELGEE  в "Центр на Московском")</div>
+
+									<div class="quiz__rating" data-question="service">
+										<div class="rating-stars">
+											<button type="button" class="star" data-value="1"></button>
+											<button type="button" class="star" data-value="2"></button>
+											<button type="button" class="star" data-value="3"></button>
+											<button type="button" class="star" data-value="4"></button>
+											<button type="button" class="star" data-value="5"></button>
+											<button type="button" class="star" data-value="6"></button>
+											<button type="button" class="star" data-value="7"></button>
+											<button type="button" class="star" data-value="8"></button>
+											<button type="button" class="star" data-value="9"></button>
+											<button type="button" class="star" data-value="10"></button>
+										</div>
+										<div class="rating-value">
+											<span class="rating-number">0</span> / 10
+										</div>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
+									</footer>
+
+								</div>
+							</div>
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+
+									<div class=""><b>Насколько Вы остались довольны оказанным гостеприимством и отношением к вам со стороны персонала?</b></div>
+									<div class="card__description">(Вспомните, насколько дружелюбно, приветливо и отзывчиво к вам отнеслись? Предложили ли чай/кофе/воду?)</div>
+
+									<div class="quiz__rating" data-question="hospitality">
+										<div class="rating-stars">
+											<button type="button" class="star" data-value="1"></button>
+											<button type="button" class="star" data-value="2"></button>
+											<button type="button" class="star" data-value="3"></button>
+											<button type="button" class="star" data-value="4"></button>
+											<button type="button" class="star" data-value="5"></button>
+											<button type="button" class="star" data-value="6"></button>
+											<button type="button" class="star" data-value="7"></button>
+											<button type="button" class="star" data-value="8"></button>
+											<button type="button" class="star" data-value="9"></button>
+											<button type="button" class="star" data-value="10"></button>
+										</div>
+										<div class="rating-value">
+											<span class="rating-number">0</span> / 10
+										</div>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn>Далее</div>
+									</footer>
+
+								</div>
+							</div>
+
+							<div class="swiper-slide">
+
+								<div class="quiz__form--card card text-left">
+
+									<div class=""><b>Насколько Вы остались довольны тем, как был организован процесс покупки нового автомобиля в дилерском центре "Центр на Московском"?</b></div>
+
+									<div class="quiz__rating" data-question="process">
+										<div class="rating-stars">
+											<button type="button" class="star" data-value="1"></button>
+											<button type="button" class="star" data-value="2"></button>
+											<button type="button" class="star" data-value="3"></button>
+											<button type="button" class="star" data-value="4"></button>
+											<button type="button" class="star" data-value="5"></button>
+											<button type="button" class="star" data-value="6"></button>
+											<button type="button" class="star" data-value="7"></button>
+											<button type="button" class="star" data-value="8"></button>
+											<button type="button" class="star" data-value="9"></button>
+											<button type="button" class="star" data-value="10"></button>
+										</div>
+										<div class="rating-value">
+											<span class="rating-number">0</span> / 10
+										</div>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn>Далее</div>
+									</footer>
+
+								</div>
+
+							</div>
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+
+									<div class=""><b>Насколько вы остались обслуживанием вашего менеджера?</b></div>
+									<div class="card__description">(Был с вами на связи все время, объяснил все делати и ответил на все вопросы)</div>
+
+									<div class="quiz__rating" data-question="manager">
+										<div class="rating-stars">
+											<button type="button" class="star" data-value="1"></button>
+											<button type="button" class="star" data-value="2"></button>
+											<button type="button" class="star" data-value="3"></button>
+											<button type="button" class="star" data-value="4"></button>
+											<button type="button" class="star" data-value="5"></button>
+											<button type="button" class="star" data-value="6"></button>
+											<button type="button" class="star" data-value="7"></button>
+											<button type="button" class="star" data-value="8"></button>
+											<button type="button" class="star" data-value="9"></button>
+											<button type="button" class="star" data-value="10"></button>
+										</div>
+										<div class="rating-value">
+											<span class="rating-number">0</span> / 10
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="d-flex">
+											<label class="checkbox-control">
+												<input type="checkbox" name="agree" class="agree" id="agree-field-1">
+												<span class="checkbox-indicator"></span>
+											</label>
+											<small>Я согласен на <a href="#popup" id="popup_link">обработку персональных данных</a></small>
+										</div>
+										<span class="error-message" id="agree"></span>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<button class="btn" data-subject="Квиз" data-form="Квиз">Отправить</button>
+									</footer>
+
+									<div class="form-message"></div>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</form>
+
+			</section>
+		</main>
+	</div>
+
+	<script type="module" src="/js/main.js"></script>
+</body>
+</html>
