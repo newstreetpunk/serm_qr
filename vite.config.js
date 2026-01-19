@@ -33,6 +33,7 @@ export default defineConfig({
         empty: path.resolve(__dirname, 'empty.html'),
         classified: path.resolve(__dirname, 'classified.html'),
         recommendation: path.resolve(__dirname, 'recommendation.html'),
+        quiz: path.resolve(__dirname, 'quiz.html'),
         script: path.resolve(__dirname, 'js/main.js'),
         style: path.resolve(__dirname, 'sass/main.sass'),
       }
