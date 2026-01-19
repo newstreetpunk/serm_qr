@@ -10,6 +10,7 @@ const quizSlider = new Swiper(".quiz__form--slider", {
 
 const slideNextBtns = document.querySelectorAll('[data-js-slide-next-btn]');
 const slidePrevBtns = document.querySelectorAll('[data-js-slide-prev-btn]');
+const form = document.querySelector('.quiz__form');
 
 slideNextBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -25,21 +26,24 @@ slidePrevBtns.forEach(btn => {
 
 // Рейтинг система
 const ratingContainers = document.querySelectorAll('.quiz__rating');
-const ratings = {};
 
 ratingContainers.forEach(container => {
     const questionId = container.dataset.question;
     const stars = container.querySelectorAll('.star');
     const ratingNumber = container.querySelector('.rating-number');
-    
-    ratings[questionId] = 0;
+    const ratingInput = form.querySelector(`input[data-question="${questionId}"]`);
+    const slide = container.closest('.swiper-slide');
+    const nextBtn = slide.querySelector('[data-js-slide-next-btn]');
 
-    stars.forEach((star, index) => {
+    stars.forEach((star) => {
         star.addEventListener('click', (e) => {
             e.preventDefault();
             const value = parseInt(star.dataset.value);
-            ratings[questionId] = value;
+            ratingInput.value = value;
             updateStarDisplay(stars, value, ratingNumber);
+            
+            // Проверяем required поля и обновляем кнопку
+            checkAndUpdateButton(nextBtn, ratingInput);
         });
 
         star.addEventListener('mouseenter', () => {
@@ -49,10 +53,10 @@ ratingContainers.forEach(container => {
     });
 
     container.addEventListener('mouseleave', () => {
-        if (ratings[questionId] === 0) {
+        if (!ratingInput.value) {
             clearStarHighlight(stars);
         } else {
-            updateStarDisplay(stars, ratings[questionId], ratingNumber);
+            updateStarDisplay(stars, parseInt(ratingInput.value), ratingNumber);
         }
     });
 });
@@ -87,5 +91,79 @@ function updateStarDisplay(stars, value, ratingNumber) {
     ratingNumber.textContent = value;
 }
 
-// Экспортируем рейтинги для отправки формы
-window.getQuizRatings = () => ratings;
+// Отслеживание всех required полей
+function checkAndUpdateButton(button, input) {
+    if (button && input) {
+        if (input.value && input.value.trim() !== '') {
+            button.removeAttribute('disabled');
+        } else {
+            button.setAttribute('disabled', '');
+        }
+    }
+}
+
+// Инициализация - добавляем слушатели на все required поля
+const requiredInputs = form.querySelectorAll('[required]');
+requiredInputs.forEach(input => {
+    input.addEventListener('change', () => {
+        // Проверяем все слайды и обновляем их кнопки
+        document.querySelectorAll('.swiper-slide').forEach(slide => {
+            const button = slide.querySelector('[data-js-slide-next-btn], button[type="submit"]');
+            if (button) {
+                const requiredInSlide = slide.querySelectorAll('[required]');
+                let allFilled = true;
+                
+                requiredInSlide.forEach(req => {
+                    if (req.type === 'hidden') {
+                        if (!req.value || req.value.trim() === '') {
+                            allFilled = false;
+                        }
+                    } else if (req.type === 'checkbox') {
+                        if (!req.checked) {
+                            allFilled = false;
+                        }
+                    } else {
+                        if (!req.value || req.value.trim() === '') {
+                            allFilled = false;
+                        }
+                    }
+                });
+                
+                if (allFilled) {
+                    button.removeAttribute('disabled');
+                } else {
+                    button.setAttribute('disabled', '');
+                }
+            }
+        });
+    });
+});
+
+// Инициальная проверка кнопок при загрузке
+document.querySelectorAll('.quiz__form--card').forEach(slide => {
+    const button = slide.querySelector('[data-js-slide-next-btn], button[type="submit"]');
+    if (button) {
+        const requiredInSlide = slide.querySelectorAll('[required]');
+        let allFilled = true;
+        
+        requiredInSlide.forEach(req => {
+            if (req.type === 'hidden') {
+                if (!req.value || req.value.trim() === '') {
+                    allFilled = false;
+                }
+            } else if (req.type === 'checkbox') {
+                if (!req.checked) {
+                    allFilled = false;
+                }
+            } else {
+                if (!req.value || req.value.trim() === '') {
+                    allFilled = false;
+                }
+            }
+        });
+        
+        if (!allFilled) {
+            button.setAttribute('disabled', '');
+        }
+    }
+});

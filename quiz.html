@@ -47,18 +47,18 @@
 								<div class="quiz__form--card card text-left">
 
 									<div class="qr-form-group quiz__form--group">
-										<input type="text" name="name-field" placeholder=" " value="Валерия Рузова">
-										<label for="name-field">ФИО продавца</label>
+										<input type="text" name="seller" id="seller" placeholder=" " value="Валерия Рузова" required>
+										<label for="seller">ФИО продавца</label>
 									</div>
 
 									<div class="qr-form-group quiz__form--group">
-										<input type="text" name="name-field" placeholder=" " required>
-										<label for="name-field">ФИО покупателя</label>
+										<input type="text" name="buyer" id="buyer" placeholder=" " required>
+										<label for="buyer">ФИО покупателя</label>
 									</div>
 
 									<footer class="card__footer text-right">
 										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
-										<div class="btn" data-js-slide-next-btn>Далее</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
 									</footer>
 
 								</div>
@@ -66,11 +66,11 @@
 
 							<div class="swiper-slide">
 								<div class="quiz__form--card card text-left">
+									<input type="hidden" name="rating-service" class="quiz__rating-input" data-question="service" required>							
 
 									<div class=""><b>Насколько Вы остались довольны обслуживанием в данном дилерском центре?</b></div>
 									<div class="card__description">(Вспомните, пожалуйста, Ваши общие впечатления о покупке нового BELGEE  в "Центр на Московском")</div>
-
-									<div class="quiz__rating" data-question="service">
+								<div class="quiz__rating" data-question="service">
 										<div class="rating-stars">
 											<button type="button" class="star" data-value="1"></button>
 											<button type="button" class="star" data-value="2"></button>
@@ -98,11 +98,11 @@
 
 							<div class="swiper-slide">
 								<div class="quiz__form--card card text-left">
+									<input type="hidden" name="rating-hospitality" class="quiz__rating-input" data-question="hospitality" required>							
 
 									<div class=""><b>Насколько Вы остались довольны оказанным гостеприимством и отношением к вам со стороны персонала?</b></div>
 									<div class="card__description">(Вспомните, насколько дружелюбно, приветливо и отзывчиво к вам отнеслись? Предложили ли чай/кофе/воду?)</div>
-
-									<div class="quiz__rating" data-question="hospitality">
+								<div class="quiz__rating" data-question="hospitality">
 										<div class="rating-stars">
 											<button type="button" class="star" data-value="1"></button>
 											<button type="button" class="star" data-value="2"></button>
@@ -122,7 +122,7 @@
 
 									<footer class="card__footer text-right">
 										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
-										<div class="btn" data-js-slide-next-btn>Далее</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
 									</footer>
 
 								</div>
@@ -131,10 +131,10 @@
 							<div class="swiper-slide">
 
 								<div class="quiz__form--card card text-left">
+									<input type="hidden" name="rating-process" class="quiz__rating-input" data-question="process" required>									
 
 									<div class=""><b>Насколько Вы остались довольны тем, как был организован процесс покупки нового автомобиля в дилерском центре "Центр на Московском"?</b></div>
-
-									<div class="quiz__rating" data-question="process">
+								<div class="quiz__rating" data-question="process">
 										<div class="rating-stars">
 											<button type="button" class="star" data-value="1"></button>
 											<button type="button" class="star" data-value="2"></button>
@@ -154,7 +154,7 @@
 
 									<footer class="card__footer text-right">
 										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
-										<div class="btn" data-js-slide-next-btn>Далее</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
 									</footer>
 
 								</div>
@@ -163,10 +163,10 @@
 
 							<div class="swiper-slide">
 								<div class="quiz__form--card card text-left">
+									<input type="hidden" name="rating-manager" class="quiz__rating-input" data-question="manager" required>								
 
 									<div class=""><b>Насколько вы остались обслуживанием вашего менеджера?</b></div>
 									<div class="card__description">(Был с вами на связи все время, объяснил все делати и ответил на все вопросы)</div>
-
 									<div class="quiz__rating" data-question="manager">
 										<div class="rating-stars">
 											<button type="button" class="star" data-value="1"></button>
@@ -198,7 +198,7 @@
 
 									<footer class="card__footer text-right">
 										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
-										<button class="btn" data-subject="Квиз" data-form="Квиз">Отправить</button>
+										<button type="submit" class="btn" data-subject="Квиз" data-form="Квиз" data-js-slide-next-btn disabled>Отправить</button>
 									</footer>
 
 									<div class="form-message"></div>
