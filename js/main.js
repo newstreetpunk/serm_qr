@@ -6,6 +6,7 @@ import './dropzone';
 import './getClientID';
 import './kia-select';
 import './qr-generation';
+import './quiz';
 
 document.addEventListener('DOMContentLoaded', () => {
 
