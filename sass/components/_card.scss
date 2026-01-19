@@ -1,0 +1,41 @@
+.card {
+
+    --radius: 8px;
+
+    &:not(:first-child){
+        margin-top: 12px;
+    }
+
+    background-color: #fff;
+    border: 1px solid rgb(218, 220, 224);
+    border-radius: var(--radius);
+    padding: 24px;
+    padding-top: 22px;
+    position: relative;
+    overflow: hidden;
+
+    &__title {
+        font-weight: bold;
+        margin: 0;
+    }
+
+    &__description {
+        margin-top: 12px;
+        font-style: italic;
+    }
+
+    .btn {
+        width: fit-content;
+        border-radius: var(--radius);
+        padding: 10px 16px;
+    }
+
+    &__footer {
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: 4px;
+    }
+
+}
