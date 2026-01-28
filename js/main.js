@@ -6,7 +6,6 @@ import './dropzone';
 import './getClientID';
 import './kia-select';
 import './qr-generation';
-import './quiz';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -24,6 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	const links = document.querySelectorAll('.classified__link');
 	const sublist = document.querySelector('.classified__sublist');
 	const sublinks = document.querySelectorAll('.classified__sublink');
+
+	const quizForm = document.querySelector('#quiz_form');
+	
+	const qtyBlock = document.querySelector('.quality-block');
+	const reviewBlockGood = document.querySelector('#add-review-good');
+	const reviewBlockBad = document.querySelector('#add-review-bad');
+	const formComment = document.getElementById('form-comment');
+	const reviewList = document.getElementById('add-review__list');
 
 	let clicked = false;
 	let attr = '';
@@ -484,6 +491,18 @@ document.addEventListener('DOMContentLoaded', () => {
 		return valid
 	}
 
+	let quizRating = {};
+	let hasLowRating = false;
+
+	document.addEventListener('ratingChange', (e) => {
+		if(!quizRating[e.detail.name]) {
+			quizRating[e.detail.name] = e.detail.value;
+		} else {
+			quizRating[e.detail.name] = e.detail.value;
+		}
+		hasLowRating = Object.values(quizRating).some(value => value < 7);		
+	});
+
 	async function sendForm(form, btn, formData, textSucces = 'Спасибо!') {
 		let res;
 		// console.log(textSucces)
@@ -536,7 +555,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}
 
-		let response = await fetch('/mail.php', {
+		if(quizForm){
+			if(!formData.get('phone')){
+				formData.append('nophone', '');
+			}
+		}
+
+		let response = await fetch('https://alexsab.ru/lead/dev/', {
 			method: 'POST',
 			body: formData
 		});
@@ -553,10 +578,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				return false;
 			}
 
-			if (res.answer == 'error') {
+			if (res.answer == 'error' || res.answer == 'required') {
 				Swal.fire({
 					title: 'Ошибка',
-					text: res.error,
+					text: res?.error || res?.message,
 					icon: 'error',
 					iconColor: '#eA0029',
 					backdrop: 'rgba(0,0,0,0.7)',
@@ -570,32 +595,57 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 
 			if(res.answer == 'ok') {
-				if(res.gs.manager) {
+
+				if(quizForm){
+					const NAME = formData.get('name') || null;
+					const LEAD_ID = res.lead_id || null;
+					if(!hasLowRating){
+						reviewBlockGood.classList.add('active');
+					}else{
+						const inputName = reviewBlockBad.querySelector('[name="name"]');
+						const inputLeadId = reviewBlockBad.querySelector('[name="lead_id"]');
+						const inputAnswers = reviewBlockBad.querySelector('[name="answers"]');
+						if(inputName && NAME) inputName.value = NAME;
+						if(inputLeadId && LEAD_ID) inputLeadId.value = LEAD_ID;
+						if(inputAnswers && Object.values(quizRating).length){
+							const quizAnswers = Object.values(quizRating).map(val => val) || [];
+							inputAnswers.value = quizAnswers.join('-');
+						}
+						reviewBlockBad.classList.add('active');
+					}
+					quizForm.classList.add('d-none');
+				}
+
+				if(res?.gs?.manager) {
 					your = "";
 					textSucces += "<br>Этот клиент уже закреплен за менеджером: <b>" + res.gs.manager + "</b><br><br>\n";
 				}
-				if(res.gs.lineAdded) {
+				if(res?.gs?.lineAdded) {
 					textSucces += "Код для" + your + " клиента: " + stringForEncode + "<br><br>\n";
 					textSucces += "Ссылка для" + your + " клиента:<br><a target=\"_blank\" href=\"https://qr.kia-engels.ru/ref/" + stringForEncode + "\">qr.kia-engels.ru/ref/" + stringForEncode + "</a>";
 					document.querySelector('.last-code').innerHTML += "<br><br>"+textSucces;
 				}
-				if(res.gs.httpcode) {
+				if(res?.gs?.httpcode) {
 					textSucces = "Что-то пошло не&nbsp;так, пожалуйста свяжитесь с&nbsp;техподдержкой<br><br><a target=\"_blank\" href=\"https://alexsab.t.me\">alexsab.t.me</a>";
 				}
-				Swal.fire({
-					title: 'Спасибо',
-					html: textSucces,
-					icon: 'success',
-					iconColor: '#f3c300',
-					backdrop: 'rgba(0,0,0,0.7)',
-					showCloseButton: true,
-					closeButtonHtml: '&times;',
-					confirmButtonColor: '#05141f',
-					allowOutsideClick: false,
-					allowEscapeKey: false,
-					showDenyButton: false,
-					showCancelButton: false
-				});
+				if(!Object.keys(quizRating).length){
+					Swal.fire({
+						title: 'Спасибо',
+						html: textSucces,
+						icon: 'success',
+						iconColor: '#f3c300',
+						backdrop: 'rgba(0,0,0,0.7)',
+						showCloseButton: true,
+						closeButtonHtml: '&times;',
+						confirmButtonColor: '#05141f',
+						allowOutsideClick: false,
+						allowEscapeKey: false,
+						showDenyButton: false,
+						showCancelButton: false
+					});
+
+					quizRating = {};
+				}
 				if(formData.get('file')){
 					document.querySelector('#file-upload').dropzone.removeAllFiles();
 				} else if(form.closest('.add-review')) {
@@ -775,11 +825,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		})
 	}
 
-	const qtyBlock = document.querySelector('.quality-block');
-	const reviewBlockGood = document.querySelector('#add-review-good');
-	const reviewBlockBad = document.querySelector('#add-review-bad');
-	const formComment = document.getElementById('form-comment');
-	const reviewList = document.getElementById('add-review__list');
 	if(qtyBlock) {
 		qtyBlock.addEventListener('click', e => {
 			if(e.target.closest('.quality-item')) {

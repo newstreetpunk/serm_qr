@@ -10,9 +10,13 @@
     border: 1px solid rgb(218, 220, 224);
     border-radius: var(--radius);
     padding: 24px;
-    padding-top: 22px;
     position: relative;
     overflow: hidden;
+    user-select: none;
+
+    @media (max-width: 480px) {
+        padding: 12px 16px;
+    }
 
     &__title {
         font-weight: bold;

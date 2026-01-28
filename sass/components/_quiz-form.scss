@@ -84,6 +84,25 @@
         border-color: #ffb800;
         background: #fffbf5;
     }
+
+    @media (max-width: 576px) {
+        width: 24px;
+        height: 24px;
+        border-width: 1px;
+
+        &::before {
+            font-size: 15px;
+        }
+
+        &.active::before {
+            font-size: 14px;
+        }
+
+        &:hover::before,
+        &.hovered::before {
+            transform: scale(1.1);
+        }
+    }
 }
 
 .rating-value {

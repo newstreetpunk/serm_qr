@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+
+	<title>Quiz Форма</title>
+	<meta name="description" content="">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Custom Browsers Color Start -->
+	<meta name="theme-color" content="#ffffff">
+	<!-- Custom Browsers Color End -->
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="img/kia/favicon.ico" type="image/x-icon">
+	<!-- Style -->
+	<link href="/sass/main.sass" rel="stylesheet" />
+</head>
+<body>
+
+	<div class="wrapper">
+		<main>
+
+			<h1>Quiz Форма</h1>
+
+			<!-- /.Rating slider -->
+			<section class="rating-slider-section">
+				<h2 class="rating-slider-section__title">Оцените качество обслуживания</h2>
+				<div class="rating-slider-section__description">Перетащите ползунок, чтобы выбрать оценку от 1 до 10</div>
+				<div class="rating-slider">
+					
+					<div class="rating-slider__container">
+						<input 
+							type="hidden" 
+							name="rating-slider-value" 
+							class="rating-slider__input" 
+							value="0"
+						>
+						
+					<div class="rating-slider__wrapper">
+						<div class="rating-slider__tooltip">Оценка: <span class="rating-slider__tooltip-value">0</span></div>
+						
+						<div class="rating-slider__track">
+							<div class="rating-slider__track-fill"></div>
+							<div class="rating-slider__thumb"></div>
+						</div>
+						
+						<div class="rating-slider__labels">
+							<span class="rating-slider__label">0</span>
+							<span class="rating-slider__label">1</span>
+							<span class="rating-slider__label">2</span>
+							<span class="rating-slider__label">3</span>
+							<span class="rating-slider__label">4</span>
+							<span class="rating-slider__label">5</span>
+							<span class="rating-slider__label">6</span>
+							<span class="rating-slider__label">7</span>
+							<span class="rating-slider__label">8</span>
+							<span class="rating-slider__label">9</span>
+							<span class="rating-slider__label">10</span>
+						</div>
+					</div>
+						
+						<div class="rating-slider__value">
+							Выбрано: <span class="rating-slider__current-value">0</span> / 10
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- /.Rating slider -->
+
+			<section class="section quiz" id="quiz_form">
+
+				<form class="quiz__form">
+					<div class="swiper quiz__form--slider">
+						<div class="swiper-wrapper">
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+									<h2 class="card__title">Качество обслуживания</h2>
+									<div class="card__description">При прохождении опроса выберите подходящую оценку <br/>(по шкале, где 1 - наихудшая оценка, 10 - наилучшая оценка)</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn" data-js-slide-next-btn>Начать</div>
+									</footer>
+
+								</div>
+							</div>
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+
+									
+									<div class="qr-form-group quiz__form--group">
+										<input type="text" name="seller" id="seller" placeholder=" " value="Валерия Рузова" readonly>
+										<label for="seller">ФИО продавца</label>
+									</div>
+									
+									<div class="qr-form-group quiz__form--group">
+										<input type="text" name="name" id="name" placeholder=" " required>
+										<label for="name">ФИО покупателя</label>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
+									</footer>
+
+								</div>
+							</div>
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+
+									<div class=""><b>Насколько Вы остались довольны обслуживанием в данном дилерском центре?</b></div>
+									<div class="card__description">(Вспомните, пожалуйста, Ваши общие впечатления о покупке нового BELGEE  в "Центр на Московском")</div>
+									<div class="quiz__rating" data-question="service">
+										<div class="rating-slider">
+					
+											<div class="rating-slider__container">
+												<input 
+													type="hidden" 
+													name="rating-slider-service" 
+													class="rating-slider__input" 
+													value="0"
+													required
+												>
+												
+												<div class="rating-slider__wrapper">
+													<div class="rating-slider__tooltip">Оценка: <span class="rating-slider__tooltip-value">0</span></div>
+													
+													<div class="rating-slider__track">
+														<div class="rating-slider__track-fill"></div>
+														<div class="rating-slider__thumb"></div>
+													</div>
+													
+													<div class="rating-slider__labels">
+														<span class="rating-slider__label">0</span>
+														<span class="rating-slider__label">1</span>
+														<span class="rating-slider__label">2</span>
+														<span class="rating-slider__label">3</span>
+														<span class="rating-slider__label">4</span>
+														<span class="rating-slider__label">5</span>
+														<span class="rating-slider__label">6</span>
+														<span class="rating-slider__label">7</span>
+														<span class="rating-slider__label">8</span>
+														<span class="rating-slider__label">9</span>
+														<span class="rating-slider__label">10</span>
+													</div>
+												</div>
+												
+												<div class="rating-slider__value">
+													Выбрано: <span class="rating-slider__current-value">0</span> / 10
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
+									</footer>
+
+								</div>
+							</div>
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+
+									<div class=""><b>Насколько Вы остались довольны оказанным гостеприимством и отношением к вам со стороны персонала?</b></div>
+									<div class="card__description">(Вспомните, насколько дружелюбно, приветливо и отзывчиво к вам отнеслись? Предложили ли чай/кофе/воду?)</div>
+									<div class="quiz__rating" data-question="hospitality">
+										<div class="rating-slider">
+						
+											<div class="rating-slider__container">
+												<input 
+													type="hidden" 
+													name="rating-slider-hospitality" 
+													class="rating-slider__input" 
+													value="0"
+													required
+												>
+												
+												<div class="rating-slider__wrapper">
+													<div class="rating-slider__tooltip">Оценка: <span class="rating-slider__tooltip-value">0</span></div>
+													
+													<div class="rating-slider__track">
+														<div class="rating-slider__track-fill"></div>
+														<div class="rating-slider__thumb"></div>
+													</div>
+													
+													<div class="rating-slider__labels">
+														<span class="rating-slider__label">0</span>
+														<span class="rating-slider__label">1</span>
+														<span class="rating-slider__label">2</span>
+														<span class="rating-slider__label">3</span>
+														<span class="rating-slider__label">4</span>
+														<span class="rating-slider__label">5</span>
+														<span class="rating-slider__label">6</span>
+														<span class="rating-slider__label">7</span>
+														<span class="rating-slider__label">8</span>
+														<span class="rating-slider__label">9</span>
+														<span class="rating-slider__label">10</span>
+													</div>
+												</div>
+												
+												<div class="rating-slider__value">
+													Выбрано: <span class="rating-slider__current-value">0</span> / 10
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
+									</footer>
+
+								</div>
+							</div>
+
+							<div class="swiper-slide">
+
+								<div class="quiz__form--card card text-left">
+
+									<div class=""><b>Насколько Вы остались довольны тем, как был организован процесс покупки нового автомобиля в дилерском центре "Центр на Московском"?</b></div>
+									<div class="quiz__rating" data-question="process">
+										<div class="rating-slider">
+					
+											<div class="rating-slider__container">
+												<input 
+													type="hidden" 
+													name="rating-slider-process" 
+													class="rating-slider__input" 
+													value="0"
+													required
+												>
+												
+												<div class="rating-slider__wrapper">
+													<div class="rating-slider__tooltip">Оценка: <span class="rating-slider__tooltip-value">0</span></div>
+													
+													<div class="rating-slider__track">
+														<div class="rating-slider__track-fill"></div>
+														<div class="rating-slider__thumb"></div>
+													</div>
+													
+													<div class="rating-slider__labels">
+														<span class="rating-slider__label">0</span>
+														<span class="rating-slider__label">1</span>
+														<span class="rating-slider__label">2</span>
+														<span class="rating-slider__label">3</span>
+														<span class="rating-slider__label">4</span>
+														<span class="rating-slider__label">5</span>
+														<span class="rating-slider__label">6</span>
+														<span class="rating-slider__label">7</span>
+														<span class="rating-slider__label">8</span>
+														<span class="rating-slider__label">9</span>
+														<span class="rating-slider__label">10</span>
+													</div>
+												</div>
+												
+												<div class="rating-slider__value">
+													Выбрано: <span class="rating-slider__current-value">0</span> / 10
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
+									</footer>
+
+								</div>
+
+							</div>
+
+							<div class="swiper-slide">
+								<div class="quiz__form--card card text-left">
+
+									<div class=""><b>Насколько вы остались обслуживанием вашего менеджера?</b></div>
+									<div class="card__description">(Был с вами на связи все время, объяснил все делати и ответил на все вопросы)</div>
+									<div class="quiz__rating" data-question="manager">
+										<div class="rating-slider">
+					
+											<div class="rating-slider__container">
+												<input 
+													type="hidden" 
+													name="rating-slider-manager" 
+													class="rating-slider__input" 
+													value="0"
+													required
+												>
+												
+												<div class="rating-slider__wrapper">
+													<div class="rating-slider__tooltip">Оценка: <span class="rating-slider__tooltip-value">0</span></div>
+													
+													<div class="rating-slider__track">
+														<div class="rating-slider__track-fill"></div>
+														<div class="rating-slider__thumb"></div>
+													</div>
+													
+													<div class="rating-slider__labels">
+														<span class="rating-slider__label">0</span>
+														<span class="rating-slider__label">1</span>
+														<span class="rating-slider__label">2</span>
+														<span class="rating-slider__label">3</span>
+														<span class="rating-slider__label">4</span>
+														<span class="rating-slider__label">5</span>
+														<span class="rating-slider__label">6</span>
+														<span class="rating-slider__label">7</span>
+														<span class="rating-slider__label">8</span>
+														<span class="rating-slider__label">9</span>
+														<span class="rating-slider__label">10</span>
+													</div>
+												</div>
+												
+												<div class="rating-slider__value">
+													Выбрано: <span class="rating-slider__current-value">0</span> / 10
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="d-flex">
+											<label class="checkbox-control">
+												<input type="checkbox" name="agree" class="agree" id="agree-field-1">
+												<span class="checkbox-indicator"></span>
+											</label>
+											<small>Я согласен на <a href="#popup" id="popup_link">обработку персональных данных</a></small>
+										</div>
+										<span class="error-message agree" id="agree"></span>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<button type="submit" class="btn" data-subject="Квиз" data-form="Квиз" data-js-slide-next-btn disabled>Отправить</button>
+									</footer>
+
+									
+								</div>
+							</div>
+							
+						</div>
+					</div>
+
+					<div class="form-message"></div>
+
+				</form>
+
+			</section>
+
+			<section class="add-review" id="add-review-good">
+				<h2 class="mb-2">Спасибо!</h2>
+				<p class="text-muted text-muted-good">Оставьте отзыв, нам будет очень приятно.</p>
+				<div id="add-review__list">
+					<div class="add-review__list icon-block__list">
+
+						<a href="#" class="add-review__link" data-source="tripadvisor" data-source-name="TripAdvisor">
+							<img src="img/icons/feedback/tripadvisor.svg" alt="TripAdvisor" class="add-review__icon _active">
+							<img src="img/icons/feedback/tripadvisor-hover.svg" alt="TripAdvisor" class="add-review__icon _hover">
+							<span class="name">TripAdvisor</span>
+						</a>
+
+						<a href="#" class="add-review__link" data-source="google" data-source-name="Google">
+							<img src="img/icons/feedback/google-maps.svg" alt="Google" class="add-review__icon _active">
+							<img src="img/icons/feedback/google-maps-hover.svg" alt="Google" class="add-review__icon _hover">
+							<span class="name">Google</span>
+						</a>
+
+						<a href="#" class="add-review__link" data-source="yandex" data-source-name="Яндекс">
+							<img src="img/icons/feedback/yandex-maps.svg" alt="Yandex" class="add-review__icon _active">
+							<img src="img/icons/feedback/yandex-maps-hover.svg" alt="Yandex" class="add-review__icon _hover">
+							<span class="name">Yandex</span>
+						</a>
+
+						<a href="#" class="add-review__link" data-source="gis" data-source-name="2Гис">
+							<img src="img/icons/feedback/2GIS.svg" alt="2Gis" class="add-review__icon _active">
+							<img src="img/icons/feedback/2GIS-hover.svg" alt="2Gis" class="add-review__icon _hover">
+							<span class="name">2GIS</span>
+						</a>
+
+					</div>
+					<div class="map">
+						<div class="map-block">
+							<h3>Выберите дилера:</h3>
+							<span id="map"></span>
+						</div>
+					</div>
+
+				</div>
+
+			</section>
+
+			<section class="add-review" id="add-review-bad">
+				<p class="text-muted">Расскажите, пожалуйста, что произошло. Мы&nbsp;постараемся разобраться в&nbsp;сложившейся ситуации.</p>
+				<div class="form-comment px-3" id="form-comment">
+					<form data-type="review">
+
+						<input type="hidden" name="lead_id">
+						<input type="hidden" name="answers">
+
+						<div class="qr-form-group">
+							<input type="text" id="name" name="name" placeholder=" " readonly>
+							<label for="name">Ваше имя</label>
+						</div>
+						<div class="qr-form-group">
+							<input type="tel" id="phone-field" name="phone" placeholder=" ">
+							<label for="phone-field">Телефон</label>
+						</div>
+						<div class="error-message" id="phone"></div>
+						<input type="email" tabindex="-1" name="email" placeholder="mail@example.com">
+
+						<div class="qr-form-group qr-form-area mt-4">
+							<textarea id="comment-field" name="comment" placeholder="Комментарий..."></textarea>
+						</div>
+						<div class="error-message" id="comment"></div>
+						<br>
+						<br>
+						<button class="btn" data-subject="Отзыв с сайта QR Kia" data-form="Отзыв QR Kia"><span>Отправить</span></button>
+						<div class="form-message"></div>
+
+						<div class="form-group">
+							<div class="d-flex">
+								<label class="checkbox-control">
+									<input type="checkbox" name="agree" class="agree" id="agree-field-1">
+									<span class="checkbox-indicator"></span>
+								</label>
+								<small>Я согласен на <a href="#popup" id="popup_link">обработку персональных данных</a></small>
+							</div>
+							<span class="error-message" id="agree"></span>
+						</div>
+					</form>
+				</div>
+
+			</section>
+
+		</main>
+	</div>
+
+	<script>
+		let placemarks = {
+			"msk": {
+				"position": [53.248659, 50.21551],
+				"hintContent": "Dongfeng центр на Московском",
+				"address": "г. Самара, Московское шоссе, дом 262 А",
+				"address_vcf": ";;Московское шоссе, дом 262 А;Самара;Самарская;443125;Россия",
+				"id": "msk",
+				"yandex": "https://yandex.ru/profile/217397686275?intent=reviews",
+				"yandex_app": "yandexmaps://maps.yandex.ru/?oid=217397686275",
+				"gis": "https://2gis.ru/samara/firm/70000001081850346/tab/reviews",
+				"gis_app": "dgis://2gis.ru/samara/firm/70000001081850346/tab/reviews",
+				"avito": "",
+				"avto_provereno": "",
+				"avito_new": "",
+				"avito_old": "",
+				"avito_review": "",
+				"avtoru_new": "",
+				"avtoru_old": "",
+				"drom_new": "",
+				"drom_old": "",
+				"marker": "/img/dfm/dfm-locator.svg"
+			},
+			"yug": {
+				"position": [53.140109, 50.180009],
+				"hintContent": "Dongfeng центр на Южном",
+				"address": "г. Самара, Южное шоссе, дом 12 В",
+				"address_vcf": ";;Южное шоссе, дом 12 В;Самара;Самарская;443085;Россия",
+				"id": "yug",
+				"yandex": "https://yandex.ru/profile/173170479346?intent=reviews",
+				"yandex_app": "yandexmaps://maps.yandex.ru/?oid=173170479346",
+				"gis": "https://2gis.ru/samara/firm/70000001086542796/tab/reviews",
+				"gis_app": "dgis://2gis.ru/samara/firm/70000001086542796/tab/reviews",
+				"avito": "",
+				"avto_provereno": "",
+				"avito_new": "",
+				"avito_old": "",
+				"avito_review": "",
+				"avtoru_new": "",
+				"avtoru_old": "",
+				"drom_new": "",
+				"drom_old": "",
+				"marker": "/img/dfm/dfm-locator.svg"
+			},
+			"kcnam": {
+				"position": [53.248467, 50.215370],
+				"hintContent": "Киа Центр на Московском",
+				"address": "г Самара, Московское шоссе, 262 А",
+				"address_vcf": ";;Московское шоссе, 262 А;Самара;Самарская;443125;Россия",
+				"id": "moscow",
+				"google": "https://g.page/kiasmr/review?rc",
+				"yandex": "https://yandex.ru/profile/1179041515?intent=reviews",
+				"yandex_app": "yandexmaps://maps.yandex.ru/?oid=1179041515",
+				"gis": "https://2gis.ru/samara/firm/70000001019939556/tab/reviews",
+				"gis_app": "dgis://2gis.ru/samara/firm/70000001019939556/tab/reviews",
+				"avito": "https://www.avito.ru/user/c3dc71a035df1bde846f84421a9b9b55/profile?page_from=public_profile&review_add_trigger=seller_link&review_page_from=public_profile&src=seller_link#open-reviews",
+				"avto_provereno": "https://www.avito.ru/user/49f0e456086095769c208c87190bb8b6/profile?page_from=public_profile&review_add_trigger=seller_link&review_page_from=public_profile&src=seller_link#open-reviews",
+				"avito_new": "https://www.avito.ru/user/c3dc71a035df1bde846f84421a9b9b55/profile",
+				"avito_old": "https://www.avito.ru/user/49f0e456086095769c208c87190bb8b6/profile",
+				"avito_review": "",
+				"avtoru_new": "https://auto.ru/diler-oficialniy/cars/all/kia_centr_na_moskovskom_samara/",
+				"avtoru_old": "",
+				"drom_new": "",
+				"drom_old": "",
+				"marker": "/img/kia/locator.svg"
+			}
+		};
+	</script>
+
+	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&loadByRequire=1" type="text/javascript"></script>
+
+	<script type="module" src="/js/quiz-slider.js"></script>
+	<script type="module" src="/js/main.js"></script>
+</body>
+</html>

@@ -34,6 +34,7 @@ export default defineConfig({
         classified: path.resolve(__dirname, 'classified.html'),
         recommendation: path.resolve(__dirname, 'recommendation.html'),
         quiz: path.resolve(__dirname, 'quiz.html'),
+        quiz_slider: path.resolve(__dirname, 'quiz-slider.html'),
         script: path.resolve(__dirname, 'js/main.js'),
         style: path.resolve(__dirname, 'sass/main.sass'),
       }
