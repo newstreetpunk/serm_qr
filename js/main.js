@@ -541,10 +541,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			case "screenshot":
 			case "friend":
 			case "friend_create":
+			case "quiz":
 				formData.append('type', form.dataset.type);
 				break;
 			default:
-				formData.append('type', form.dataset.type);
 				break;
 		}
 
