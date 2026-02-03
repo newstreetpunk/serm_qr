@@ -544,6 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				formData.append('type', form.dataset.type);
 				break;
 			default:
+				formData.append('type', form.dataset.type);
 				break;
 		}
 
@@ -562,7 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}
 
-		let response = await fetch('https://alexsab.ru/lead/dev/', {
+		let response = await fetch('/mail.php', {
 			method: 'POST',
 			body: formData
 		});
