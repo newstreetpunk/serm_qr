@@ -570,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		if (response.status === 200) {
 			res = await response.json();
-			if (!res.validation && !checkingRequiredFields(form, res.massages)) {
+			if (!res.validation && !checkingRequiredFields(form, res.messages)) {
 				if(form.querySelector('.success-message')){
 					form.querySelector('.success-message').style.display = 'none';
 				}
