@@ -6,6 +6,7 @@ import './dropzone';
 import './getClientID';
 import './kia-select';
 import './qr-generation';
+import './quiz-slider';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -568,7 +569,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		if (response.status === 200) {
 			res = await response.json();
-			console.log(res);
 			if (!res.validation && !checkingRequiredFields(form, res.massages)) {
 				if(form.querySelector('.success-message')){
 					form.querySelector('.success-message').style.display = 'none';
