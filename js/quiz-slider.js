@@ -22,6 +22,7 @@ if (quizSliderElement && form) {
 
     const slideNextBtns = document.querySelectorAll('[data-js-slide-next-btn]');
     const slidePrevBtns = document.querySelectorAll('[data-js-slide-prev-btn]');
+    const yesNoGroups = form.querySelectorAll('.quiz__yesno');
 
     slideNextBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -31,12 +32,32 @@ if (quizSliderElement && form) {
                 // Если слайд не валиден, не переключаемся
                 return;
             }
+            const nextSlide = getSubquestionSlide(slide);
+            const yesNoValue = getYesNoValue(slide);
+            if (nextSlide && yesNoValue && yesNoValue !== 'yes') {
+                toggleSlideRequired(nextSlide, false);
+                quizSlider.slideTo(quizSlider.activeIndex + 2);
+                return;
+            }
+            if (nextSlide && yesNoValue === 'yes') {
+                toggleSlideRequired(nextSlide, true);
+            }
             quizSlider.slideNext();
         });
     });
 
     slidePrevBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            const slide = document.querySelector('.swiper-slide-active');
+            const prevSlide = slide?.previousElementSibling;
+            if (prevSlide && isSubquestionSlide(prevSlide)) {
+                const parentSlide = getParentSlide(prevSlide);
+                const parentAnswer = parentSlide ? getYesNoValue(parentSlide) : '';
+                if (parentAnswer && parentAnswer !== 'yes') {
+                    quizSlider.slideTo(quizSlider.activeIndex - 2);
+                    return;
+                }
+            }
             quizSlider.slidePrev();
         });
     });
@@ -66,6 +87,47 @@ function isSlideValid(slide) {
     return allFilled;
 }
 
+function getYesNoValue(slide) {
+    const input = slide?.querySelector('.quiz__yesno-input');
+    return input ? input.value : '';
+}
+
+function isSubquestionSlide(slide) {
+    return !!slide?.dataset?.parentId;
+}
+
+function getSubquestionSlide(slide) {
+    if (!slide?.dataset?.questionId) {
+        return null;
+    }
+    const nextSlide = slide.nextElementSibling;
+    if (!nextSlide || !nextSlide.classList.contains('swiper-slide')) {
+        return null;
+    }
+    if (nextSlide.dataset.parentId === slide.dataset.questionId) {
+        return nextSlide;
+    }
+    return null;
+}
+
+function getParentSlide(subSlide) {
+    if (!subSlide?.dataset?.parentId) {
+        return null;
+    }
+    return form.querySelector(`.swiper-slide[data-question-id="${subSlide.dataset.parentId}"]`);
+}
+
+function toggleSlideRequired(slide, enable) {
+    const inputs = slide.querySelectorAll('[data-quiz-required]');
+    inputs.forEach(input => {
+        if (enable) {
+            input.setAttribute('required', '');
+        } else {
+            input.removeAttribute('required');
+        }
+    });
+}
+
 // Функция для обновления состояния кнопки конкретного слайда
 function updateButtonState(slide) {
     const button = slide.querySelector('[data-js-slide-next-btn]');
@@ -81,6 +143,7 @@ function updateButtonState(slide) {
 // Добавляем слушатели на все required поля
     const requiredInputs = form.querySelectorAll('[required]');
     requiredInputs.forEach(input => {
+        input.dataset.quizRequired = '1';
         // Используем 'input' для текстовых полей и 'change' для всех
         const eventType = input.type === 'checkbox' ? 'change' : 'input';
         input.addEventListener(eventType, () => {
@@ -100,6 +163,32 @@ function updateButtonState(slide) {
                 }
             });
         }
+    });
+
+    yesNoGroups.forEach(group => {
+        const input = group.querySelector('.quiz__yesno-input');
+        const buttons = group.querySelectorAll('.quiz__yesno-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.dataset.yesnoValue || '';
+                input.value = value;
+                buttons.forEach(btn => btn.classList.toggle('is-active', btn === button));
+                const slide = group.closest('.swiper-slide');
+                if (slide) {
+                    updateButtonState(slide);
+                    const nextSlide = getSubquestionSlide(slide);
+                    if (nextSlide) {
+                        toggleSlideRequired(nextSlide, value === 'yes');
+                    }
+                }
+                document.dispatchEvent(new CustomEvent('quizYesNoChange', {
+                    detail: {
+                        name: input.name || '',
+                        value,
+                    },
+                }));
+            });
+        });
     });
 
     // Обновляем состояние кнопок при смене слайда

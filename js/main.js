@@ -495,13 +495,116 @@ document.addEventListener('DOMContentLoaded', () => {
 	let quizRating = {};
 	let hasLowRating = false;
 
+	function getRequiredRatingNames() {
+		return Array.from(document.querySelectorAll('.rating-slider__input[required]'))
+			.map(input => input.name);
+	}
+
+	function getQuizAnswers() {
+		const ratingInputs = document.querySelectorAll('.rating-slider__input');
+		const yesNoInputs = document.querySelectorAll('.quiz__yesno-input');
+		const answers = {};
+		ratingInputs.forEach(input => {
+			if (input.name) {
+				answers[input.name] = input.value;
+			}
+		});
+		yesNoInputs.forEach(input => {
+			if (input.name) {
+				answers[input.name] = input.value;
+			}
+		});
+		return answers;
+	}
+
+	function parseNegativeRule(rule) {
+		const normalized = String(rule).trim().toLowerCase();
+		if (normalized === '') {
+			return null;
+		}
+		if (normalized === 'нет' || normalized === 'no') {
+			return { type: 'yesno', value: 'no' };
+		}
+		if (normalized === 'да' || normalized === 'yes') {
+			return { type: 'yesno', value: 'yes' };
+		}
+		const rangeMatch = normalized.match(/^(\d+)\s*-\s*(\d+)$/);
+		if (rangeMatch) {
+			return { type: 'range', min: Number(rangeMatch[1]), max: Number(rangeMatch[2]) };
+		}
+		const compareMatch = normalized.match(/^(<=|>=|<|>)(\d+)$/);
+		if (compareMatch) {
+			return { type: 'compare', op: compareMatch[1], value: Number(compareMatch[2]) };
+		}
+		return null;
+	}
+
+	function isNegativeByRule(rule, value, questionType) {
+		if (!rule) {
+			return false;
+		}
+		const parsed = parseNegativeRule(rule);
+		if (!parsed) {
+			return false;
+		}
+		if (parsed.type === 'yesno') {
+			return String(value).toLowerCase() === parsed.value;
+		}
+		if (questionType === 'yesno') {
+			return false;
+		}
+		const numericValue = Number(value);
+		if (Number.isNaN(numericValue)) {
+			return false;
+		}
+		if (parsed.type === 'range') {
+			return numericValue >= parsed.min && numericValue <= parsed.max;
+		}
+		if (parsed.type === 'compare') {
+			switch (parsed.op) {
+				case '<':
+					return numericValue < parsed.value;
+				case '<=':
+					return numericValue <= parsed.value;
+				case '>':
+					return numericValue > parsed.value;
+				case '>=':
+					return numericValue >= parsed.value;
+				default:
+					return false;
+			}
+		}
+		return false;
+	}
+
+	function updateHasLowRating() {
+		const answers = getQuizAnswers();
+		const questionSlides = document.querySelectorAll('.swiper-slide[data-negative-rule]');
+		hasLowRating = Array.from(questionSlides).some(slide => {
+			const rule = slide.dataset.negativeRule || '';
+			const questionType = slide.dataset.questionType || 'rating';
+			if (questionType === 'yesno') {
+				const input = slide.querySelector('.quiz__yesno-input');
+				const value = input ? input.value : '';
+				return isNegativeByRule(rule, value, 'yesno');
+			}
+			const input = slide.querySelector('.rating-slider__input');
+			const value = input ? input.value : '';
+			return isNegativeByRule(rule, value, 'rating');
+		});
+	}
+
 	document.addEventListener('ratingChange', (e) => {
 		if(!quizRating[e.detail.name]) {
 			quizRating[e.detail.name] = e.detail.value;
 		} else {
 			quizRating[e.detail.name] = e.detail.value;
 		}
-		hasLowRating = Object.values(quizRating).some(value => value < 7);		
+		updateHasLowRating();
+	});
+
+	document.addEventListener('quizYesNoChange', () => {
+		updateHasLowRating();
 	});
 
 	async function sendForm(form, btn, formData, textSucces = 'Спасибо!') {
@@ -609,7 +712,10 @@ document.addEventListener('DOMContentLoaded', () => {
 						if(inputName && NAME) inputName.value = NAME;
 						if(inputLeadId && LEAD_ID) inputLeadId.value = LEAD_ID;
 						if(inputAnswers && Object.values(quizRating).length){
-							const quizAnswers = Object.values(quizRating).map(val => val) || [];
+							const requiredNames = getRequiredRatingNames();
+							const quizAnswers = requiredNames
+								.map(name => quizRating[name])
+								.filter(value => typeof value !== 'undefined');
 							inputAnswers.value = quizAnswers.join('-');
 						}
 						reviewBlockBad.classList.add('active');

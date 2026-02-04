@@ -77,7 +77,7 @@
 						<div class="swiper-wrapper">
 
 							<div class="swiper-slide">
-								<div class="quiz__form--card card text-left">
+								<div class="quiz__form--card text-left">
 									<h2 class="card__title">Качество обслуживания</h2>
 									<div class="card__description">При прохождении опроса выберите подходящую оценку <br/>(по шкале, где 1 - наихудшая оценка, 10 - наилучшая оценка)</div>
 
@@ -89,7 +89,7 @@
 							</div>
 
 							<div class="swiper-slide">
-								<div class="quiz__form--card card text-left">
+								<div class="quiz__form--card text-left">
 
 									
 									<div class="qr-form-group quiz__form--group hidden">
@@ -111,7 +111,7 @@
 							</div>
 
 							<div class="swiper-slide">
-								<div class="quiz__form--card card text-left">
+								<div class="quiz__form--card text-left">
 
 									<div class=""><b>Насколько Вы остались довольны обслуживанием в данном дилерском центре?</b></div>
 									<div class="card__description">(Вспомните, пожалуйста, Ваши общие впечатления о покупке нового BELGEE  в "Центр на Московском")</div>
@@ -166,7 +166,7 @@
 							</div>
 
 							<div class="swiper-slide">
-								<div class="quiz__form--card card text-left">
+								<div class="quiz__form--card text-left">
 
 									<div class=""><b>Насколько Вы остались довольны оказанным гостеприимством и отношением к вам со стороны персонала?</b></div>
 									<div class="card__description">(Вспомните, насколько дружелюбно, приветливо и отзывчиво к вам отнеслись? Предложили ли чай/кофе/воду?)</div>
@@ -222,7 +222,7 @@
 
 							<div class="swiper-slide">
 
-								<div class="quiz__form--card card text-left">
+								<div class="quiz__form--card text-left">
 
 									<div class=""><b>Насколько Вы остались довольны тем, как был организован процесс покупки нового автомобиля в дилерском центре "Центр на Московском"?</b></div>
 									<div class="quiz__rating" data-question="process">
@@ -276,8 +276,95 @@
 
 							</div>
 
+							<div class="swiper-slide" data-question-id="testdrive" data-question-type="yesno">
+								<div class="quiz__form--card text-left">
+									<div class=""><b>Предложили ли вам тест-драйв в дилерском центре?</b></div>
+									<div class="quiz__yesno" data-question="testdrive">
+										<input type="hidden" name="yesno-testdrive" class="quiz__yesno-input" value="" required>
+										<div class="quiz__yesno-buttons">
+											<button type="button" class="btn quiz__yesno-btn" data-yesno-value="yes">Да</button>
+											<button type="button" class="btn btn-white quiz__yesno-btn" data-yesno-value="no">Нет</button>
+										</div>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
+									</footer>
+								</div>
+							</div>
+
+							<div class="swiper-slide" data-question-id="testdrive-1" data-parent-id="testdrive" data-question-type="rating">
+								<div class="quiz__form--card text-left">
+									<div class=""><b>Насколько вы остались довольны тест-драйвом?</b></div>
+									<div class="quiz__rating" data-question="testdrive-1">
+										<div class="rating-slider">
+											<div class="rating-slider__container">
+												<input 
+													type="hidden" 
+													name="rating-slider-testdrive" 
+													class="rating-slider__input" 
+													value="0"
+													required
+												>
+												
+												<div class="rating-slider__wrapper">
+													<div class="rating-slider__tooltip">Оценка: <span class="rating-slider__tooltip-value">0</span></div>
+													
+													<div class="rating-slider__track">
+														<div class="rating-slider__track-fill"></div>
+														<div class="rating-slider__thumb"></div>
+													</div>
+													
+													<div class="rating-slider__labels">
+														<span class="rating-slider__label">0</span>
+														<span class="rating-slider__label">1</span>
+														<span class="rating-slider__label">2</span>
+														<span class="rating-slider__label">3</span>
+														<span class="rating-slider__label">4</span>
+														<span class="rating-slider__label">5</span>
+														<span class="rating-slider__label">6</span>
+														<span class="rating-slider__label">7</span>
+														<span class="rating-slider__label">8</span>
+														<span class="rating-slider__label">9</span>
+														<span class="rating-slider__label">10</span>
+													</div>
+												</div>
+												
+												<div class="rating-slider__value">
+													Выбрано: <span class="rating-slider__current-value">0</span> / 10
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
+									</footer>
+								</div>
+							</div>
+
+							<div class="swiper-slide" data-question-id="tradein" data-question-type="yesno">
+								<div class="quiz__form--card text-left">
+									<div class=""><b>Был ли приём старого автомобиля в зачёт?</b></div>
+									<div class="quiz__yesno" data-question="tradein">
+										<input type="hidden" name="yesno-tradein" class="quiz__yesno-input" value="" required>
+										<div class="quiz__yesno-buttons">
+											<button type="button" class="btn quiz__yesno-btn" data-yesno-value="yes">Да</button>
+											<button type="button" class="btn btn-white quiz__yesno-btn" data-yesno-value="no">Нет</button>
+										</div>
+									</div>
+
+									<footer class="card__footer text-right">
+										<div class="btn btn-white" data-js-slide-prev-btn>Назад</div>
+										<div class="btn" data-js-slide-next-btn disabled>Далее</div>
+									</footer>
+								</div>
+							</div>
+
 							<div class="swiper-slide">
-								<div class="quiz__form--card card text-left">
+								<div class="quiz__form--card text-left">
 
 									<div class=""><b>Насколько вы остались обслуживанием вашего менеджера?</b></div>
 									<div class="card__description">(Был с вами на связи все время, объяснил все делати и ответил на все вопросы)</div>
