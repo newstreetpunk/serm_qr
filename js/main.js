@@ -790,7 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	document.querySelectorAll('form').forEach(form => {
-		let btn = form.querySelector('button');
+		let btn = form.querySelector('button[type="submit"]');
 		form.onsubmit = async (e) => {
 			e.preventDefault();
 			btn.innerHTML = 'Отправляем...';
