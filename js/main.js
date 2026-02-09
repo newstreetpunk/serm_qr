@@ -961,6 +961,25 @@ document.addEventListener('DOMContentLoaded', () => {
 	const saveBtn = document.querySelector('.save-vcard')
 	if (/mobile|iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()) && saveBtn) {
 		saveBtn.classList.add('mobile');
+
+		let ignoreScrollRevealUntil = 0;
+		const hideSaveBtn = () => {
+			saveBtn.classList.add('is-quiz-shifted');
+			// Игнорируем события scroll от программной прокрутки
+			ignoreScrollRevealUntil = Date.now() + 1200;
+		};
+		const showSaveBtn = () => {
+			saveBtn.classList.remove('is-quiz-shifted');
+		};
+
+		document.addEventListener('quizStart', hideSaveBtn);
+		document.addEventListener('quizNavigate', hideSaveBtn);
+		window.addEventListener('scroll', () => {
+			if (Date.now() < ignoreScrollRevealUntil) {
+				return;
+			}
+			showSaveBtn();
+		}, { passive: true });
 	} else {
 		// code for non-mobile devices
 	}

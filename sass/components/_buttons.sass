@@ -57,7 +57,10 @@
 		left: 50%
 		transform: translateX(-50%)
 		bottom: 16px
+		transition: bottom 1s ease
 		z-index: 100
 		box-shadow: 0 0 30px rgba(vars.$midnight, .3)
 		max-width: 90%
 		margin-top: 0
+		&.is-quiz-shifted
+			bottom: -26px

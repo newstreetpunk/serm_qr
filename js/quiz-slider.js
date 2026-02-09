@@ -29,10 +29,26 @@ if (quizSliderElement && form) {
         spaceBetween: 30,
         allowTouchMove: false,
     });
+    let isQuizStarted = false;
 
     const slideNextBtns = document.querySelectorAll('[data-js-slide-next-btn]');
     const slidePrevBtns = document.querySelectorAll('[data-js-slide-prev-btn]');
     const yesNoGroups = form.querySelectorAll('.quiz__yesno');
+
+    function notifyQuizNavigation() {
+        document.dispatchEvent(new CustomEvent('quizNavigate', {
+            detail: { index: quizSlider.activeIndex },
+        }));
+    }
+
+    function scrollToQuizWithOffset(offset = 20) {
+        const rect = form.getBoundingClientRect();
+        const targetY = window.scrollY + rect.top - offset;
+        window.scrollTo({
+            top: Math.max(0, targetY),
+            behavior: 'smooth',
+        });
+    }
 
     slideNextBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -42,17 +58,24 @@ if (quizSliderElement && form) {
                 // Если слайд не валиден, не переключаемся
                 return;
             }
+            if (!isQuizStarted && quizSlider.activeIndex === 0) {
+                isQuizStarted = true;
+                scrollToQuizWithOffset(24);
+                document.dispatchEvent(new CustomEvent('quizStart'));
+            }
             const nextSlide = getSubquestionSlide(slide);
             const yesNoValue = getYesNoValue(slide);
             if (nextSlide && yesNoValue && yesNoValue !== 'yes') {
                 toggleSlideRequired(nextSlide, false);
                 quizSlider.slideTo(quizSlider.activeIndex + 2);
+                notifyQuizNavigation();
                 return;
             }
             if (nextSlide && yesNoValue === 'yes') {
                 toggleSlideRequired(nextSlide, true);
             }
             quizSlider.slideNext();
+            notifyQuizNavigation();
         });
     });
 
@@ -65,10 +88,12 @@ if (quizSliderElement && form) {
                 const parentAnswer = parentSlide ? getYesNoValue(parentSlide) : '';
                 if (parentAnswer && parentAnswer !== 'yes') {
                     quizSlider.slideTo(quizSlider.activeIndex - 2);
+                    notifyQuizNavigation();
                     return;
                 }
             }
             quizSlider.slidePrev();
+            notifyQuizNavigation();
         });
     });
 
