@@ -9,6 +9,16 @@ if(ratingSliders.length > 0) {
     });
 }
 
+// Блокирование системного жеста "назад" при взаимодействии со слайдером
+const blockBackGesture = (e) => {
+    e.preventDefault();
+};
+
+document.querySelectorAll('.rating-slider').forEach(slider => {
+    slider.addEventListener('touchstart', blockBackGesture, { passive: false });
+    slider.addEventListener('touchmove', blockBackGesture, { passive: false });
+});
+
 const quizSliderElement = document.querySelector(".quiz__form--slider");
 const form = document.querySelector('.quiz__form');
 
