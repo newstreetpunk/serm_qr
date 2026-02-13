@@ -441,6 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	async function sendGood(rate, serviceName, link, dealer) {
+		if(!rate || (rate && rate === 0)) return;
 		let res;
 		let formData = new FormData();
 		formData.append('rate', rate);
